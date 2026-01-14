@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   ArrowRight, 
@@ -10,13 +9,10 @@ import {
   Command,
   Terminal,
   ActivitySquare,
-  Linkedin,
-  Twitter,
   ShieldCheck,
   EyeOff,
   ExternalLink,
   BookOpen,
-  Bug,
   Share2,
   ShieldQuestion,
   Smartphone,
@@ -42,7 +38,8 @@ const App: React.FC = () => {
   const CALENDLY_URL = "https://calendly.com/msmannan/30min";
 
   return (
-    <div className="min-h-screen selection:bg-blue-500/30">
+    <div className="min-h-screen mesh-gradient selection:bg-blue-500/30">
+      <div className="grain"></div>
       <Navbar onNavigate={setView} currentView={view} />
       
       <LegalModals 
@@ -99,7 +96,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* Core Section: REFINED CLINICAL DESIGN */}
+            {/* Core Section */}
             <section id="core" className="px-6 lg:px-12 py-32 bg-[#020202] relative">
               <div className="max-w-[1400px] mx-auto">
                 <div className="flex flex-col lg:flex-row justify-between items-end gap-16 mb-24">
@@ -123,62 +120,14 @@ const App: React.FC = () => {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
-                    { 
-                      icon: Cpu, 
-                      title: 'Extraction Engine', 
-                      desc: 'Heuristic normalization of indicators enriched with automated tactical tagging.',
-                      id: '01',
-                      tag: 'Active Ingestion'
-                    },
-                    { 
-                      icon: Workflow, 
-                      title: 'Case Workflow', 
-                      desc: 'Unified investigative folders with blockchain-verified data integrity for teams.',
-                      id: '02',
-                      tag: 'Clinical Audit'
-                    },
-                    { 
-                      icon: Network, 
-                      title: 'Surface Mapping', 
-                      desc: 'Real-time infrastructure correlation linked with underground historicals.',
-                      id: '03',
-                      tag: 'Global Grid'
-                    },
-                    { 
-                      icon: Smartphone, 
-                      title: 'Secure Mobility', 
-                      desc: 'Privacy-hardened interface with integrated onion-routing for field analysts.',
-                      id: '04',
-                      tag: 'End-to-End'
-                    },
-                    { 
-                      icon: Share2, 
-                      title: 'STIX 2.1 Ready', 
-                      desc: 'Full interoperability with global SOC pipelines via standardized JSON exports.',
-                      id: '05',
-                      tag: 'TAXII Supported'
-                    },
-                    { 
-                      icon: ShieldQuestion, 
-                      title: 'Protected Intake', 
-                      desc: 'Anonymized whistleblower portal for sensitive organizational reporting.',
-                      id: '06',
-                      tag: 'Privacy Tier 1'
-                    },
-                    { 
-                      icon: Database, 
-                      title: 'Semantic Search', 
-                      desc: 'Deep indexing across IRC archives, paste sites, and ransomware blogs.',
-                      id: '07',
-                      tag: '14.2B Records'
-                    },
-                    { 
-                      icon: ShieldCheck, 
-                      title: 'Isolation Vault', 
-                      desc: 'Hardware-level multi-tenant separation with cryptographic user isolation.',
-                      id: '08',
-                      tag: 'Zero Trust'
-                    }
+                    { icon: Cpu, title: 'Extraction Engine', desc: 'Heuristic normalization of indicators enriched with automated tactical tagging.', id: '01', tag: 'Active Ingestion' },
+                    { icon: Workflow, title: 'Case Workflow', desc: 'Unified investigative folders with blockchain-verified data integrity for teams.', id: '02', tag: 'Clinical Audit' },
+                    { icon: Network, title: 'Surface Mapping', desc: 'Real-time infrastructure correlation linked with underground historicals.', id: '03', tag: 'Global Grid' },
+                    { icon: Smartphone, title: 'Secure Mobility', desc: 'Privacy-hardened interface with integrated onion-routing for field analysts.', id: '04', tag: 'End-to-End' },
+                    { icon: Share2, title: 'STIX 2.1 Ready', desc: 'Full interoperability with global SOC pipelines via standardized JSON exports.', id: '05', tag: 'TAXII Supported' },
+                    { icon: ShieldQuestion, title: 'Protected Intake', desc: 'Anonymized whistleblower portal for sensitive organizational reporting.', id: '06', tag: 'Privacy Tier 1' },
+                    { icon: Database, title: 'Semantic Search', desc: 'Deep indexing across IRC archives, paste sites, and ransomware blogs.', id: '07', tag: '14.2B Records' },
+                    { icon: ShieldCheck, title: 'Isolation Vault', desc: 'Hardware-level multi-tenant separation with cryptographic user isolation.', id: '08', tag: 'Zero Trust' }
                   ].map((item, i) => (
                     <div key={i} className="group relative bg-[#080808] border border-white/5 rounded-2xl p-8 flex flex-col h-full transition-all duration-500 hover:bg-[#0c0c0c] hover:-translate-y-1 hover:border-blue-500/20 shadow-lg">
                       <div className="flex items-start justify-between mb-10">

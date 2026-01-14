@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Loader2, Database, Shield, Crosshair, Search, Terminal, Download, Share2, Maximize2 } from 'lucide-react';
+import { Loader2, Database, Shield, Crosshair, Search, Terminal, Zap, Download, Share2, Maximize2 } from 'lucide-react';
 import { generateThreatReport } from '../services/geminiService';
 
 const IntelligenceProbe: React.FC = () => {
@@ -16,6 +16,7 @@ const IntelligenceProbe: React.FC = () => {
     setDossier(null);
     
     await new Promise(resolve => setTimeout(resolve, 1500));
+    // Determine type for clinical analysis
     const type = target.includes('.') || target.includes('@') ? 'website' : 'ioc';
     const result = await generateThreatReport(target, type);
     
@@ -24,8 +25,8 @@ const IntelligenceProbe: React.FC = () => {
   };
 
   return (
-    <div id="terminal" className="w-full max-w-7xl mx-auto font-sans">
-      <div className="glass-card rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+    <div id="terminal" className="w-full max-w-7xl mx-auto">
+      <div className="glass-card rounded-3xl overflow-hidden border border-white/10 shadow-[0_20px_100px_rgba(0,0,0,0.8)]">
         {/* Dashboard Header */}
         <div className="px-8 py-5 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
           <div className="flex items-center gap-6">
@@ -38,15 +39,16 @@ const IntelligenceProbe: React.FC = () => {
             <div className="flex items-center gap-3">
               <Terminal className="w-4 h-4 text-white/40" />
               <span className="text-[11px] font-bold text-white/40 uppercase tracking-[0.25em]">
-                Investigative Intelligence Module
+                OSINT_CORE :: ORION-V4
               </span>
             </div>
           </div>
           <div className="flex items-center gap-8 font-mono text-[10px]">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
-              <span className="text-blue-500 font-bold uppercase tracking-widest">Connection Stable</span>
+              <span className="text-blue-500 font-bold">GRID_LINK: ESTABLISHED</span>
             </div>
+            <span className="text-white/20">DB_COUNT: 14.2B</span>
           </div>
         </div>
 
@@ -59,18 +61,18 @@ const IntelligenceProbe: React.FC = () => {
               type="text"
               value={target}
               onChange={(e) => setTarget(e.target.value)}
-              placeholder="DOMAIN, IP ADDRESS, OR ASSET IDENTIFIER"
-              className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-6 pl-16 pr-56 text-lg text-white focus:outline-none focus:border-blue-500/40 focus:ring-8 focus:ring-blue-500/5 font-mono transition-all placeholder:text-white/5 tracking-widest uppercase"
+              placeholder="EMAIL, USERNAME, DOMAIN, OR IP_ADDRESS"
+              className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-6 pl-16 pr-56 text-lg text-white focus:outline-none focus:border-blue-500/40 focus:ring-8 focus:ring-blue-500/5 font-mono transition-all placeholder:text-white/5 uppercase tracking-widest"
             />
             <button
               disabled={isProcessing || !target}
               className="absolute right-3 top-3 bottom-3 bg-blue-600 hover:bg-blue-500 disabled:bg-white/5 disabled:text-white/10 text-white px-10 rounded-xl text-[13px] font-bold uppercase tracking-[0.15em] transition-all shadow-xl active:scale-95"
             >
-              {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Execute Analysis'}
+              {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Run OSINT Probe'}
             </button>
           </form>
 
-          <div className="bg-black/40 border border-white/5 rounded-2xl min-h-[500px] relative overflow-hidden flex flex-col">
+          <div className="bg-black/40 border border-white/5 rounded-2xl min-h-[500px] relative overflow-hidden flex flex-col group/terminal">
             {!isProcessing && dossier ? (
               <div className="flex-1 p-10 lg:p-12 animate-in fade-in duration-700">
                 <div className="flex items-center justify-between mb-10 pb-6 border-b border-white/5">
@@ -79,8 +81,8 @@ const IntelligenceProbe: React.FC = () => {
                       <Database className="w-5 h-5 text-blue-500" />
                     </div>
                     <div className="space-y-1">
-                      <span className="block text-[11px] font-bold text-white uppercase tracking-widest">Strategic Intelligence Dossier</span>
-                      <span className="block text-[9px] text-white/30 uppercase tracking-tighter">Clinical Report cross-referenced with 14.2B records</span>
+                      <span className="block text-[11px] font-bold text-white uppercase tracking-widest">Intelligence Dossier</span>
+                      <span className="block text-[9px] text-white/30 uppercase tracking-tighter">Analysis cross-referenced with 14.2B records</span>
                     </div>
                   </div>
                   <div className="flex gap-4">
@@ -89,6 +91,9 @@ const IntelligenceProbe: React.FC = () => {
                     </button>
                     <button className="p-3 rounded-lg border border-white/5 hover:bg-white/5 transition-colors text-white/40 hover:text-white">
                       <Share2 className="w-4 h-4" />
+                    </button>
+                    <button className="p-3 rounded-lg border border-white/5 hover:bg-white/5 transition-colors text-white/40 hover:text-white">
+                      <Maximize2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
@@ -106,14 +111,14 @@ const IntelligenceProbe: React.FC = () => {
                     </div>
                  </div>
                  <div className="text-center space-y-3">
-                    <div className="text-[12px] font-bold uppercase tracking-[0.5em] text-white/80">Polling Aggregated Databases</div>
-                    <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest">Processing situational signals...</div>
+                    <div className="text-[12px] font-bold uppercase tracking-[0.5em] text-white/80">Querying Leak Repositories</div>
+                    <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest">Correlating entities across signals...</div>
                  </div>
               </div>
             ) : (
-              <div className="flex-1 flex flex-col items-center justify-center h-[500px] opacity-10">
+              <div className="flex-1 flex flex-col items-center justify-center h-[500px] opacity-10 grayscale group-hover/terminal:opacity-20 group-hover/terminal:grayscale-0 transition-all duration-700">
                 <Shield className="w-24 h-24 stroke-[0.5px] mb-8" />
-                <p className="text-[11px] uppercase tracking-[0.5em] font-bold">Awaiting Investigative Query</p>
+                <p className="text-[11px] uppercase tracking-[0.5em] font-bold">Awaiting Target Identifier</p>
               </div>
             )}
           </div>
