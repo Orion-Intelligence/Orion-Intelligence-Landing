@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Search, Loader2, FileText, Database, Shield } from 'lucide-react';
+import { Loader2, FileText, Database, Shield } from 'lucide-react';
 import { generateThreatReport } from '../services/geminiService';
 
 const ThreatScanner: React.FC = () => {
