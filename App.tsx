@@ -368,7 +368,7 @@ const App: React.FC = () => {
                 <div className="w-12 h-12 relative flex items-center justify-center rounded-xl overflow-hidden border border-white/10 shadow-lg bg-black">
                   {!footerLogoError ? (
                     <img 
-                      src="/logo.png" 
+                      src="public_html/logo.png" 
                       alt="Orion" 
                       className="w-full h-full object-cover scale-110" 
                       onError={() => setFooterLogoError(true)}

@@ -13,7 +13,7 @@ const Logo = () => {
     <div className="w-10 h-10 relative flex items-center justify-center rounded-xl overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.3)] border border-white/10 bg-[#0a0a0a]">
       {!error ? (
         <img 
-          src="/logo.png" 
+          src="public_html/logo.png" 
           alt="Orion Logo" 
           className="w-full h-full object-cover scale-105"
           onError={() => setError(true)}
