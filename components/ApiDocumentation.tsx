@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Terminal, Code2, Database, Shield, Globe, Search, Command, ChevronRight, Copy, Check, Info, FileJson, Zap, Network, MessageSquare, Share2, Scan, FileText, Smartphone, LayoutGrid, ListFilter, Bug, ShieldAlert, Newspaper, Users, UserCheck } from 'lucide-react';
 
@@ -363,29 +362,29 @@ const ApiDocumentation: React.FC = () => {
   return (
     <div className="flex flex-col lg:flex-row lg:h-[calc(100vh-80px)] lg:overflow-hidden animate-in fade-in duration-700">
       {/* Sidebar Navigation */}
-      <aside className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-white/5 bg-black/20 overflow-y-auto no-scrollbar flex flex-col">
-        <div className="p-8 border-b border-white/5 bg-white/[0.01]">
-          <div className="flex items-center gap-3 text-blue-500 mb-2">
+      <aside className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-black/20 overflow-y-auto no-scrollbar flex flex-col">
+        <div className="p-8 border-b border-slate-200 dark:border-white/5 bg-white/[0.01]">
+          <div className="flex items-center gap-3 text-blue-600 dark:text-blue-500 mb-2">
             <Code2 className="w-5 h-5" />
             <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Protocol V4.2.0</span>
           </div>
-          <p className="text-[9px] text-white/30 uppercase tracking-widest font-black">Orion Intelligence Core</p>
+          <p className="text-[9px] text-slate-400 dark:text-white/30 uppercase tracking-widest font-black">Orion Intelligence Core</p>
         </div>
 
         <nav className="flex-1 p-6 space-y-10 lg:pb-20">
           {categories.map(cat => (
             <div key={cat.name} className="space-y-4">
               <div className="flex items-center gap-3 px-2">
-                <cat.icon className="w-3.5 h-3.5 text-white/20" />
-                <h4 className="text-[9px] font-bold text-white/40 uppercase tracking-[0.2em]">{cat.label}</h4>
+                <cat.icon className="w-3.5 h-3.5 text-slate-300 dark:text-white/20" />
+                <h4 className="text-[9px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-[0.2em]">{cat.label}</h4>
               </div>
               <div className="space-y-1">
                 {endpoints.filter(e => e.category === cat.name).map(e => (
                   <button
                     key={e.id}
                     onClick={() => setActiveId(e.id)}
-                    className={`w-full text-left px-4 py-2 rounded-xl text-[11px] font-bold transition-all flex items-center justify-between group ${
-                      activeId === e.id ? 'bg-blue-600/10 text-white border border-blue-500/20 shadow-lg shadow-blue-500/5' : 'text-white/40 hover:text-white/70 hover:bg-white/[0.02] border border-transparent'
+                    className={`w-full text-left px-4 py-2.5 rounded-xl text-[11px] font-bold transition-all flex items-center justify-between group ${
+                      activeId === e.id ? 'bg-blue-600/10 dark:bg-blue-600/10 text-blue-600 dark:text-white border border-blue-600/20 dark:border-blue-500/20 shadow-lg shadow-blue-500/5' : 'text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.02] border border-transparent'
                     }`}
                   >
                     <span className="truncate">{e.name}</span>
@@ -397,32 +396,32 @@ const ApiDocumentation: React.FC = () => {
           ))}
         </nav>
 
-        <div className="hidden lg:block p-6 border-t border-white/5 bg-white/[0.01]">
-           <div className="flex items-center gap-3 p-4 rounded-xl bg-blue-500/5 border border-blue-500/10">
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
-              <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest leading-none">GRID STATUS: PRODUCTION</span>
+        <div className="hidden lg:block p-6 border-t border-slate-200 dark:border-white/5 bg-white/[0.01]">
+           <div className="flex items-center gap-3 p-4 rounded-xl bg-blue-600/5 dark:bg-blue-500/5 border border-blue-600/10 dark:border-blue-500/10">
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
+              <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest leading-none">GRID STATUS: PRODUCTION</span>
            </div>
         </div>
       </aside>
 
       {/* Main Documentation Area */}
-      <main className="flex-1 overflow-y-auto bg-black/40 p-6 lg:p-20 no-scrollbar">
+      <main className="flex-1 overflow-y-auto bg-white dark:bg-[#0a0a0c] p-6 lg:p-20 no-scrollbar">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-12 lg:mb-16 space-y-6 lg:space-y-8">
             <div className="flex flex-wrap items-center gap-3 lg:gap-4">
               <span className={`px-3 lg:px-4 py-1.5 rounded-lg text-[9px] lg:text-[10px] font-black uppercase tracking-widest border shadow-lg ${
-                activeEndpoint.method === 'GET' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' : 'bg-green-500/10 text-green-500 border-green-500/20'
+                activeEndpoint.method === 'GET' ? 'bg-blue-600/10 text-blue-600 border-blue-600/20' : 'bg-green-600/10 text-green-600 border-green-600/20'
               }`}>
                 {activeEndpoint.method}
               </span>
-              <code className="text-[10px] lg:text-xs font-mono text-white/80 bg-white/5 px-4 lg:px-5 py-2 rounded-xl border border-white/10 shadow-inner truncate max-w-full">
+              <code className="text-[10px] lg:text-xs font-mono text-slate-700 dark:text-white/80 bg-slate-100 dark:bg-white/5 px-4 lg:px-5 py-2 rounded-xl border border-slate-200 dark:border-white/10 shadow-inner truncate max-w-full">
                 {activeEndpoint.path}
               </code>
             </div>
             <div className="space-y-4">
-              <h1 className="text-3xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">{activeEndpoint.name}</h1>
-              <p className="text-base lg:text-xl text-white/40 leading-relaxed font-medium max-w-4xl">
+              <h1 className="text-3xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">{activeEndpoint.name}</h1>
+              <p className="text-base lg:text-xl text-slate-500 dark:text-white/40 leading-relaxed font-medium max-w-4xl">
                 {activeEndpoint.description}
               </p>
             </div>
@@ -433,19 +432,19 @@ const ApiDocumentation: React.FC = () => {
             <div className="space-y-8 lg:space-y-12">
               <section className="space-y-4 lg:space-y-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 shadow-xl">
-                    <Info className="w-4 h-4 text-blue-500" />
+                  <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-xl">
+                    <Info className="w-4 h-4 text-blue-600 dark:text-blue-500" />
                   </div>
-                  <h3 className="text-[10px] lg:text-[11px] font-black text-white uppercase tracking-[0.25em]">Clinical Authorization</h3>
+                  <h3 className="text-[10px] lg:text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-[0.25em]">Clinical Authorization</h3>
                 </div>
-                <div className="p-6 lg:p-8 rounded-3xl bg-white/[0.02] border border-white/5 space-y-6 relative overflow-hidden group">
+                <div className="p-6 lg:p-8 rounded-3xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 space-y-6 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <p className="text-sm text-white/40 leading-relaxed font-medium">
-                    Requests require an <code className="text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">X-Orion-Key</code> header. Development keys are restricted to clinical use only.
+                  <p className="text-sm text-slate-600 dark:text-white/40 leading-relaxed font-medium">
+                    Requests require an <code className="text-blue-600 dark:text-blue-400 bg-blue-600/10 dark:bg-blue-500/10 px-2 py-0.5 rounded">X-Orion-Key</code> header. Development keys are restricted to clinical use only.
                   </p>
                   <div className="space-y-3">
-                    <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest block">Shell Interface</span>
-                    <div className="font-mono text-[10px] lg:text-[11px] text-blue-400/80 bg-black/60 p-5 rounded-2xl border border-white/5 leading-relaxed overflow-x-auto no-scrollbar">
+                    <span className="text-[10px] font-bold text-slate-300 dark:text-white/20 uppercase tracking-widest block">Shell Interface</span>
+                    <div className="font-mono text-[10px] lg:text-[11px] text-blue-700 dark:text-blue-400/80 bg-slate-100 dark:bg-black/60 p-5 rounded-2xl border border-slate-200 dark:border-white/5 leading-relaxed overflow-x-auto no-scrollbar shadow-inner">
                       curl -X {activeEndpoint.method} \<br />
                       &nbsp;&nbsp;-H "X-Orion-Key: $ORION_API_KEY" \<br />
                       &nbsp;&nbsp;{activeEndpoint.path}
@@ -457,20 +456,20 @@ const ApiDocumentation: React.FC = () => {
               {activeEndpoint.params && (
                 <section className="space-y-4 lg:space-y-6">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 shadow-xl">
-                      <Terminal className="w-4 h-4 text-blue-500" />
+                    <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-xl">
+                      <Terminal className="w-4 h-4 text-blue-600 dark:text-blue-500" />
                     </div>
-                    <h3 className="text-[10px] lg:text-[11px] font-black text-white uppercase tracking-[0.25em]">Investigation Parameters</h3>
+                    <h3 className="text-[10px] lg:text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-[0.25em]">Investigation Parameters</h3>
                   </div>
                   <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-br from-blue-500/20 to-transparent rounded-[2rem] blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-br from-blue-600/20 dark:from-blue-500/20 to-transparent rounded-[2rem] blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <button 
                       onClick={() => handleCopy(activeEndpoint.params!, 'params')}
-                      className="absolute top-4 lg:top-6 right-4 lg:right-6 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/20 hover:text-white transition-all z-10 border border-white/5"
+                      className="absolute top-4 lg:top-6 right-4 lg:right-6 p-2 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-500 dark:text-white/20 hover:text-slate-900 dark:hover:text-white transition-all z-10 border border-slate-300 dark:border-white/5"
                     >
-                      {copied === 'params' ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
+                      {copied === 'params' ? <Check className="w-3 h-3 text-green-600 dark:text-green-500" /> : <Copy className="w-3 h-3" />}
                     </button>
-                    <pre className="relative p-6 lg:p-10 rounded-[2rem] bg-[#030303] border border-white/10 text-[10px] lg:text-[11px] font-mono text-blue-300/90 overflow-x-auto no-scrollbar leading-[1.8] shadow-2xl">
+                    <pre className="relative p-6 lg:p-10 rounded-[2rem] bg-slate-100 dark:bg-[#0c0c0e] border border-slate-200 dark:border-white/10 text-[10px] lg:text-[11px] font-mono text-blue-700 dark:text-blue-300/90 overflow-x-auto no-scrollbar leading-[1.8] shadow-2xl dark:shadow-none">
                       {activeEndpoint.params}
                     </pre>
                   </div>
@@ -478,12 +477,12 @@ const ApiDocumentation: React.FC = () => {
               )}
 
               {/* Extraction Feature Notice */}
-              <section className="p-6 lg:p-8 rounded-3xl bg-green-500/5 border border-green-500/10 space-y-4">
-                <div className="flex items-center gap-3 text-green-500">
+              <section className="p-6 lg:p-8 rounded-3xl bg-green-600/5 dark:bg-green-500/5 border border-green-600/10 dark:border-green-500/10 space-y-4">
+                <div className="flex items-center gap-3 text-green-600 dark:text-green-500">
                   <Zap className="w-4 h-4" />
                   <span className="text-[10px] font-black uppercase tracking-widest">Heuristic Extraction Active</span>
                 </div>
-                <p className="text-xs text-white/30 leading-relaxed font-medium">
+                <p className="text-xs text-slate-500 dark:text-white/30 leading-relaxed font-medium">
                   Responses may include automatically extracted Indicators of Compromise (IOCs). Only fields with active data are returned (e.g. `m_cve`, `m_ip`, `m_yara_rule`).
                 </p>
               </section>
@@ -492,34 +491,34 @@ const ApiDocumentation: React.FC = () => {
             {/* Right Panel: Example Response */}
             <div className="space-y-6 lg:space-y-8 sticky top-0">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 shadow-xl">
-                  <FileJson className="w-4 h-4 text-green-500" />
+                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-xl">
+                  <FileJson className="w-4 h-4 text-green-600 dark:text-green-500" />
                 </div>
-                <h3 className="text-[10px] lg:text-[11px] font-black text-white uppercase tracking-[0.25em]">Response Schema</h3>
+                <h3 className="text-[10px] lg:text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-[0.25em]">Response Schema</h3>
               </div>
               
               <div className="relative group">
-                <div className="absolute inset-0 bg-blue-500/5 blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                <div className="absolute inset-0 bg-blue-600/5 dark:bg-blue-500/5 blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                 <button 
                   onClick={() => handleCopy(activeEndpoint.example, 'example')}
-                  className="absolute top-4 lg:top-6 right-4 lg:right-6 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/20 hover:text-white transition-all z-10 border border-white/5"
+                  className="absolute top-4 lg:top-6 right-4 lg:right-6 p-2 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-500 dark:text-white/20 hover:text-slate-900 dark:hover:text-white transition-all z-10 border border-slate-300 dark:border-white/5"
                 >
-                  {copied === 'example' ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
+                  {copied === 'example' ? <Check className="w-3 h-3 text-green-600 dark:text-green-500" /> : <Copy className="w-3 h-3" />}
                 </button>
-                <div className="relative p-[1px] bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-[2.5rem] shadow-2xl">
-                  <div className="p-6 lg:p-10 rounded-[2.45rem] bg-[#010101] border border-white/5">
-                    <pre className="text-[10px] lg:text-[11px] font-mono text-white/70 overflow-x-auto no-scrollbar leading-loose">
+                <div className="relative p-[1px] bg-gradient-to-br from-slate-200 dark:from-white/10 via-slate-100 dark:via-white/5 to-transparent rounded-[2.5rem] shadow-2xl">
+                  <div className="p-6 lg:p-10 rounded-[2.45rem] bg-slate-50 dark:bg-[#0c0c0e] border border-slate-200 dark:border-white/5">
+                    <pre className="text-[10px] lg:text-[11px] font-mono text-slate-700 dark:text-white/70 overflow-x-auto no-scrollbar leading-loose">
                       {activeEndpoint.example}
                     </pre>
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 lg:p-8 rounded-3xl bg-blue-500/[0.03] border border-blue-500/10 flex items-start gap-6">
-                <Shield className="w-6 h-6 text-blue-500 shrink-0" />
+              <div className="p-6 lg:p-8 rounded-3xl bg-blue-600/[0.03] dark:bg-blue-500/[0.03] border border-blue-600/10 dark:border-blue-500/10 flex items-start gap-6">
+                <Shield className="w-6 h-6 text-blue-600 dark:text-blue-500 shrink-0" />
                 <div className="space-y-2">
-                  <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Clinical Governance</span>
-                  <p className="text-[10px] lg:text-[11px] text-white/40 leading-relaxed font-medium">
+                  <span className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">Clinical Governance</span>
+                  <p className="text-[10px] lg:text-[11px] text-slate-500 dark:text-white/40 leading-relaxed font-medium">
                     Data returned by the API is cross-referenced with 14.2B records. TLP:AMBER protocols apply to all non-public clinical identifiers discovered.
                   </p>
                 </div>

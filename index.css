@@ -5,22 +5,22 @@
 :root {
     --bg: #ffffff;
     --fg: #0f172a;
-    --muted: #64748b;
+    --muted: #475569;
     --border: #e2e8f0;
-    --accent: #3b82f6;
+    --accent: #2563eb;
 }
 
 .dark {
-    --bg: #010101;
+    --bg: #0a0a0c;
     --fg: #fafafa;
     --muted: #666666;
-    --border: #161616;
+    --border: #1a1a1c;
     --accent: #3b82f6;
 }
 
 @layer base {
   body {
-    @apply antialiased bg-white dark:bg-[#010101] text-slate-900 dark:text-[#fafafa] transition-colors duration-300;
+    @apply antialiased bg-white dark:bg-[#0a0a0c] text-slate-900 dark:text-[#fafafa] transition-colors duration-300;
     font-family: 'Plus Jakarta Sans', sans-serif;
     letter-spacing: -0.015em;
   }
@@ -30,17 +30,17 @@
     @apply transition-all duration-700;
     background-color: #ffffff;
     background-image: 
-        radial-gradient(at 0% 0%, hsla(217,100%,95%,1) 0, transparent 40%), 
+        radial-gradient(at 0% 0%, hsla(217,100%,97%,1) 0, transparent 40%), 
         radial-gradient(at 100% 0%, hsla(210,100%,98%,1) 0, transparent 40%),
-        radial-gradient(at 50% 100%, hsla(220,100%,97%,1) 0, transparent 50%);
+        radial-gradient(at 50% 100%, hsla(220,100%,96%,1) 0, transparent 50%);
 }
 
 .dark .mesh-gradient {
-    background-color: #010101;
+    background-color: #0a0a0c;
     background-image: 
-        radial-gradient(at 0% 0%, hsla(217,100%,10%,1) 0, transparent 40%), 
-        radial-gradient(at 100% 0%, hsla(210,100%,6%,1) 0, transparent 40%),
-        radial-gradient(at 50% 100%, hsla(220,100%,8%,1) 0, transparent 50%);
+        radial-gradient(at 0% 0%, hsla(217,100%,12%,1) 0, transparent 40%), 
+        radial-gradient(at 100% 0%, hsla(210,100%,8%,1) 0, transparent 40%),
+        radial-gradient(at 50% 100%, hsla(220,100%,10%,1) 0, transparent 50%);
 }
 
 .grain {
@@ -51,16 +51,16 @@
     height: 100%;
     pointer-events: none;
     z-index: 100;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 200 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 .dark .grain {
-    opacity: 0.02;
+    opacity: 0.015;
 }
 
 .glass-card {
-    @apply bg-white/70 dark:bg-[#0a0a0a]/40 backdrop-blur-2xl border border-slate-200 dark:border-white/5 shadow-sm dark:shadow-none;
+    @apply bg-white/80 dark:bg-[#131315]/40 backdrop-blur-2xl border border-slate-200 dark:border-white/5 shadow-sm dark:shadow-none;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -79,11 +79,11 @@
 
 .discovery-gradient {
     @apply transition-all duration-700;
-    background: radial-gradient(circle at 50% 100%, #f1f5f9 0%, #ffffff 80%);
+    background: radial-gradient(circle at 50% 100%, #f8fafc 0%, #ffffff 80%);
 }
 
 .dark .discovery-gradient {
-    background: radial-gradient(circle at 50% 100%, #0a1122 0%, #010101 80%);
+    background: radial-gradient(circle at 50% 100%, #111827 0%, #0a0a0c 80%);
 }
 
 .social-link {
