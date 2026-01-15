@@ -110,24 +110,24 @@ const App: React.FC = () => {
         ) : (
           <>
             {/* Hero Section */}
-            <section className="relative min-h-screen flex flex-col px-4 lg:px-12 overflow-hidden border-b border-slate-200 dark:border-white/5 pt-28 md:pt-0">
+            <section className="relative min-h-screen flex flex-col px-4 lg:px-12 overflow-hidden border-b border-slate-200 dark:border-white/5 pt-16 md:pt-0">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[2000px] h-full bg-blue-500/[0.04] dark:bg-blue-500/[0.04] blur-[150px] rounded-full pointer-events-none"></div>
               
-              <div className="max-w-[1400px] mx-auto relative w-full flex-1 flex flex-col items-center justify-center text-center py-20">
-                <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 text-blue-600 dark:text-blue-400 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] mb-8 md:mb-10 animate-in fade-in slide-in-from-top-4 duration-1000">
+              <div className="max-w-[1400px] mx-auto relative w-full flex-1 flex flex-col items-center justify-center text-center pt-8 pb-20 md:py-20">
+                <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 text-blue-600 dark:text-blue-400 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] mb-5 md:mb-10 animate-in fade-in slide-in-from-top-4 duration-1000">
                   <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
                   GOVERNANCE STANDARD V4.2.0
                 </div>
                 
-                <h1 className="hero-heading text-3xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 dark:text-white mb-6 md:mb-10 pb-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-100 max-w-full break-words">
+                <h1 className="hero-heading text-3xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 dark:text-white mb-5 md:mb-10 pb-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-100 max-w-full break-words">
                   Unified Investigative Intelligence
                 </h1>
                 
-                <p className="text-base md:text-xl text-slate-500 dark:text-white/50 leading-relaxed font-medium mb-10 md:mb-12 max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200">
+                <p className="text-sm md:text-xl text-slate-500 dark:text-white/50 leading-relaxed font-medium mb-8 md:mb-12 max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200 px-4 md:px-0">
                   A role-aware analytical ecosystem for global enterprise defense. Orion unifies automated scrapers, ransomware tracking, and STIX 2.1 workflows into a clinical workspace.
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 w-full sm:w-auto px-6 md:px-0">
                   <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto group px-8 md:px-10 py-4 bg-slate-900 dark:bg-white text-white dark:text-black font-bold text-[12px] md:text-[13px] uppercase tracking-[0.12em] rounded-xl hover:bg-slate-800 dark:hover:bg-blue-50 transition-all flex items-center justify-center gap-4 shadow-xl active:scale-95">
                     Operational Demo
                     <Command className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />

@@ -70,7 +70,7 @@ const IntelligenceProbe: React.FC = () => {
                 value={target}
                 onChange={(e) => setTarget(e.target.value)}
                 placeholder="TARGET IDENTIFIER"
-                className="w-full max-w-full bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl py-5 md:py-6 pl-10 md:pl-16 pr-4 md:pr-56 text-sm md:text-lg text-slate-900 dark:text-white focus:outline-none focus:border-blue-500/40 focus:ring-8 focus:ring-blue-500/5 font-mono transition-all placeholder:text-slate-400 dark:placeholder:text-white/5 uppercase tracking-wider md:tracking-widest"
+                className="w-full max-w-full bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl py-5 md:py-6 pl-10 md:pl-16 pr-4 md:pr-56 text-sm md:text-lg text-slate-900 dark:text-white focus:outline-none focus:border-blue-500/40 focus:ring-8 focus:ring-blue-500/5 font-mono transition-all placeholder:text-slate-400 dark:placeholder:text-white/5 uppercase tracking-wider md:tracking-widest shadow-sm"
               />
               <button
                 disabled={isProcessing || !target}
@@ -88,7 +88,7 @@ const IntelligenceProbe: React.FC = () => {
             </button>
           </form>
 
-          <div className="bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 rounded-2xl min-h-[400px] md:min-h-[500px] relative overflow-hidden flex flex-col group/terminal transition-colors duration-300 w-full">
+          <div className="bg-white dark:bg-black/40 border border-slate-200 dark:border-white/5 rounded-2xl min-h-[400px] md:min-h-[500px] relative overflow-hidden flex flex-col group/terminal transition-colors duration-300 w-full shadow-inner dark:shadow-none">
             {!isProcessing && dossier ? (
               <div className="flex-1 p-5 md:p-10 lg:p-12 animate-in fade-in duration-700 w-full max-w-full overflow-hidden">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 md:mb-10 pb-6 border-b border-slate-100 dark:border-white/5 gap-6">
@@ -102,13 +102,13 @@ const IntelligenceProbe: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex gap-3 md:gap-4">
-                    <button className="flex-1 sm:flex-none p-3 rounded-lg border border-slate-200 dark:border-white/5 hover:bg-slate-200 dark:hover:bg-white/5 transition-colors text-slate-400 dark:text-white/40 hover:text-slate-900 dark:hover:text-white flex justify-center">
+                    <button className="flex-1 sm:flex-none p-3 rounded-lg border border-slate-200 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-400 dark:text-white/40 hover:text-slate-900 dark:hover:text-white flex justify-center">
                       <Download className="w-4 h-4" />
                     </button>
-                    <button className="flex-1 sm:flex-none p-3 rounded-lg border border-slate-200 dark:border-white/5 hover:bg-slate-200 dark:hover:bg-white/5 transition-colors text-slate-400 dark:text-white/40 hover:text-slate-900 dark:hover:text-white flex justify-center">
+                    <button className="flex-1 sm:flex-none p-3 rounded-lg border border-slate-200 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-400 dark:text-white/40 hover:text-slate-900 dark:hover:text-white flex justify-center">
                       <Share2 className="w-4 h-4" />
                     </button>
-                    <button className="flex-1 sm:flex-none p-3 rounded-lg border border-slate-200 dark:border-white/5 hover:bg-slate-200 dark:hover:bg-white/5 transition-colors text-slate-400 dark:text-white/40 hover:text-slate-900 dark:hover:text-white flex justify-center">
+                    <button className="flex-1 sm:flex-none p-3 rounded-lg border border-slate-200 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-400 dark:text-white/40 hover:text-slate-900 dark:hover:text-white flex justify-center">
                       <Maximize2 className="w-4 h-4" />
                     </button>
                   </div>
