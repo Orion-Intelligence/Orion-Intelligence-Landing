@@ -360,9 +360,9 @@ const ApiDocumentation: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col lg:flex-row lg:h-[calc(100vh-80px)] lg:overflow-hidden animate-in fade-in duration-700">
+    <div className="flex flex-col md:flex-row md:h-[calc(100vh-80px)] md:overflow-hidden animate-in fade-in duration-700">
       {/* Sidebar Navigation */}
-      <aside className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-black/20 overflow-y-auto no-scrollbar flex flex-col">
+      <aside className="w-full md:w-72 lg:w-80 border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-black/20 overflow-y-auto no-scrollbar flex flex-col shrink-0">
         <div className="p-8 border-b border-slate-200 dark:border-white/5 bg-white/[0.01]">
           <div className="flex items-center gap-3 text-blue-600 dark:text-blue-500 mb-2">
             <Code2 className="w-5 h-5" />
@@ -371,7 +371,7 @@ const ApiDocumentation: React.FC = () => {
           <p className="text-[9px] text-slate-400 dark:text-white/30 uppercase tracking-widest font-black">Orion Intelligence Core</p>
         </div>
 
-        <nav className="flex-1 p-6 space-y-10 lg:pb-20">
+        <nav className="flex-1 p-6 space-y-10 md:pb-20">
           {categories.map(cat => (
             <div key={cat.name} className="space-y-4">
               <div className="flex items-center gap-3 px-2">
@@ -396,7 +396,7 @@ const ApiDocumentation: React.FC = () => {
           ))}
         </nav>
 
-        <div className="hidden lg:block p-6 border-t border-slate-200 dark:border-white/5 bg-white/[0.01]">
+        <div className="hidden md:block p-6 border-t border-slate-200 dark:border-white/5 bg-white/[0.01]">
            <div className="flex items-center gap-3 p-4 rounded-xl bg-blue-600/5 dark:bg-blue-500/5 border border-blue-600/10 dark:border-blue-500/10">
               <div className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
               <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest leading-none">GRID STATUS: PRODUCTION</span>
@@ -405,7 +405,7 @@ const ApiDocumentation: React.FC = () => {
       </aside>
 
       {/* Main Documentation Area */}
-      <main className="flex-1 overflow-y-auto bg-white dark:bg-[#0a0a0c] p-6 lg:p-20 no-scrollbar">
+      <main className="flex-1 overflow-y-auto bg-white dark:bg-[#0a0a0c] p-6 md:p-10 lg:p-20 no-scrollbar">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-12 lg:mb-16 space-y-6 lg:space-y-8">
