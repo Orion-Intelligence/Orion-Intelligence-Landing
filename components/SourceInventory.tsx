@@ -139,8 +139,8 @@ const SourceInventory: React.FC = () => {
   };
 
   return (
-    <div className="py-12 animate-in fade-in duration-700">
-      <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12">
+    <div className="py-12 animate-in fade-in duration-700 px-0">
+      <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12 px-4 md:px-0">
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[9px] font-bold uppercase tracking-[0.3em]">
             <Database className="w-3 h-3" />
@@ -166,7 +166,7 @@ const SourceInventory: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3 mb-8">
+      <div className="flex flex-wrap gap-3 mb-8 px-4 md:px-0">
         <button 
           onClick={() => setSelectedCategory(null)}
           className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${!selectedCategory ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-100 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white'}`}
@@ -193,53 +193,53 @@ const SourceInventory: React.FC = () => {
         <div className="col-span-2 text-right">Action</div>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 px-4 md:px-0">
         {filtered.map((src) => (
           <div 
             key={src.id} 
             onClick={() => handleSourceClick(src)}
-            className="group flex flex-col lg:grid lg:grid-cols-12 items-center gap-6 px-8 py-5 bg-white dark:bg-[#0d0d0f] border border-slate-100 dark:border-white/10 hover:border-blue-600/30 dark:hover:border-blue-500/30 rounded-2xl transition-all cursor-pointer hover:bg-slate-50 dark:hover:bg-[#111113] shadow-sm dark:shadow-none"
+            className="group flex flex-row lg:grid lg:grid-cols-12 items-start lg:items-center gap-4 lg:gap-6 px-4 lg:px-8 py-4 lg:py-5 bg-white dark:bg-[#0d0d0f] border border-slate-100 dark:border-white/10 hover:border-blue-600/30 dark:hover:border-blue-500/30 rounded-2xl transition-all cursor-pointer hover:bg-slate-50 dark:hover:bg-[#111113] shadow-sm dark:shadow-none"
           >
-            <div className="col-span-1 flex justify-center lg:justify-start">
-               <div className={`p-2.5 rounded-xl border transition-colors ${
+            <div className="col-span-1 flex justify-start shrink-0">
+               <div className={`p-2 lg:p-2.5 rounded-xl border transition-colors ${
                   src.type === 'onion' ? 'bg-purple-600/10 border-purple-600/20 text-purple-600' :
                   src.type === 'website' ? 'bg-green-600/10 border-green-600/20 text-green-600' :
                   'bg-blue-600/10 border-blue-600/20 text-blue-600'
                 }`}>
-                  {src.type === 'onion' ? <Lock className="w-4 h-4" /> : 
-                   src.type === 'website' ? <Globe className="w-4 h-4" /> : 
-                   <Terminal className="w-4 h-4" />}
+                  {src.type === 'onion' ? <Lock className="w-3.5 h-3.5 lg:w-4 lg:h-4" /> : 
+                   src.type === 'website' ? <Globe className="w-3.5 h-3.5 lg:w-4 lg:h-4" /> : 
+                   <Terminal className="w-3.5 h-3.5 lg:w-4 lg:h-4" />}
                </div>
             </div>
 
-            <div className="col-span-4 space-y-1 w-full text-center lg:text-left">
-              <h3 className="text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors tracking-widest font-mono truncate">
+            <div className="col-span-4 space-y-1 w-full min-w-0">
+              <h3 className="text-[12px] lg:text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors tracking-widest font-mono truncate">
                 {src.name}
               </h3>
-              <div className="flex items-center justify-center lg:justify-start gap-2">
-                <div className={`w-1.5 h-1.5 rounded-full ${src.type === 'onion' ? 'bg-purple-600' : src.type === 'website' ? 'bg-green-600' : 'bg-blue-600'} opacity-40`}></div>
-                <span className="text-[10px] font-bold text-slate-400 dark:text-white/20 uppercase tracking-widest">
-                  {src.type === 'onion' ? 'Hidden Service' : src.type === 'website' ? 'Clearnet Node' : 'Module'}
+              <div className="flex items-center gap-2">
+                <div className={`w-1.5 h-1.5 rounded-full ${src.type === 'onion' ? 'bg-purple-600' : src.type === 'website' ? 'bg-green-600' : 'bg-blue-600'} opacity-40 shrink-0`}></div>
+                <span className="text-[9px] lg:text-[10px] font-bold text-slate-400 dark:text-white/20 uppercase tracking-widest truncate">
+                  {src.type === 'onion' ? 'Hidden' : src.type === 'website' ? 'Clearnet' : 'Module'}
                 </span>
               </div>
             </div>
 
-            <div className="col-span-3 w-full text-center lg:text-left">
-              <code className="text-[10px] text-slate-500 dark:text-white/30 font-mono uppercase tracking-tighter truncate opacity-80 bg-slate-50 dark:bg-white/[0.02] px-3 py-1 rounded-lg border border-slate-100 dark:border-white/5">
+            <div className="col-span-3 hidden lg:block min-w-0">
+              <code className="text-[10px] text-slate-500 dark:text-white/30 font-mono uppercase tracking-tighter truncate opacity-80 bg-slate-50 dark:bg-white/[0.02] px-3 py-1 rounded-lg border border-slate-100 dark:border-white/5 block">
                 {src.original}
               </code>
             </div>
 
-            <div className="col-span-2 flex justify-center">
+            <div className="col-span-2 hidden lg:flex justify-center">
               <span className="px-4 py-1 rounded-full bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-white/5 text-[9px] font-black text-slate-400 dark:text-white/40 uppercase tracking-[0.2em] group-hover:text-blue-600 group-hover:border-blue-600/20 transition-all">
                 {src.category}
               </span>
             </div>
 
-            <div className="col-span-2 flex justify-center lg:justify-end">
+            <div className="col-span-2 flex justify-end shrink-0">
               <div className="flex items-center gap-3 text-slate-300 dark:text-white/10 group-hover:text-blue-600 transition-colors">
-                <span className="text-[10px] font-bold uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                  {src.type === 'script' ? 'Inspect Module' : 'Open Remote'}
+                <span className="hidden lg:inline text-[10px] font-bold uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
+                  {src.type === 'script' ? 'Inspect' : 'Open'}
                 </span>
                 <div className="p-2 rounded-lg bg-slate-100 dark:bg-white/5 group-hover:bg-blue-600/10 transition-colors">
                   <ChevronRight className="w-4 h-4" />

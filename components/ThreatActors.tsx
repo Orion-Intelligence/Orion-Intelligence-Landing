@@ -133,8 +133,8 @@ const ThreatActors: React.FC = () => {
   const categories = Array.from(new Set(actors.map(a => a.category)));
 
   return (
-    <div className="py-12 animate-in fade-in duration-700">
-      <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12">
+    <div className="py-12 animate-in fade-in duration-700 px-0">
+      <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12 px-4 md:px-0">
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[9px] font-bold uppercase tracking-[0.3em]">
             <Crosshair className="w-3 h-3" />
@@ -146,7 +146,7 @@ const ThreatActors: React.FC = () => {
           </p>
         </div>
         
-        <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-4">
+        <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-4 px-4 md:px-0">
           <div className="relative group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/20 group-focus-within:text-blue-500 transition-colors" />
             <input 
@@ -157,13 +157,13 @@ const ThreatActors: React.FC = () => {
               className="pl-12 pr-6 py-3 bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest focus:outline-none focus:border-blue-600/40 w-full lg:w-64 transition-all placeholder:text-slate-400 dark:placeholder:text-white/10"
             />
           </div>
-          <div className="px-5 py-3 bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 rounded-xl text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest whitespace-nowrap">
+          <div className="px-5 py-3 bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 rounded-xl text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest whitespace-nowrap text-center">
             Matched: {filteredActors.length} / {actors.length}
           </div>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3 mb-12">
+      <div className="flex flex-wrap gap-3 mb-12 px-4 md:px-0">
         <button 
           onClick={() => setActiveCategory(null)}
           className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${!activeCategory ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-100 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white'}`}
@@ -181,7 +181,7 @@ const ThreatActors: React.FC = () => {
         ))}
       </div>
 
-      <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 md:px-0">
         {filteredActors.map((actor, idx) => (
           <div key={idx} className="bg-white dark:bg-[#0d0d0f] group p-5 rounded-2xl border border-slate-200 dark:border-white/10 hover:border-blue-600/40 dark:hover:border-blue-500/40 transition-all flex flex-col h-full hover:bg-slate-50 dark:hover:bg-[#111113] shadow-sm dark:shadow-none">
             <div className="flex justify-between items-start mb-5">
@@ -242,7 +242,7 @@ const ThreatActors: React.FC = () => {
       </div>
 
       {filteredActors.length === 0 && (
-        <div className="py-32 flex flex-col items-center justify-center text-center space-y-6">
+        <div className="py-32 flex flex-col items-center justify-center text-center space-y-6 px-4">
            <div className="p-6 rounded-full bg-slate-100 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5">
               <Search className="w-12 h-12 text-slate-300 dark:text-white/10" />
            </div>
