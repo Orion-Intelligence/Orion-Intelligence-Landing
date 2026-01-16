@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -29,6 +30,7 @@
 .mesh-gradient {
     @apply transition-all duration-700;
     background-color: #ffffff;
+    background-attachment: fixed;
     background-image: 
         radial-gradient(at 0% 0%, hsla(217,100%,97%,1) 0, transparent 40%), 
         radial-gradient(at 100% 0%, hsla(210,100%,98%,1) 0, transparent 40%),
@@ -37,10 +39,31 @@
 
 .dark .mesh-gradient {
     background-color: #0a0a0c;
+    background-attachment: fixed;
     background-image: 
         radial-gradient(at 0% 0%, hsla(217,100%,12%,1) 0, transparent 40%), 
         radial-gradient(at 100% 0%, hsla(210,100%,8%,1) 0, transparent 40%),
         radial-gradient(at 50% 100%, hsla(220,100%,10%,1) 0, transparent 50%);
+}
+
+/* Brighter version for specialized inventory views */
+.mesh-gradient-bright {
+    @apply transition-all duration-700;
+    background-color: #ffffff;
+    background-attachment: fixed;
+    background-image: 
+        radial-gradient(at 0% 0%, hsla(217,100%,98%,1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(210,100%,99%,1) 0, transparent 50%),
+        radial-gradient(at 50% 100%, hsla(220,100%,97%,1) 0, transparent 60%);
+}
+
+.dark .mesh-gradient-bright {
+    background-color: #0d0d0f;
+    background-attachment: fixed;
+    background-image: 
+        radial-gradient(at 0% 0%, hsla(217,100%,18%,1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(210,100%,15%,1) 0, transparent 50%),
+        radial-gradient(at 50% 100%, hsla(220,100%,16%,1) 0, transparent 60%);
 }
 
 .grain {

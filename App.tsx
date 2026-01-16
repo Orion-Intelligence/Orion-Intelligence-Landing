@@ -84,8 +84,10 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const bgClass = ['adversaries', 'sources'].includes(view) ? 'mesh-gradient-bright' : 'mesh-gradient';
+
   return (
-    <div className="min-h-screen mesh-gradient selection:bg-blue-500/30 overflow-x-hidden">
+    <div className={`min-h-screen ${bgClass} selection:bg-blue-500/30 overflow-x-hidden transition-all duration-700`}>
       <div className="grain"></div>
       <Navbar onNavigate={setView} currentView={view} theme={theme} onToggleTheme={toggleTheme} />
       
