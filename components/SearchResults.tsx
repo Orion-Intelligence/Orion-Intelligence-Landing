@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   ArrowLeft, Mail, Database, ShieldCheck,
@@ -132,7 +131,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-3">
                 <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-none uppercase">Security Audit Report</h2>
-                <div className={`px-3 py-1 rounded-lg border text-[9px] font-black uppercase tracking-widest flex items-center gap-2 ${data.breach_found ? 'bg-red-500/10 border-red-500/20 text-red-600' : 'bg-green-500/10 border-green-500/20 text-green-600'}`}>
+                <div className={`px-3 py-1 rounded-lg border text-[9px] font-black uppercase tracking-widest flex items-center gap-2 ${data.breach_found ? 'bg-red-500/10 border-red-500/20 text-red-600' : 'bg-green-500/10 border-green-600/20 text-green-600'}`}>
                   <div className={`w-1 h-1 rounded-full ${data.breach_found ? 'bg-red-500' : 'bg-green-500'}`}></div>
                   {data.breach_found ? 'Exposure' : 'Clearance'}
                 </div>
@@ -225,10 +224,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
                    <span className="text-blue-500">Analysis_Nominal</span>
                 </div>
                 <div className="space-y-1.5">
-                  <p><span className="text-white/10">>></span> TARGET_NODE: <span className="text-white/70">{query}</span></p>
-                  <p><span className="text-white/10">>></span> SOURCE: <span className="text-white/70">{data.primary_channel}</span> <span className="text-blue-500">[{data.primary_channel_hits} HITS]</span></p>
-                  <p><span className="text-white/10">>></span> RESULT: <span className="text-red-500">POSITIVE</span> IN <span className="text-white/70">{data.unique_channels}</span> CLUSTERS.</p>
-                  <p><span className="text-white/10">>></span> PATTERN: <span className="text-white/70">{data.primary_type.toUpperCase()}</span>.</p>
+                  <p><span className="text-white/10">&gt;&gt;</span> TARGET_NODE: <span className="text-white/70">{query}</span></p>
+                  <p><span className="text-white/10">&gt;&gt;</span> SOURCE: <span className="text-white/70">{data.primary_channel}</span> <span className="text-blue-500">[{data.primary_channel_hits} HITS]</span></p>
+                  <p><span className="text-white/10">&gt;&gt;</span> RESULT: <span className="text-red-500">POSITIVE</span> IN <span className="text-white/70">{data.unique_channels}</span> CLUSTERS.</p>
+                  <p><span className="text-white/10">&gt;&gt;</span> PATTERN: <span className="text-white/70">{data.primary_type.toUpperCase()}</span>.</p>
                 </div>
               </div>
             </div>

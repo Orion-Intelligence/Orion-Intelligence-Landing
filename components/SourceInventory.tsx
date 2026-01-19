@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { 
   Globe, Search, Terminal, Database, ShieldAlert, Lock, 
@@ -226,7 +225,7 @@ const SourceInventory: React.FC = () => {
           <div 
             key={src.id} 
             onClick={() => handleSourceClick(src)}
-            className="group flex flex-row items-center gap-4 lg:gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-slate-200/50 dark:bg-[#0d0d0f]/60 border border-slate-300/40 dark:border-white/10 rounded-2xl transition-all cursor-pointer hover:bg-blue-100/40 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 shadow-sm dark:shadow-none backdrop-blur-3xl"
+            className="group flex flex-row items-center gap-4 lg:gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-slate-200/70 dark:bg-[#0d0d0f]/60 border border-slate-300/60 dark:border-white/10 rounded-2xl transition-all cursor-pointer hover:bg-blue-100/40 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 shadow-sm dark:shadow-none backdrop-blur-3xl"
           >
             <div className="flex justify-start shrink-0">
                <div className={`p-2 lg:p-2.5 rounded-xl border transition-colors ${

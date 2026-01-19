@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { 
   ExternalLink, Globe, Search, Crosshair, 
@@ -168,7 +167,7 @@ const ThreatActors: React.FC = () => {
             <div 
               key={idx} 
               onClick={() => window.open(actor.url, '_blank')}
-              className="group relative flex flex-col gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-slate-200/50 dark:bg-[#0d0d0f]/60 border border-slate-300/40 dark:border-white/10 rounded-2xl transition-all duration-300 hover:bg-blue-100/40 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 cursor-pointer backdrop-blur-3xl shadow-sm dark:shadow-none"
+              className="group relative flex flex-col gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-slate-200/80 dark:bg-[#0d0d0f]/60 border border-slate-300/60 dark:border-white/10 rounded-2xl transition-all duration-300 hover:bg-blue-100/40 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 cursor-pointer backdrop-blur-3xl shadow-sm dark:shadow-none"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex flex-col flex-1 min-w-0 space-y-1">
