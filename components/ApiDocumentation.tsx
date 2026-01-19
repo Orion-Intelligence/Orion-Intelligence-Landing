@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Terminal, Code2, Database, Shield, Globe, Search, Command, ChevronRight, Copy, Check, Info, FileJson, Zap, Network, MessageSquare, Share2, Scan, FileText, Smartphone, LayoutGrid, ListFilter, Bug, ShieldAlert, Newspaper, Users, UserCheck } from 'lucide-react';
 
@@ -360,7 +361,7 @@ const ApiDocumentation: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row md:h-[calc(100vh-80px)] md:overflow-hidden animate-in fade-in duration-700">
+    <div className="flex flex-col md:flex-row md:h-[calc(100vh-80px)] md:overflow-hidden animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out">
       {/* Sidebar Navigation */}
       <aside className="w-full md:w-72 lg:w-80 border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-black/20 overflow-y-auto no-scrollbar flex flex-col shrink-0">
         <div className="p-8 border-b border-slate-200 dark:border-white/5 bg-white/[0.01]">

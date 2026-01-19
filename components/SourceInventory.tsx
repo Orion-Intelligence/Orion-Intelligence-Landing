@@ -29,7 +29,7 @@ const sourceData: IntelligenceSource[] = [
   ...[
     '3ev4metjirohtdpshsqlkrqcmxq6zu3d7obrdhglpy5jpbr7whmlfgqd.onion', '5butbkrljkaorg5maepuca25oma7eiwo6a2rlhvkblb4v6mf3ki2ovid.onion',
     '7ukmkdtyxdkdivtjad57klqnd3kdsmq6tp45rrsxqnu76zzv3jvitlqd.onion', '34o4m3f26ucyeddzpf53bksy76wd737nf2fytslovwd3viac3by5chad.onion',
-    '47glxkuxyayqrvugfumgsblrdagvrah7gttfscgzn56eyss5wg3uvmqd.onion', 'akiral2iz6a7qgd3ayp3l6yub7xx2uep76idk3u2kollpj5z3z636bad.onion',
+    '47glxkuxyayqrvugfumgsblrdagvrah7gttfscgzn56eyss5wg3uvmqd.onion', 'akiral2iz6a7getid.onion',
     'arcuufpr5xxbbkin4mlidt7itmr6znlppk63jbtkeguuhszmc5g7qdyd.onion', 'basheqtvzqwz4vp6ks5lm2ocq7i6tozqgf6vjcasj4ezmsy4bkpshhyd.onion',
     'bertblogsoqmm4ow7nqyh5ik7etsmefdbf25stauecytvwy7tkgizhad.onion', 'black3gnkizshuynieigw6ejgpblb53mpasftzd6pydqpmq2vn2xf6yd.onion',
     'blogvl7tjyjvsfthobttze52w36wwiz34hrfcmorgvdzb6hikucb7aqd.onion', 'business_data_leaks', 'cicadabv7vicyvgz5khl7v2x5yygcgow7ryyy6yppwmxii4eoobdaztqd.onion',
@@ -39,7 +39,7 @@ const sourceData: IntelligenceSource[] = [
     'handala_hack', 'hptqq2o2qjva7lcaaq67w36jihzivkaitkexorauw7b2yul2z6zozpqd.onion',
     'hunters55atbdusuladzv7vzv6a423bkh6ksl2uftwrxyuarbzlfh7yd.onion', 'ijzn3sicrcy7guixkzjkib4ukbiilwc3xhnmby4mcbccnsd7j2rekvqd.onion',
     'imncrewwfkbjkhr2oylerfm5qtbzfphhmpcfag43xc2k2kfgvluqtlgoid.onion', 'incblog6qu4y4mm4zvw5nrmue6qbwtgjsxpw6b7ixzssu36tsajldoad.onion',
-    'intelrepository', 'j3dp6okmaklajrsk6zljl5sfa2vpui7j2w6cwmhmmqhab6frdfbphhid.onion',
+    'intelrepository', 'j3dp6okmaklajrsk6zljl5fa2vpui7j2w6cwmhmmqhab6frdfbphhid.onion',
     'j5o5y2feotmhvr7cbcp2j2ewayv5mn5zenl3joqwx67gtfchhezjznad.onion', 'k7kg3jqxang3wh7hnmaiokchk7qoebupfgoik6rha6mjpzwupwtj25yd.onion',
     'kawasa2qo7345dt7ogxmx7qmn6z2hnwaoi3h5aeosupozkddqwp6lqqd.onion', 'krakenccj3wr23452a4ibkbkuph4d6soyx2xgjoogtuamc3m7u7wemad.onion',
     'ks5424y3wpr5zlug5c7i6svvxweinhbdcqcfnptkfcutrncfazzgz5id.onion', 'leak_lookup', 'leaksndi6i6m2ji6ozulqe4imlrqn6wrgjlhxe25vremvr3aymm4aaid.onion',
@@ -139,30 +139,67 @@ const SourceInventory: React.FC = () => {
   };
 
   return (
-    <div className="py-12 animate-in fade-in duration-700 px-0">
+    <div className="py-12 animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out px-0 relative">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10 opacity-30 w-screen left-1/2 -translate-x-1/2">
+        <div className="absolute inset-0" 
+             style={{ 
+               backgroundImage: `radial-gradient(1px 1px at 15% 15%, white, transparent),
+                                 radial-gradient(1.5px 1.5px at 25% 55%, white, transparent),
+                                 radial-gradient(1px 1px at 45% 25%, white, transparent),
+                                 radial-gradient(2px 2px at 65% 85%, white, transparent),
+                                 radial-gradient(1.2px 1.2px at 95% 15%, white, transparent),
+                                 radial-gradient(1.1px 1.1px at 50% 50%, white, transparent),
+                                 radial-gradient(1px 1px at 10% 80%, white, transparent),
+                                 radial-gradient(1.4px 1.4px at 80% 20%, white, transparent),
+                                 radial-gradient(1px 1px at 30% 90%, white, transparent),
+                                 radial-gradient(1.8px 1.8px at 20% 10%, white, transparent),
+                                 radial-gradient(1px 1px at 70% 40%, white, transparent),
+                                 radial-gradient(1.2px 1.2px at 5% 45%, white, transparent),
+                                 radial-gradient(1px 1px at 90% 90%, white, transparent),
+                                 radial-gradient(0.8px 0.8px at 35% 15%, white, transparent),
+                                 radial-gradient(1.3px 1.3px at 55% 85%, white, transparent),
+                                 radial-gradient(1px 1px at 15% 75%, white, transparent),
+                                 radial-gradient(1.2px 1.2px at 85% 35%, white, transparent),
+                                 radial-gradient(1.5px 1.5px at 40% 10%, white, transparent),
+                                 radial-gradient(1px 1px at 60% 95%, white, transparent),
+                                 radial-gradient(1.1px 1.1px at 5% 5%, white, transparent),
+                                 radial-gradient(1.2px 1.2px at 95% 95%, white, transparent),
+                                 radial-gradient(1px 1px at 50% 20%, white, transparent),
+                                 radial-gradient(1.3px 1.3px at 80% 80%, white, transparent),
+                                 radial-gradient(3px 3px at 15% 15%, rgba(59,130,246,0.1), transparent),
+                                 radial-gradient(4px 4px at 85% 85%, rgba(59,130,246,0.08), transparent),
+                                 repeating-radial-gradient(circle at center, transparent 0, transparent 200px, rgba(59,130,246,0.03) 201px, transparent 203px),
+                                 repeating-radial-gradient(circle at center, transparent 0, transparent 450px, rgba(59,130,246,0.02) 451px, transparent 454px)`,
+               backgroundSize: '400px 400px, 400px 400px, 400px 400px, 400px 400px, 400px 400px, 400px 400px, 300px 300px, 250px 250px, 350px 350px, 150px 150px, 450px 450px, 500px 500px, 380px 380px, 220px 220px, 420px 420px, 280px 280px, 310px 310px, 120px 120px, 180px 180px, 220px 220px, 280px 280px, 320px 320px, 380px 380px, 800px 800px, 1000px 1000px, 100% 100%, 100% 100%'
+             }}>
+        </div>
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/5 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-blue-500/5 blur-[150px] rounded-full"></div>
+      </div>
+
       <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12 px-4 md:px-0">
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[9px] font-bold uppercase tracking-[0.3em]">
             <Database className="w-3 h-3" />
             Extraction Core Directory
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">Source Inventory.</h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">Source Inventory</h2>
           <p className="text-lg text-slate-500 dark:text-white/40 font-medium leading-relaxed">
             Clinical mapping of {sourceData.length} extraction nodes across the clearnet, deep web, and automated investigative modules.
           </p>
         </div>
-        
-        <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-4">
-          <div className="relative group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/20 group-focus-within:text-blue-500 transition-colors" />
-            <input 
-              type="text"
-              placeholder="FILTER SOURCES..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-12 pr-6 py-3 bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest focus:outline-none focus:border-blue-600/40 w-full lg:w-64 transition-all placeholder:text-slate-400 dark:placeholder:text-white/10"
-            />
-          </div>
+      </div>
+
+      <div className="mb-8 px-4 md:px-0">
+        <div className="relative group w-full lg:max-w-md">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/20 group-focus-within:text-blue-500 transition-colors" />
+          <input 
+            type="text"
+            placeholder="FILTER SOURCES..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-12 pr-6 py-3 bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-white/10 focus:border-blue-600/40 focus:ring-0 w-full"
+          />
         </div>
       </div>
 
@@ -184,23 +221,14 @@ const SourceInventory: React.FC = () => {
         ))}
       </div>
 
-      {/* List Header */}
-      <div className="hidden lg:grid grid-cols-12 gap-6 px-8 py-4 mb-4 text-[10px] font-black text-slate-400 dark:text-white/20 uppercase tracking-[0.3em] border-b border-slate-200 dark:border-white/5">
-        <div className="col-span-1">Modality</div>
-        <div className="col-span-4">Source Identity</div>
-        <div className="col-span-3">System Identifier</div>
-        <div className="col-span-2 text-center">Category</div>
-        <div className="col-span-2 text-right">Action</div>
-      </div>
-
-      <div className="flex flex-col gap-2 px-4 md:px-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 md:px-0">
         {filtered.map((src) => (
           <div 
             key={src.id} 
             onClick={() => handleSourceClick(src)}
-            className="group flex flex-row lg:grid lg:grid-cols-12 items-start lg:items-center gap-4 lg:gap-6 px-4 lg:px-8 py-4 lg:py-5 bg-white dark:bg-[#0d0d0f] border border-slate-100 dark:border-white/10 hover:border-blue-600/30 dark:hover:border-blue-500/30 rounded-2xl transition-all cursor-pointer hover:bg-slate-50 dark:hover:bg-[#111113] shadow-sm dark:shadow-none"
+            className="group flex flex-row items-center gap-4 lg:gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-slate-200/50 dark:bg-[#0d0d0f]/60 border border-slate-300/40 dark:border-white/10 rounded-2xl transition-all cursor-pointer hover:bg-blue-100/40 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 shadow-sm dark:shadow-none backdrop-blur-3xl"
           >
-            <div className="col-span-1 flex justify-start shrink-0">
+            <div className="flex justify-start shrink-0">
                <div className={`p-2 lg:p-2.5 rounded-xl border transition-colors ${
                   src.type === 'onion' ? 'bg-purple-600/10 border-purple-600/20 text-purple-600' :
                   src.type === 'website' ? 'bg-green-600/10 border-green-600/20 text-green-600' :
@@ -212,7 +240,7 @@ const SourceInventory: React.FC = () => {
                </div>
             </div>
 
-            <div className="col-span-4 space-y-1 w-full min-w-0">
+            <div className="flex flex-col space-y-1 w-full min-w-0">
               <h3 className="text-[12px] lg:text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors tracking-widest font-mono truncate">
                 {src.name}
               </h3>
@@ -221,26 +249,14 @@ const SourceInventory: React.FC = () => {
                 <span className="text-[9px] lg:text-[10px] font-bold text-slate-400 dark:text-white/20 uppercase tracking-widest truncate">
                   {src.type === 'onion' ? 'Hidden' : src.type === 'website' ? 'Clearnet' : 'Module'}
                 </span>
+                <span className="px-2 py-0.5 rounded-full bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-white/5 text-[7px] font-black text-slate-400 dark:text-white/40 uppercase tracking-[0.2em]">
+                  {src.category}
+                </span>
               </div>
             </div>
 
-            <div className="col-span-3 hidden lg:block min-w-0">
-              <code className="text-[10px] text-slate-500 dark:text-white/30 font-mono uppercase tracking-tighter truncate opacity-80 bg-slate-50 dark:bg-white/[0.02] px-3 py-1 rounded-lg border border-slate-100 dark:border-white/5 block">
-                {src.original}
-              </code>
-            </div>
-
-            <div className="col-span-2 hidden lg:flex justify-center">
-              <span className="px-4 py-1 rounded-full bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-white/5 text-[9px] font-black text-slate-400 dark:text-white/40 uppercase tracking-[0.2em] group-hover:text-blue-600 group-hover:border-blue-600/20 transition-all">
-                {src.category}
-              </span>
-            </div>
-
-            <div className="col-span-2 flex justify-end shrink-0">
+            <div className="flex justify-end shrink-0">
               <div className="flex items-center gap-3 text-slate-300 dark:text-white/10 group-hover:text-blue-600 transition-colors">
-                <span className="hidden lg:inline text-[10px] font-bold uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                  {src.type === 'script' ? 'Inspect' : 'Open'}
-                </span>
                 <div className="p-2 rounded-lg bg-slate-100 dark:bg-white/5 group-hover:bg-blue-600/10 transition-colors">
                   <ChevronRight className="w-4 h-4" />
                 </div>
@@ -252,7 +268,7 @@ const SourceInventory: React.FC = () => {
 
       {torTarget && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
-          <div className="w-full max-w-lg bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-hidden">
+          <div className="w-full max-w-lg bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 rounded-xl shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-hidden">
             <div className="px-10 py-8 border-b border-slate-100 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-white/[0.02]">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-xl bg-purple-600/10 dark:bg-purple-500/10 border border-purple-600/20 dark:border-purple-500/20">

@@ -15,7 +15,7 @@ const Logo = () => {
   const [error, setError] = useState(false);
 
   return (
-    <div className="w-10 h-10 relative flex items-center justify-center rounded-xl overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.3)] border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0a0c]">
+    <div className="w-10 h-10 relative flex items-center justify-center rounded-xl overflow-hidden shadow-lg border border-slate-200/60 dark:border-white/10 bg-white dark:bg-[#0a0a0c]">
       {!error ? (
         <img 
           src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" 
@@ -83,7 +83,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-[60] border-b border-slate-200 dark:border-white/5 bg-white/40 dark:bg-black/40 backdrop-blur-xl transition-colors duration-300">
+      <nav className="fixed top-0 w-full z-[60] border-b border-slate-200 dark:border-white/5 bg-white/70 dark:bg-black/40 backdrop-blur-xl transition-all duration-300">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between h-20">
             <div 
@@ -91,23 +91,23 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               onClick={() => handleNavigate('home')}
             >
               <div className="relative group-hover:scale-110 transition-transform duration-500">
-                 <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                 <div className="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                  <Logo />
               </div>
-              <span className="text-xl font-black tracking-[0.4em] text-slate-900 dark:text-white uppercase leading-none">
+              <span className="text-xl font-black tracking-[0.3em] text-slate-900 dark:text-white uppercase leading-none">
                 Orion
               </span>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-10">
+            <div className="hidden lg:flex items-center space-x-8 lg:space-x-10">
               {menuItems.map((item) => (
                 <button 
                   key={item.id}
                   onClick={() => handleNavigate(item.id as any)} 
-                  className={`${currentView === item.id ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-white/40'} hover:text-blue-600 dark:hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest flex items-center gap-2`}
+                  className={`${currentView === item.id ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-white/40'} hover:text-blue-600 dark:hover:text-white transition-all text-[10px] font-black uppercase tracking-widest flex items-center gap-2`}
                 >
-                  {item.icon && <item.icon className="w-3 h-3" />}
+                  {item.icon && <item.icon className={`w-3 h-3 ${currentView === item.id ? 'opacity-100' : 'opacity-40'}`} />}
                   {item.label}
                 </button>
               ))}
@@ -118,13 +118,13 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                 <div className="relative">
                   <button 
                     onClick={() => setShowLangMenu(!showLangMenu)}
-                    className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/60 hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2"
+                    className="p-2.5 rounded-xl bg-slate-100/50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/60 hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2 shadow-sm"
                   >
                     <Globe className="w-4 h-4" />
-                    <span className="text-[10px] font-bold uppercase">{language}</span>
+                    <span className="text-[10px] font-black uppercase tracking-tighter">{language}</span>
                   </button>
                   {showLangMenu && (
-                    <div className="absolute top-full right-0 mt-2 w-32 bg-white dark:bg-[#0a0a0c] border border-slate-200 dark:border-white/10 rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2">
+                    <div className="absolute top-full right-0 mt-2 w-36 bg-white dark:bg-[#0a0a0c] border border-slate-200 dark:border-white/10 rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 z-20">
                       {languages.map(lang => (
                         <button
                           key={lang.code}
@@ -132,8 +132,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                             setLanguage(lang.code);
                             setShowLangMenu(false);
                           }}
-                          className={`w-full text-left px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-colors ${
-                            language === lang.code ? 'text-blue-600 bg-blue-600/5' : 'text-slate-500 dark:text-white/40 hover:bg-slate-100 dark:hover:bg-white/5'
+                          className={`w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest transition-colors ${
+                            language === lang.code ? 'text-blue-600 bg-blue-50 dark:bg-blue-600/5' : 'text-slate-500 dark:text-white/40 hover:bg-slate-50 dark:hover:bg-white/5'
                           }`}
                         >
                           {lang.label}
@@ -145,7 +145,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
 
                 <button 
                   onClick={onToggleTheme}
-                  className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/60 hover:text-blue-600 dark:hover:text-white transition-all"
+                  className="p-2.5 rounded-xl bg-slate-100/50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/60 hover:text-blue-600 dark:hover:text-white transition-all shadow-sm"
                   aria-label="Toggle theme"
                 >
                   {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
@@ -154,7 +154,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                   href="https://calendly.com/msmannan/30min" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-black text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 dark:hover:bg-blue-50 transition-all rounded-xl shadow-lg shadow-black/5 dark:shadow-white/5 active:scale-95"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 dark:hover:bg-blue-50 transition-all rounded-xl shadow-lg shadow-slate-900/10 dark:shadow-white/5 active:scale-95"
                 >
                   <Command className="w-3 h-3" />
                   {t('nav_get_access')}
@@ -163,7 +163,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                   href="https://try.orionintelligence.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-[10px] font-bold uppercase tracking-widest hover:bg-slate-200 dark:hover:bg-white/10 transition-all rounded-xl border-slate-300 dark:hover:border-white/20 active:scale-95"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-white dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-white/10 transition-all rounded-xl active:scale-95 shadow-sm"
                 >
                   <Lock className="w-3 h-3 text-blue-600 dark:text-blue-500" />
                   {t('nav_login')}
@@ -172,16 +172,16 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
             </div>
 
             {/* Mobile Toggle */}
-            <div className="lg:hidden flex items-center gap-4">
+            <div className="lg:hidden flex items-center gap-3">
                <button 
                 onClick={onToggleTheme}
-                className="p-2 text-slate-500 dark:text-white/60 hover:text-blue-600 dark:hover:text-white transition-colors"
+                className="p-2.5 text-slate-500 dark:text-white/60 hover:text-blue-600 dark:hover:text-white transition-colors bg-slate-100/50 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10"
                 aria-label="Toggle theme"
               >
                 {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
               </button>
               <button 
-                className="p-3 text-slate-900 dark:text-white hover:text-blue-600 transition-colors bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10"
+                className="p-2.5 text-slate-900 dark:text-white hover:text-blue-600 transition-colors bg-slate-100/50 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10"
                 onClick={() => toggleMenu(true)}
               >
                 <Menu className="w-6 h-6" />
@@ -198,7 +198,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
             isAnimating ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="absolute inset-0 bg-white dark:bg-[#0c0c0e] backdrop-blur-3xl -z-10"></div>
+          <div className="absolute inset-0 bg-white/95 dark:bg-[#0c0c0e]/95 backdrop-blur-3xl -z-10"></div>
           
           <div className={`flex flex-col h-full w-full transition-all duration-500 ease-out ${
             isAnimating ? 'translate-y-0 scale-100' : 'translate-y-4 scale-95'
@@ -212,7 +212,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                 </span>
               </div>
               <button 
-                className="p-2 md:p-3 text-slate-900 dark:text-white hover:text-blue-600 transition-colors bg-slate-100 dark:bg-white/5 rounded-lg md:rounded-xl border border-slate-200 dark:border-white/10 active:scale-95"
+                className="p-2 md:p-3 text-slate-900 dark:text-white hover:text-blue-600 transition-colors bg-slate-100/50 dark:bg-white/5 rounded-lg md:rounded-xl border border-slate-200 dark:border-white/10 active:scale-95 shadow-sm"
                 onClick={() => toggleMenu(false)}
               >
                 <X className="w-5 h-5 md:w-6 md:h-6" />
@@ -220,14 +220,14 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
             </header>
 
             {/* Improved Action Bar - Responsive Sizing */}
-            <div className={`px-6 md:px-10 py-3 md:py-6 flex gap-2 md:gap-4 shrink-0 border-b border-slate-100 dark:border-white/5 transition-all duration-500 delay-100 ${
+            <div className={`px-6 md:px-10 py-4 md:py-6 flex gap-2 md:gap-4 shrink-0 border-b border-slate-100 dark:border-white/5 transition-all duration-500 delay-100 ${
               isAnimating ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'
             }`}>
               <a 
                 href="https://try.orionintelligence.org/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex-[2] flex items-center justify-center gap-2 py-2 md:py-3.5 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-[8px] md:text-[11px] font-bold uppercase tracking-wider rounded-lg md:rounded-xl active:scale-95 transition-all"
+                className="flex-[2] flex items-center justify-center gap-2 py-2.5 md:py-3.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-[8px] md:text-[11px] font-black uppercase tracking-wider rounded-lg md:rounded-xl active:scale-95 transition-all shadow-sm"
               >
                 <Lock className="w-3 h-3 md:w-4 md:h-4 text-blue-600" />
                 {t('nav_login')}
@@ -236,14 +236,14 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                 href="https://calendly.com/msmannan/30min" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex-[3] flex items-center justify-center gap-2 py-2 md:py-3.5 bg-blue-600 hover:bg-blue-500 text-white text-[8px] md:text-[11px] font-black uppercase tracking-wider rounded-lg md:rounded-xl shadow-lg shadow-blue-500/10 active:scale-95 transition-all"
+                className="flex-[3] flex items-center justify-center gap-2 py-2.5 md:py-3.5 bg-blue-600 hover:bg-blue-500 text-white text-[8px] md:text-[11px] font-black uppercase tracking-wider rounded-lg md:rounded-xl shadow-lg shadow-blue-500/10 active:scale-95 transition-all"
               >
                 <Shield className="w-3 h-3 md:w-4 md:h-4" />
                 {t('nav_get_access')}
               </a>
               <button 
                 onClick={onToggleTheme}
-                className="w-10 md:w-14 flex items-center justify-center bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg md:rounded-xl text-slate-600 dark:text-white/40 active:scale-95 transition-all"
+                className="w-10 md:w-14 flex items-center justify-center bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg md:rounded-xl text-slate-600 dark:text-white/40 active:scale-95 transition-all shadow-sm"
               >
                 {theme === 'light' ? <Moon className="w-3.5 h-3.5 md:w-5 md:h-5" /> : <Sun className="w-3.5 h-3.5 md:w-5 md:h-5" />}
               </button>
@@ -252,42 +252,42 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
             {/* Navigation List - Responsive Scaling */}
             <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar">
               <div className="py-2 md:py-6 px-5 md:px-10 space-y-0.5 md:space-y-2">
-                <div className="text-[7px] md:text-[10px] font-bold text-blue-600/50 dark:text-blue-500/40 uppercase tracking-[0.3em] py-2 md:py-4 px-3 md:px-5">System Matrix</div>
+                <div className="text-[7px] md:text-[10px] font-black text-blue-600/50 dark:text-blue-500/40 uppercase tracking-[0.3em] py-4 md:py-6 px-3 md:px-5">System Matrix</div>
                 
                 {menuItems.map((item, index) => (
                   <button 
                     key={item.id}
                     onClick={() => handleNavigate(item.id as any)} 
                     style={{ transitionDelay: `${index * 25}ms` }}
-                    className={`group relative w-full text-left py-1.5 md:py-3.5 px-3 md:px-5 rounded-lg md:rounded-2xl transition-all duration-200 flex items-center gap-3 md:gap-5 ${
+                    className={`group relative w-full text-left py-2 md:py-3.5 px-3 md:px-5 rounded-lg md:rounded-2xl transition-all duration-200 flex items-center gap-3 md:gap-5 ${
                       isAnimating ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
                     } ${
                       currentView === item.id 
                         ? 'bg-blue-600/5 text-blue-600 dark:text-blue-400' 
-                        : 'text-slate-600 dark:text-white/30 hover:bg-slate-100 dark:hover:bg-white/[0.02]'
+                        : 'text-slate-600 dark:text-white/30 hover:bg-slate-50 dark:hover:bg-white/[0.02]'
                     }`}
                   >
-                    <div className={`p-1.5 md:p-3 rounded-md md:rounded-xl transition-all duration-300 ${
-                      currentView === item.id ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-white/10'
+                    <div className={`p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 ${
+                      currentView === item.id ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100/50 dark:bg-white/5 text-slate-500 dark:text-white/10'
                     }`}>
                       <item.icon className="w-3.5 h-3.5 md:w-5 md:h-5" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[12px] md:text-base font-bold uppercase tracking-widest leading-none mb-0.5 md:mb-1">{item.label}</span>
+                      <span className="text-[12px] md:text-base font-black uppercase tracking-widest leading-none mb-1">{item.label}</span>
                       <span className="text-[6px] md:text-[8px] font-mono uppercase opacity-30 tracking-[0.2em]">module_{item.id}</span>
                     </div>
                   </button>
                 ))}
 
-                <div className="pt-4 md:pt-10 px-3 md:px-5 space-y-2 md:space-y-5">
-                  <div className="text-[7px] md:text-[10px] font-bold text-slate-400 dark:text-white/10 uppercase tracking-[0.3em]">Language Hub</div>
-                  <div className="flex flex-wrap gap-1.5 md:gap-3 pb-4">
+                <div className="pt-6 md:pt-10 px-3 md:px-5 space-y-3 md:space-y-5">
+                  <div className="text-[7px] md:text-[10px] font-black text-slate-400 dark:text-white/10 uppercase tracking-[0.3em]">Language Hub</div>
+                  <div className="flex flex-wrap gap-2 md:gap-3 pb-8">
                     {languages.map(lang => (
                       <button
                         key={lang.code}
                         onClick={() => setLanguage(lang.code)}
-                        className={`px-2.5 md:px-5 py-1 md:py-2.5 rounded-md md:rounded-xl text-[8px] md:text-[11px] font-black uppercase tracking-widest border transition-all ${
-                          language === lang.code ? 'bg-blue-600 text-white border-blue-500 shadow-md' : 'bg-slate-50 dark:bg-white/5 text-slate-500 border-slate-200 dark:border-white/10'
+                        className={`px-3 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl text-[8px] md:text-[10px] font-black uppercase tracking-widest border transition-all ${
+                          language === lang.code ? 'bg-blue-600 text-white border-blue-500 shadow-lg' : 'bg-white dark:bg-white/5 text-slate-500 border-slate-200 dark:border-white/10 shadow-sm'
                         }`}
                       >
                         {lang.code}
@@ -299,8 +299,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
             </div>
 
             {/* Responsive Footer */}
-            <footer className="px-6 md:px-10 pb-4 md:pb-8 pt-2 md:pt-4 border-t border-slate-200 dark:border-white/5 bg-white/95 dark:bg-[#0c0c0e]/95 backdrop-blur-xl shrink-0 flex justify-center">
-               <div className="text-[7px] md:text-[10px] font-bold text-slate-300 dark:text-white/5 uppercase tracking-[0.4em]">
+            <footer className="px-6 md:px-10 pb-6 md:pb-8 pt-4 md:pt-6 border-t border-slate-200 dark:border-white/5 bg-white/95 dark:bg-[#0c0c0e]/95 backdrop-blur-xl shrink-0 flex justify-center">
+               <div className="text-[7px] md:text-[10px] font-black text-slate-300 dark:text-white/5 uppercase tracking-[0.4em]">
                  ORION_PRIME_V4.2_NODE
                </div>
             </footer>

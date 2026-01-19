@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Terminal, Globe, ChevronRight, Activity, Cpu } from 'lucide-react';
 import { getBriefIntelligenceSummary } from '../services/geminiService';
@@ -63,7 +64,7 @@ const IntelligenceFeed: React.FC = () => {
   }, [logs]);
 
   return (
-    <div className="bg-white dark:bg-[#131315] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden font-mono shadow-xl dark:shadow-2xl h-full flex flex-col min-h-[400px] transition-colors duration-300 w-full">
+    <div className="bg-white dark:bg-[#131315] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden font-mono shadow-xl dark:shadow-2xl h-[580px] flex flex-col transition-colors duration-300 w-full">
       {/* Header */}
       <div className="px-3 md:px-5 py-3 border-b border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/[0.02] flex items-center justify-between shrink-0 w-full overflow-hidden">
         <div className="flex items-center gap-1.5 md:gap-3 min-w-0">
