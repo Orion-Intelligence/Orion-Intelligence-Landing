@@ -1,12 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
-import { Command, Ghost, Lock, Code2, ListTree, Menu, X, Sun, Moon, Shield, Radio, Activity, Globe } from 'lucide-react';
+import { Command, Ghost, Lock, Code2, ListTree, Menu, X, Sun, Moon, Shield, Radio, Activity, Globe, Tag } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import { Language } from '../translations';
 
 interface NavbarProps {
-  onNavigate: (view: 'home' | 'adversaries' | 'api-docs' | 'sources') => void;
-  currentView: 'home' | 'adversaries' | 'api-docs' | 'sources';
+  onNavigate: (view: 'home' | 'adversaries' | 'api-docs' | 'sources' | 'pricing') => void;
+  currentView: 'home' | 'adversaries' | 'api-docs' | 'sources' | 'pricing';
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
 }
@@ -20,6 +19,9 @@ const Logo = () => {
         <img 
           src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" 
           alt="Orion Logo" 
+          width="40"
+          height="40"
+          loading="eager"
           className="w-full h-full object-cover scale-105"
           onError={() => setError(true)}
         />
@@ -46,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
     }
   };
 
-  const handleNavigate = (view: 'home' | 'adversaries' | 'api-docs' | 'sources') => {
+  const handleNavigate = (view: 'home' | 'adversaries' | 'api-docs' | 'sources' | 'pricing') => {
     onNavigate(view);
     toggleMenu(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -71,6 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
     { id: 'adversaries', label: t('nav_adversaries'), icon: Ghost },
     { id: 'sources', label: t('nav_sources'), icon: ListTree },
     { id: 'api-docs', label: t('nav_api_docs'), icon: Code2 },
+    { id: 'pricing', label: 'Pricing', icon: Tag },
   ];
 
   const languages: { code: Language; label: string }[] = [

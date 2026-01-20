@@ -36,7 +36,11 @@ import {
   Rss,
   MessageSquare,
   Activity,
-  Loader2
+  Loader2,
+  Facebook,
+  Youtube,
+  Instagram,
+  Tag
 } from 'lucide-react';
 import Navbar from './components/Navbar';
 import IntelligenceProbe from './components/IntelligenceProbe';
@@ -47,6 +51,7 @@ import ApiDocumentation from './components/ApiDocumentation';
 import SourceInventory from './components/SourceInventory';
 import SearchResults from './components/SearchResults';
 import RemediationGuide from './components/RemediationGuide';
+import Pricing from './components/Pricing';
 import { useLanguage } from './components/LanguageContext';
 
 export interface StealerLogResponse {
@@ -69,7 +74,7 @@ export interface StealerLogResponse {
 
 const App: React.FC = () => {
   const [activeModal, setActiveModal] = useState<'privacy' | 'access' | 'compliance' | null>(null);
-  const [view, setView] = useState<'home' | 'adversaries' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide'>('home');
+  const [view, setView] = useState<'home' | 'adversaries' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing'>('home');
   const [footerLogoError, setFooterLogoError] = useState(false);
   const [heroSearch, setHeroSearch] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -117,7 +122,6 @@ const App: React.FC = () => {
       if (!response.ok) throw new Error("Search node failure");
       const data: StealerLogResponse = await response.json();
       
-      // Inject simulated analytics for richer UX if missing from API
       const enrichedData: StealerLogResponse = {
         ...data,
         intel_confidence: data.intel_confidence ?? 94 + Math.floor(Math.random() * 5),
@@ -146,7 +150,7 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const bgClass = ['adversaries', 'sources', 'search-results', 'remediation-guide'].includes(view) ? 'mesh-gradient-bright' : 'mesh-gradient';
+  const bgClass = ['adversaries', 'sources', 'search-results', 'remediation-guide', 'pricing'].includes(view) ? 'mesh-gradient-bright' : 'mesh-gradient';
 
   return (
     <div className={`min-h-screen ${bgClass} selection:bg-blue-500/30 overflow-x-hidden transition-all duration-700`}>
@@ -172,6 +176,10 @@ const App: React.FC = () => {
           <div className="pt-20 lg:pt-32 px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
             <SourceInventory />
           </div>
+        ) : view === 'pricing' ? (
+          <div className="pt-20 lg:pt-32 px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
+            <Pricing />
+          </div>
         ) : view === 'search-results' && searchResult ? (
           <div className="pt-20 lg:pt-32 px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
             <SearchResults 
@@ -179,6 +187,7 @@ const App: React.FC = () => {
               data={searchResult.data} 
               onBack={() => setView('home')}
               onNavigateToRemediation={() => setView('remediation-guide')}
+              onNavigateToPricing={() => setView('pricing')}
             />
           </div>
         ) : view === 'remediation-guide' && searchResult ? (
@@ -249,7 +258,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* Strategic Modular Core Section - ENHANCED GALAXY STACK */}
+            {/* Strategic Modular Core Section */}
             <section 
               id="core" 
               className="px-6 md:px-12 lg:px-20 py-20 md:py-32 bg-slate-950 dark:bg-slate-950 relative overflow-hidden bg-[radial-gradient(circle_at_15%_25%,rgba(220,38,38,0.12),transparent_50%),radial-gradient(circle_at_85%_75%,rgba(217,70,239,0.1),transparent_50%),radial-gradient(circle_at_50%_40%,rgba(220,38,38,0.06),transparent_40%),radial-gradient(circle_at_50%_100%,rgba(220,38,38,0.1),transparent_60%),radial-gradient(circle_at_20%_60%,rgba(220,38,38,0.08),transparent_50%),radial-gradient(1.5px_1.5px_at_12%_12%,#fff,transparent),radial-gradient(1px_1px_at_22%_82%,#fff,transparent),radial-gradient(1.2px_1.2px_at_72%_22%,#fff,transparent),radial-gradient(2px_2px_at_92%_42%,#fff,transparent),radial-gradient(1.1px_1.1px_at_37%_47%,#fff,transparent),radial-gradient(1.3px_1.3px_at_67%_17%,#fff,transparent),radial-gradient(1px_1px_at_47%_87%,#fff,transparent),radial-gradient(1.5px_1.5px_at_17%_67%,#fff,transparent),radial-gradient(1.1px_1.1px_at_85%_15%,#fff,transparent),radial-gradient(1.2px_1.2px_at_5%_95%,#fff,transparent),radial-gradient(1.3px_1.3px_at_50%_10%,#fff,transparent),radial-gradient(1px_1px_at_10%_10%,#fff,transparent),radial-gradient(1.4px_1.4px_at_30%_90%,#fff,transparent),radial-gradient(1px_1px_at_90%_10%,#fff,transparent),radial-gradient(1.2px_1.2px_at_75%_50%,#fff,transparent),radial-gradient(1.1px_1.1px_at_25%_40%,#fff,transparent),radial-gradient(1.5px_1.5px_at_45%_65%,#fff,transparent),radial-gradient(1.1px_1.1px_at_65%_35%,#fff,transparent),radial-gradient(0.8px_0.8px_at_5%_15%,rgba(255,255,255,0.8),transparent),radial-gradient(1px_1px_at_15%_85%,rgba(255,255,255,0.8),transparent),radial-gradient(1.2px_1.2px_at_25%_25%,rgba(255,255,255,0.8),transparent),radial-gradient(0.9px_0.9px_at_35%_75%,rgba(255,255,255,0.8),transparent),radial-gradient(1px_1px_at_45%_15%,rgba(255,255,255,0.8),transparent),radial-gradient(1.5px_1.5px_at_55%_85%,rgba(255,255,255,0.8),transparent),radial-gradient(0.8px_0.8px_at_65%_25%,rgba(255,255,255,0.8),transparent),radial-gradient(1.1px_1.1px_at_75%_75%,rgba(255,255,255,0.8),transparent),radial-gradient(1.3px_1.3px_at_85%_15%,rgba(255,255,255,0.8),transparent),radial-gradient(0.9px_0.9px_at_95%_85%,rgba(255,255,255,0.8),transparent),radial-gradient(1px_1px_at_3%_30%,#fff,transparent),radial-gradient(1px_1px_at_97%_70%,#fff,transparent),radial-gradient(1px_1px_at_40%_2%,#fff,transparent),radial-gradient(1px_1px_at_60%_98%,#fff,transparent),radial-gradient(1px_1px_at_18%_18%,#fff,transparent),radial-gradient(1px_1px_at_82%_82%,#fff,transparent),repeating-radial-gradient(circle_at_20%_30%,transparent_0,transparent_100px,rgba(220,38,38,0.04)_101px,transparent_103px),repeating-radial-gradient(circle_at_80%_70%,transparent_0,transparent_150px,rgba(220,38,38,0.03)_151px,transparent_153px),repeating-radial-gradient(circle_at_50%_50%,transparent_0,transparent_200px,rgba(220,38,38,0.05)_201px,transparent_203px),repeating-radial-gradient(circle_at_50%_50%,transparent_0,transparent_350px,rgba(220,38,38,0.03)_351px,transparent_354px),repeating-radial-gradient(circle_at_50%_50%,transparent_0,transparent_500px,rgba(220,38,38,0.02)_501px,transparent_504px),repeating-radial-gradient(circle_at_45%_55%,transparent_0,transparent_600px,rgba(220,38,38,0.015)_601px,transparent_605px)]"
@@ -310,9 +319,30 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* Investigative Ecosystem: Breach Audit Tooling */}
-            <section className="px-6 md:px-12 lg:px-20 py-10 md:py-16 discovery-gradient relative overflow-hidden border-y border-slate-200 dark:border-white/5">
-               <div className="max-w-[1400px] mx-auto">
+            {/* Investigative Ecosystem */}
+            <section className="px-6 md:px-12 lg:px-20 py-10 md:py-16 relative overflow-hidden border-y border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-slate-950">
+               {/* Galaxy Background for this section */}
+               <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-40 dark:opacity-100 transition-all duration-1000" 
+                    style={{ 
+                      backgroundImage: `
+                        radial-gradient(circle at 15% 25%, rgba(59,130,246,0.12), transparent 50%),
+                        radial-gradient(circle at 85% 75%, rgba(217,70,239,0.1), transparent 50%),
+                        radial-gradient(1.5px 1.5px at 12% 12%, #fff, transparent),
+                        radial-gradient(1px 1px at 22% 82%, #fff, transparent),
+                        radial-gradient(1.2px 1.2px at 72% 22%, #fff, transparent),
+                        radial-gradient(2px 2px at 92% 42%, #fff, transparent),
+                        radial-gradient(1.1px 1.1px at 37% 47%, #fff, transparent),
+                        radial-gradient(1.3px 1.3px at 67% 17%, #fff, transparent),
+                        radial-gradient(1px 1px at 47% 87%, #fff, transparent),
+                        radial-gradient(1.5px 1.5px at 17% 67%, #fff, transparent),
+                        radial-gradient(1.1px 1.1px at 85% 15%, #fff, transparent),
+                        radial-gradient(1.2px 1.2px at 5% 95%, #fff, transparent),
+                        repeating-radial-gradient(circle at center, transparent 0, transparent 200px, rgba(59,130,246,0.03) 201px, transparent 203px)
+                      `
+                    }}>
+               </div>
+               
+               <div className="max-w-[1400px] mx-auto relative z-10">
                  <div id="probe" className="w-full relative z-10 space-y-6">
                    <div className="flex flex-col gap-1 px-2">
                      <div className="flex items-center gap-3 text-blue-600 dark:text-blue-500 mb-1">
@@ -334,7 +364,7 @@ const App: React.FC = () => {
                </div>
             </section>
 
-            {/* Governance and FIDO2 Support - ENHANCED GALAXY STACK */}
+            {/* Governance and FIDO2 Support */}
             <section 
               className="px-6 md:px-12 lg:px-20 py-20 md:py-32 bg-slate-950 dark:bg-slate-950 relative overflow-hidden bg-[radial-gradient(circle_at_25%_25%,rgba(220,38,38,0.12),transparent_50%),radial-gradient(circle_at_75%_75%,rgba(217,70,239,0.1),transparent_50%),radial-gradient(circle_at_50%_60%,rgba(220,38,38,0.08),transparent_40%),radial-gradient(circle_at_20%_90%,rgba(220,38,38,0.12),transparent_60%),radial-gradient(circle_at_80%_40%,rgba(220,38,38,0.07),transparent_50%),radial-gradient(1.5px_1.5px_at_15%_10%,#fff,transparent),radial-gradient(1px_1px_at_80%_20%,#fff,transparent),radial-gradient(1.2px_1.2px_at_40%_60%,#fff,transparent),radial-gradient(2px_2px_at_60%_40%,#fff,transparent),radial-gradient(1px_1px_at_10%_90%,#fff,transparent),radial-gradient(1.1px_1.1px_at_85%_85%,#fff,transparent),radial-gradient(1.3px_1.3px_at_55%_35%,#fff,transparent),radial-gradient(1.5px_1.5px_at_25%_45%,#fff,transparent),radial-gradient(1px_1px_at_65%_75%,#fff,transparent),radial-gradient(1.2px_1.2px_at_95%_5%,#fff,transparent),radial-gradient(1.1px_1.1px_at_35%_25%,#fff,transparent),radial-gradient(1.4px_1.4px_at_10%_30%,#fff,transparent),radial-gradient(1.1px_1.1px_at_50%_90%,#fff,transparent),radial-gradient(1.2px_1.2px_at_80%_70%,#fff,transparent),radial-gradient(1px_1px_at_20%_20%,#fff,transparent),radial-gradient(1px_1px_at_45%_5%,rgba(255,255,255,0.7),transparent),radial-gradient(1.2px_1.2px_at_65%_95%,rgba(255,255,255,0.7),transparent),radial-gradient(1px_1px_at_5%_55%,rgba(255,255,255,0.7),transparent),radial-gradient(1.5px_1.5px_at_95%_45%,rgba(255,255,255,0.7),transparent),radial-gradient(0.8px_0.8px_at_30%_15%,rgba(255,255,255,0.7),transparent),radial-gradient(1.1px_1.1px_at_70%_85%,rgba(255,255,255,0.7),transparent),radial-gradient(1px_1px_at_10%_35%,rgba(255,255,255,0.7),transparent),radial-gradient(1.3px_1.3px_at_85%_65%,rgba(255,255,255,0.7),transparent),radial-gradient(1px_1px_at_2%_2%,#fff,transparent),radial-gradient(1px_1px_at_98%_98%,#fff,transparent),radial-gradient(1px_1px_at_50%_2%,#fff,transparent),radial-gradient(1px_1px_at_2%_50%,#fff,transparent),repeating-radial-gradient(circle_at_30%_20%,transparent_0,transparent_75px,rgba(220,38,38,0.04)_76px,transparent_78px),repeating-radial-gradient(circle_at_70%_80%,transparent_0,transparent_150px,rgba(220,38,38,0.04)_151px,transparent_153px),repeating-radial-gradient(circle_at_50%_50%,transparent_0,transparent_225px,rgba(220,38,38,0.05)_226px,transparent_228px),repeating-radial-gradient(circle_at_50%_50%,transparent_0,transparent_350px,rgba(220,38,38,0.03)_351px,transparent_354px),repeating-radial-gradient(circle_at_50%_50%,transparent_0,transparent_450px,rgba(220,38,38,0.02)_451px,transparent_454px),repeating-radial-gradient(circle_at_55%_45%,transparent_0,transparent_550px,rgba(220,38,38,0.015)_551px,transparent_555px)]"
             >
@@ -431,7 +461,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* Operational Liaison - ORIGINAL BLUE THEME RESTORED & BUTTON SIZE REDUCED */}
+            {/* Operational Liaison */}
             <section className="px-6 md:px-12 lg:px-20 py-24 md:py-32 lg:py-40 discovery-gradient group overflow-hidden relative border-t border-slate-200 dark:border-white/10">
               <div className="max-w-[1400px] mx-auto flex flex-col items-center text-center relative z-10">
                  <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-12">
@@ -508,7 +538,7 @@ const App: React.FC = () => {
 
       <footer className="px-6 md:px-12 lg:px-20 py-16 md:py-20 lg:py-24 bg-slate-50 dark:bg-[#0a0a0c] border-t border-slate-200 dark:border-white/10 relative z-10 w-full overflow-x-hidden">
         <div className="max-w-[1400px] mx-auto">
-          {/* Footer Grid - Fully Optimized for Tablet (md:grid-cols-4) and Desktop (lg:grid-cols-12) */}
+          {/* Footer Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-12 lg:gap-16 mb-16 md:mb-20">
             <div className="col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-4 space-y-8">
               <div className="flex items-center gap-4 cursor-pointer" onClick={() => setView('home')}>
@@ -517,6 +547,8 @@ const App: React.FC = () => {
                     <img 
                       src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" 
                       alt="Orion" 
+                      width="48"
+                      height="48"
                       className="w-full h-full object-cover scale-110" 
                       onError={() => setFooterLogoError(true)}
                     />
@@ -554,6 +586,9 @@ const App: React.FC = () => {
                 <li><a href="https://orionfeed.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-500 transition-colors flex items-center gap-2">Feed <Rss className="w-3 h-3" /></a></li>
                 <li><a href="https://x.com/orionfeed" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-500 transition-colors flex items-center gap-2">X <Twitter className="w-3 h-3" /></a></li>
                 <li><a href="https://www.linkedin.com/showcase/108619822/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-500 transition-colors flex items-center gap-2">LinkedIn <Linkedin className="w-3 h-3" /></a></li>
+                <li><a href="https://web.facebook.com/people/Orion-Feed/61581366287535/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-500 transition-colors flex items-center gap-2">Facebook <Facebook className="w-3 h-3" /></a></li>
+                <li><a href="https://www.youtube.com/@OrionFeeds" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-500 transition-colors flex items-center gap-2">YouTube <Youtube className="w-3 h-3" /></a></li>
+                <li><a href="https://www.instagram.com/msman_nan00" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-500 transition-colors flex items-center gap-2">Instagram <Instagram className="w-3 h-3" /></a></li>
               </ul>
             </div>
 
@@ -562,6 +597,7 @@ const App: React.FC = () => {
               <ul className="space-y-4 text-[12px] text-slate-500 dark:text-white/60 uppercase tracking-[0.1em] font-bold">
                 <li><button onClick={() => setActiveModal('privacy')} className="hover:text-blue-600 dark:hover:text-blue-500 transition-colors">Privacy</button></li>
                 <li><button onClick={() => setActiveModal('compliance')} className="hover:text-blue-600 dark:hover:text-blue-500 transition-colors">Audit</button></li>
+                <li><button onClick={() => setView('pricing')} className="hover:text-blue-600 dark:hover:text-blue-500 transition-colors flex items-center gap-2">Pricing <Tag className="w-3 h-3" /></button></li>
               </ul>
             </div>
           </div>

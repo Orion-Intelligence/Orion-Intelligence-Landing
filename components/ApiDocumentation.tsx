@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Terminal, Code2, Database, Shield, Globe, Search, Command, ChevronRight, Copy, Check, Info, FileJson, Zap, Network, MessageSquare, Share2, Scan, FileText, Smartphone, LayoutGrid, ListFilter, Bug, ShieldAlert, Newspaper, Users, UserCheck } from 'lucide-react';
 
@@ -377,7 +376,7 @@ const ApiDocumentation: React.FC = () => {
             <div key={cat.name} className="space-y-4">
               <div className="flex items-center gap-3 px-2">
                 <cat.icon className="w-3.5 h-3.5 text-slate-300 dark:text-white/20" />
-                <h4 className="text-[9px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-[0.2em]">{cat.label}</h4>
+                <h2 className="text-[9px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-[0.2em]">{cat.label}</h2>
               </div>
               <div className="space-y-1">
                 {endpoints.filter(e => e.category === cat.name).map(e => (
@@ -407,7 +406,7 @@ const ApiDocumentation: React.FC = () => {
 
       {/* Main Documentation Area */}
       <main className="flex-1 overflow-y-auto bg-white dark:bg-[#0a0a0c] p-6 md:p-10 lg:p-20 no-scrollbar">
-        <div className="max-w-5xl mx-auto">
+        <article className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-12 lg:mb-16 space-y-6 lg:space-y-8">
             <div className="flex flex-wrap items-center gap-3 lg:gap-4">
@@ -526,7 +525,7 @@ const ApiDocumentation: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </main>
     </div>
   );
