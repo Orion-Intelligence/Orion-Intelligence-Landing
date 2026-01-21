@@ -118,38 +118,33 @@ const App: React.FC = () => {
       case 'search-results': return 'search';
       case 'remediation-guide': return 'remediation';
       case 'home': return '';
-      default: return '404';
+      default: return '';
     }
   };
 
-  const getViewFromPath = (inputPath: string): ViewType => {
-    // 1. Force everything to lowercase for matching
-    const path = inputPath.toLowerCase();
-
-    // 2. Clinical keyword matching - highest priority
-    // We check for these anywhere in the path to handle proxy-nested subdirectories
-    if (path.includes('adversaries/dossier')) return 'actor-dossier';
-    if (path.includes('adversaries')) return 'adversaries';
-    if (path.includes('api-docs')) return 'api-docs';
-    if (path.includes('sources')) return 'sources';
-    if (path.includes('pricing')) return 'pricing';
-    if (path.includes('search')) return 'search-results';
-    if (path.includes('remediation')) return 'remediation-guide';
-
-    // 3. Fallback logic for Home vs 404
-    // Tokenize to find non-UUID segments
-    const parts = path.split('/').filter(Boolean);
-    const isUUID = (s: string) => (s.length === 36 && s.includes('-')) || (s.length > 30 && /^[0-9a-f]+$/.test(s));
+  /**
+   * REFACTORED: Keyword-First Inclusion Strategy
+   * This is much more resilient for proxy environments because it defaults to 'home'
+   * if no specific clinical keywords are found in the URL.
+   */
+  const getViewFromPath = (pathOrUrl: string): ViewType => {
+    const normalized = pathOrUrl.toLowerCase();
     
-    const cleanSegments = parts.filter(p => !isUUID(p) && p !== 'index.html');
+    // Scan for high-priority clinical keywords
+    if (normalized.includes('/adversaries/dossier')) return 'actor-dossier';
+    if (normalized.includes('/adversaries')) return 'adversaries';
+    if (normalized.includes('/api-docs')) return 'api-docs';
+    if (normalized.includes('/sources')) return 'sources';
+    if (normalized.includes('/pricing')) return 'pricing';
+    if (normalized.includes('/search')) return 'search-results';
+    if (normalized.includes('/remediation')) return 'remediation-guide';
 
-    // If no clinical segments left, it's the home view
-    if (cleanSegments.length === 0) return 'home';
-
-    // If there's content left that we didn't match above, it's truly a 404
-    return '404';
+    // If no keyword is found, ALWAYS default to home.
+    // This prevents 404 loops in Google AI Studio or Vercel.
+    return 'home';
   };
 
+  // State initialization
   const [view, setView] = useState<ViewType>(() => getViewFromPath(window.location.href));
 
   const navigateTo = useCallback((newView: ViewType) => {
@@ -159,10 +154,17 @@ const App: React.FC = () => {
     try {
       const currentPath = window.location.pathname;
       const parts = currentPath.split('/').filter(Boolean);
-      const isUUID = (s: string) => (s.length === 36 && s.includes('-')) || (s.length > 30 && /^[0-9a-f]+$/.test(s));
       
-      // Preserve the sandbox UUID if it's the leading segment
-      const base = (parts.length > 0 && isUUID(parts[0])) ? `/${parts[0]}/` : '/';
+      // Heuristic to detect if we are in a sub-pathed environment (like Studio UUIDs)
+      // Usually the first segment is the UUID in those cases.
+      const isProxyUUID = (s: string) => 
+        (s.length === 36 && s.includes('-')) || 
+        (s.length > 30 && /^[0-9a-f-]+$/.test(s));
+
+      const hasPrefix = parts.length > 0 && isProxyUUID(parts[0]);
+      const base = hasPrefix ? `/${parts[0]}/` : '/';
+      
+      // Construct the absolute path relative to the environment root
       const fullTargetPath = targetSegment === '' ? base : `${base}${targetSegment}`;
       
       window.history.pushState({ view: newView }, '', fullTargetPath);
@@ -177,7 +179,7 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const handlePopState = (event: PopStateEvent) => {
+    const handlePopState = () => {
       const pathView = getViewFromPath(window.location.href);
       setView(pathView);
     };
@@ -252,12 +254,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     document.title = "Orion Intelligence";
-    const interval = setInterval(() => {
-      if (document.title !== "Orion Intelligence") {
-        document.title = "Orion Intelligence";
-      }
-    }, 2000);
-    return () => clearInterval(interval);
   }, []);
 
   const scrollToTop = () => {

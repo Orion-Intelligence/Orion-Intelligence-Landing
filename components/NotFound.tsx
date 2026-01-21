@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowLeft, ShieldAlert, Terminal, Globe, Activity } from 'lucide-react';
+import { ArrowLeft, ShieldAlert, Terminal, Globe, Activity, Search } from 'lucide-react';
 
 interface NotFoundProps {
   onBack: () => void;
@@ -66,7 +66,7 @@ const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* Minimal Diagnostics Sidebar */}
+        {/* Technical Diagnostics Sidebar */}
         <div className="space-y-6 animate-in fade-in slide-in-from-right-6 duration-1000 delay-200">
           <div className="p-8 rounded-3xl bg-black/40 border border-white/5 backdrop-blur-xl shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-1 h-full bg-red-500/20 group-hover:bg-red-500/50 transition-colors"></div>
@@ -76,13 +76,27 @@ const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
               <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Trace_Dump</span>
             </div>
             
-            <div className="space-y-4 font-mono text-[11px] text-slate-400 opacity-60">
-              <p>{'>>'} ERR_ID: {Math.random().toString(36).substring(7).toUpperCase()}</p>
-              <p>{'>>'} STATE: UNRESOLVED_IDENTIFIER</p>
-              <p>{'>>'} ACTION: REDIRECT_HOME</p>
-              <p className="truncate">{'>>'} RAW_PATH: {window.location.pathname}</p>
-              <p className="truncate text-[9px] text-blue-500/60">{'>>'} SYS_RESOLVE: {window.location.href}</p>
+            <div className="space-y-6 font-mono text-[10px] text-slate-400">
+              <div className="space-y-2">
+                <p className="text-[8px] font-bold text-white/20 uppercase">Core Data</p>
+                <p>{'>>'} ERR_ID: {Math.random().toString(36).substring(7).toUpperCase()}</p>
+                <p>{'>>'} STATE: UNRESOLVED_IDENTIFIER</p>
+                <p>{'>>'} ACTION: REDIRECT_HOME</p>
+              </div>
+
+              <div className="space-y-2 pt-4 border-t border-white/5">
+                <p className="text-[8px] font-bold text-white/20 uppercase flex items-center gap-2">
+                  <Search className="w-3 h-3" /> Runtime_Context
+                </p>
+                <p className="break-all"><span className="text-blue-500/60">RAW_PATH:</span> {window.location.pathname}</p>
+                <p className="break-all"><span className="text-blue-500/60">SYS_RESOLVE:</span> {window.location.href}</p>
+              </div>
             </div>
+          </div>
+
+          <div className="px-6 py-4 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center gap-4 group">
+            <div className="w-2 h-2 rounded-full bg-green-500/40 group-hover:bg-green-500 animate-pulse transition-colors"></div>
+            <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest leading-none">Extraction_Grid_Online</span>
           </div>
         </div>
       </div>
@@ -90,7 +104,7 @@ const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
       {/* Simple Footer */}
       <div className="mt-auto pt-24 border-t border-white/5 flex items-center justify-between opacity-20">
         <span className="text-[10px] font-black uppercase tracking-widest">Orion_Protocol_V4.2</span>
-        <span className="text-[10px] font-black uppercase tracking-widest font-mono">2025_REF_SIG_LOST</span>
+        <span className="text-[10px] font-black uppercase tracking-widest font-mono">SIG_RECOVERY_ACTIVE</span>
       </div>
     </div>
   );
