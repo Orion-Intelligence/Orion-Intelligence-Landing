@@ -1,12 +1,15 @@
 {
-  "redirects": [
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
+    },
     {
       "source": "/robot.txt",
-      "destination": "/robots.txt",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
+      "destination": "/robots.txt"
+    },
     {
       "source": "/((?!.*\\.).*)",
       "destination": "/index.html"
