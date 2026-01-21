@@ -77,10 +77,10 @@ const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
             </div>
             
             <div className="space-y-4 font-mono text-[11px] text-slate-400 opacity-60">
-              <p>>> ERR_ID: {Math.random().toString(36).substring(7).toUpperCase()}</p>
-              <p>>> STATE: UNRESOLVED_IDENTIFIER</p>
-              <p>>> ACTION: REDIRECT_HOME</p>
-              <p className="truncate">>> PATH: {window.location.pathname}</p>
+              <p>{'>>'} ERR_ID: {Math.random().toString(36).substring(7).toUpperCase()}</p>
+              <p>{'>>'} STATE: UNRESOLVED_IDENTIFIER</p>
+              <p>{'>>'} ACTION: REDIRECT_HOME</p>
+              <p className="truncate">{'>>'} PATH: {window.location.pathname}</p>
             </div>
           </div>
         </div>
