@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Terminal, Globe, ChevronRight, Activity, Cpu } from 'lucide-react';
 import { getBriefIntelligenceSummary } from '../services/geminiService';
@@ -59,7 +58,12 @@ const IntelligenceFeed: React.FC = () => {
 
   useEffect(() => {
     if (logContainerRef.current) {
-      logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
+      // Use requestAnimationFrame to prevent forced reflow / layout thrashing
+      requestAnimationFrame(() => {
+        if (logContainerRef.current) {
+          logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
+        }
+      });
     }
   }, [logs]);
 

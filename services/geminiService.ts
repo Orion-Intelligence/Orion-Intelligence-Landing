@@ -1,9 +1,9 @@
-
 import { GoogleGenAI } from "@google/genai";
 
 // Always use const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
+// Clinical technical analysis for a specific target.
 export const generateThreatReport = async (target: string, type: 'website' | 'ioc'): Promise<string> => {
   try {
     const prompt = `Perform a clinical technical analysis for the following ${type}: ${target}. 
@@ -33,6 +33,7 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
   }
 };
 
+// Brief situational report of global cyber activity.
 export const getBriefIntelligenceSummary = async (): Promise<string> => {
   try {
     const prompt = `Provide a concise 3-sentence technical situational report of global cyber activity. Focus on infrastructure-level events, protocol vulnerabilities, or documented threat actor movements. Do not use buzzwords.`;
@@ -49,16 +50,14 @@ export const getBriefIntelligenceSummary = async (): Promise<string> => {
   }
 };
 
-/**
- * Initiates a streaming chat session with Gemini to provide real-time AI assistance
- * in the Orion AINexus interface.
- */
+// Fix: Implementation of streaming chat for the Orion Nexus assistant.
+// Returns an async iterable of content responses.
 export const getStreamingChat = async (message: string) => {
-  const chat = ai.chats.create({
+  return await ai.models.generateContentStream({
     model: 'gemini-3-flash-preview',
+    contents: message,
     config: {
-      systemInstruction: 'You are Orion Nexus, a specialized AI assistant for the Orion Intelligence platform. You provide technical insights on cyber threats, OSINT methodology, and platform status. Keep responses clinical, professional, and concise.',
-    },
+      systemInstruction: "You are Orion Nexus v4.2, an advanced cyber intelligence AI assistant. Provide precise, clinical analysis of threat actors, indicators of compromise (IOCs), and security grid status. Maintain a professional, objective tone appropriate for a senior OSINT investigator. Focus on factual accuracy and technical depth.",
+    }
   });
-  return await chat.sendMessageStream({ message });
 };

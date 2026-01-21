@@ -628,8 +628,9 @@ const App: React.FC = () => {
                     <img 
                       src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" 
                       alt="Orion" 
-                      width="56"
-                      height="56"
+                      width="38"
+                      height="38"
+                      loading="lazy"
                       className="w-full h-full object-cover scale-110" 
                       onError={() => setFooterLogoError(true)}
                     />
