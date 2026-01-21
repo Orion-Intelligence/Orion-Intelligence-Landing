@@ -125,15 +125,27 @@ const App: React.FC = () => {
 
   const getViewFromPath = (path: string): ViewType => {
     const normalized = path.toLowerCase();
-    if (normalized.includes('adversaries/dossier')) return 'actor-dossier';
-    if (normalized.includes('adversaries')) return 'adversaries';
-    if (normalized.includes('api-docs')) return 'api-docs';
-    if (normalized.includes('sources')) return 'sources';
-    if (normalized.includes('pricing')) return 'pricing';
-    if (normalized.includes('search')) return 'search-results';
-    if (normalized.includes('remediation')) return 'remediation-guide';
+    
+    // Extract actual segments, filtering out sandbox UUIDs if present
+    const parts = normalized.split('/').filter(Boolean);
+    const hasUUID = parts.length > 0 && parts[0].length > 20;
+    const segments = hasUUID ? parts.slice(1) : parts;
+    const cleanPath = '/' + segments.join('/');
 
-    return 'home';
+    // Explicit Clinical Route Matching
+    if (cleanPath.includes('adversaries/dossier')) return 'actor-dossier';
+    if (cleanPath.includes('adversaries')) return 'adversaries';
+    if (cleanPath.includes('api-docs')) return 'api-docs';
+    if (cleanPath.includes('sources')) return 'sources';
+    if (cleanPath.includes('pricing')) return 'pricing';
+    if (cleanPath.includes('search')) return 'search-results';
+    if (cleanPath.includes('remediation')) return 'remediation-guide';
+
+    // Base paths for home
+    if (cleanPath === '/' || cleanPath === '') return 'home';
+
+    // If we've reached here and have non-empty segments, it's a 404
+    return segments.length > 0 ? '404' : 'home';
   };
 
   const [view, setView] = useState<ViewType>(() => getViewFromPath(window.location.pathname));
@@ -142,18 +154,13 @@ const App: React.FC = () => {
     setView(newView);
     const targetSegment = getSegmentFromView(newView);
     
-    // Sandbox Safety: Use RELATIVE paths in pushState to keep the environment UUID prefix.
-    // Absolute paths (e.g., '/adversaries') trigger SecurityError in many sandboxes.
     try {
       const currentPath = window.location.pathname;
       const parts = currentPath.split('/').filter(Boolean);
-      
-      // Reconstruct base path (handles environments like /uuid/index.html)
       const hasUUID = parts.length > 0 && parts[0].length > 20;
       const base = hasUUID ? `/${parts[0]}/` : '/';
       
       const fullTargetPath = targetSegment === '' ? base : `${base}${targetSegment}`;
-      
       window.history.pushState({ view: newView }, '', fullTargetPath);
     } catch (e) {
       console.warn('Navigation protocol rejected by sandbox security. Internal state sync active.', e);

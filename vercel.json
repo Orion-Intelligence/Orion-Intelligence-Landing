@@ -51,7 +51,7 @@
       "destination": "/sitemap.xml"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!api/|robots.txt|sitemap.xml|index.css|index.tsx|favicon.ico).*)",
       "destination": "/index.html"
     }
   ]
