@@ -1,3 +1,4 @@
+
 {
   "cleanUrls": true,
   "trailingSlash": false,
@@ -46,11 +47,11 @@
       "destination": "/robots.txt"
     },
     {
-      "source": "/robot.txt",
-      "destination": "/robots.txt"
+      "source": "/sitemap.xml",
+      "destination": "/sitemap.xml"
     },
     {
-      "source": "/((?!.*\\.).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]

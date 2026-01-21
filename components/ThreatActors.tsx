@@ -84,14 +84,29 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
   const [searchTerm, setSearchTerm] = useState('');
   const [actors, setActors] = useState<ActorIntelligence[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchActors = async () => {
       try {
+        setError(null);
         const response = await fetch('/ransomware_groups_info.json');
-        if (!response.ok) throw new Error('Failed to fetch intelligence node');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Intelligence node returned invalid format (Expected JSON)');
+        }
+
         const data = await response.json();
         
+        if (!Array.isArray(data)) {
+          throw new Error('Intelligence node returned unexpected data structure');
+        }
+
         const normalizedData = data.map((item: any) => ({
           name: item.name || "Unknown Entity",
           description: item.description || "No analysis available.",
@@ -107,8 +122,9 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
         }));
         
         setActors(normalizedData);
-      } catch (error) {
-        console.error("Critical Grid Failure: Actor intelligence unreachable.", error);
+      } catch (err: any) {
+        console.error("Critical Grid Failure:", err);
+        setError(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -190,6 +206,15 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
             <div className="py-32 flex flex-col items-center justify-center space-y-6">
                <Loader2 className="w-12 h-12 text-red-600 animate-spin" strokeWidth={1.5} />
                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 animate-pulse">Synchronizing Intelligence Stream...</p>
+            </div>
+          ) : error ? (
+            <div className="py-32 flex flex-col items-center justify-center text-center space-y-6">
+               <ShieldAlert className="w-16 h-16 text-red-600/40" strokeWidth={1} />
+               <div className="space-y-2">
+                 <h3 className="text-xl font-black uppercase tracking-widest text-slate-900 dark:text-white">Grid Link Failure</h3>
+                 <p className="text-sm text-slate-500 dark:text-white/40 max-w-sm font-mono">{error}</p>
+               </div>
+               <button onClick={() => window.location.reload()} className="px-6 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest rounded-lg">Retry Sync</button>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
