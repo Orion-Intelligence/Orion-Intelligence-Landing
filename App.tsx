@@ -128,20 +128,33 @@ const App: React.FC = () => {
    * if no specific clinical keywords are found in the URL.
    */
   const getViewFromPath = (pathOrUrl: string): ViewType => {
-    const normalized = pathOrUrl.toLowerCase();
-    
-    // Scan for high-priority clinical keywords
-    if (normalized.includes('/adversaries/dossier')) return 'actor-dossier';
-    if (normalized.includes('/adversaries')) return 'adversaries';
-    if (normalized.includes('/api-docs')) return 'api-docs';
-    if (normalized.includes('/sources')) return 'sources';
-    if (normalized.includes('/pricing')) return 'pricing';
-    if (normalized.includes('/search')) return 'search-results';
-    if (normalized.includes('/remediation')) return 'remediation-guide';
+    let pathname = '/';
+    try {
+      const u = new URL(pathOrUrl, window.location.origin);
+      pathname = u.pathname || '/';
+    } catch {
+      pathname = pathOrUrl || '/';
+    }
 
-    // If no keyword is found, ALWAYS default to home.
-    // This prevents 404 loops in Google AI Studio or Vercel.
-    return 'home';
+    const parts = pathname.toLowerCase().split('/').filter(Boolean);
+
+    const isProxyUUID = (s: string) =>
+      (s.length === 36 && s.includes('-')) ||
+      (s.length > 30 && /^[0-9a-f-]+$/.test(s));
+
+    const effectiveParts = parts.length > 0 && isProxyUUID(parts[0]) ? parts.slice(1) : parts;
+    const effectivePath = '/' + effectiveParts.join('/');
+
+    if (effectiveParts.length === 0) return 'home';
+    if (effectivePath.startsWith('/adversaries/dossier')) return 'actor-dossier';
+    if (effectivePath.startsWith('/adversaries')) return 'adversaries';
+    if (effectivePath.startsWith('/api-docs')) return 'api-docs';
+    if (effectivePath.startsWith('/sources')) return 'sources';
+    if (effectivePath.startsWith('/pricing')) return 'pricing';
+    if (effectivePath.startsWith('/search')) return 'search-results';
+    if (effectivePath.startsWith('/remediation')) return 'remediation-guide';
+
+    return '404';
   };
 
   // State initialization
