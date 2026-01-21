@@ -1,13 +1,12 @@
 {
-  "rewrites": [
-    {
-      "source": "/robots.txt",
-      "destination": "/robots.txt"
-    },
+  "redirects": [
     {
       "source": "/robot.txt",
-      "destination": "/robots.txt"
-    },
+      "destination": "/robots.txt",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
     {
       "source": "/((?!.*\\.).*)",
       "destination": "/index.html"
