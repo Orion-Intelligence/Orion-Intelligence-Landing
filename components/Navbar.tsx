@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Command, Ghost, Lock, Code2, ListTree, Menu, X, Sun, Moon, Shield, Radio, Activity, Globe, Tag } from 'lucide-react';
+import { Command, Ghost, Lock, Code2, ListTree, Menu, X, Sun, Moon, Shield, Activity, Globe, Tag } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import { Language } from '../translations';
 
@@ -10,28 +10,15 @@ interface NavbarProps {
   onToggleTheme: () => void;
 }
 
-const Logo = () => {
-  const [error, setError] = useState(false);
-
-  return (
-    <div className="w-10 h-10 relative flex items-center justify-center rounded-xl overflow-hidden shadow-lg border border-slate-200/60 dark:border-white/10 bg-white dark:bg-[#0a0a0c]">
-      {!error ? (
-        <img 
-          src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" 
-          alt="Orion Logo" 
-          width="38"
-          height="38"
-          loading="eager"
-          fetchPriority="high"
-          className="w-full h-full object-cover scale-105"
-          onError={() => setError(true)}
-        />
-      ) : (
-        <div className="text-blue-600 dark:text-blue-500 font-black text-xl tracking-tighter">O</div>
-      )}
-    </div>
-  );
-};
+const OrionLogo = ({ className = "w-10 h-10" }: { className?: string }) => (
+  <div className={`${className} relative flex items-center justify-center rounded-xl overflow-hidden shadow-lg border border-slate-200/60 dark:border-white/10 bg-white dark:bg-[#0a0a0c] transition-transform duration-500`}>
+    <svg viewBox="0 0 100 100" className="w-7 h-7 text-blue-600 dark:text-blue-500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 5L95 27.5V72.5L50 95L5 72.5V27.5L50 5Z" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="50" cy="50" r="12" fill="currentColor"/>
+      <path d="M50 20V30M50 70V80M20 50H30M70 50H80" stroke="currentColor" strokeWidth="6" strokeLinecap="round"/>
+    </svg>
+  </div>
+);
 
 const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,15 +45,10 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
-      document.body.style.height = '100vh';
     } else {
       document.body.style.overflow = 'unset';
-      document.body.style.height = 'unset';
     }
-    return () => { 
-      document.body.style.overflow = 'unset';
-      document.body.style.height = 'unset';
-    };
+    return () => { document.body.style.overflow = 'unset'; };
   }, [isMenuOpen]);
 
   const menuItems = [
@@ -96,14 +78,13 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
             >
               <div className="relative group-hover:scale-110 transition-transform duration-500">
                  <div className="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                 <Logo />
+                 <OrionLogo />
               </div>
               <span className="text-xl font-black tracking-[0.3em] text-slate-900 dark:text-white uppercase leading-none">
                 Orion
               </span>
             </div>
 
-            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8 lg:space-x-10">
               {menuItems.map((item) => (
                 <button 
@@ -175,7 +156,6 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               </div>
             </div>
 
-            {/* Mobile Toggle */}
             <div className="lg:hidden flex items-center gap-3">
                <button 
                 onClick={onToggleTheme}
@@ -195,7 +175,6 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
       {isMenuOpen && (
         <div 
           className={`lg:hidden fixed inset-0 z-[9999] h-[100dvh] w-screen flex flex-col overflow-hidden transition-all duration-500 ease-in-out ${
@@ -207,10 +186,9 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
           <div className={`flex flex-col h-full w-full transition-all duration-500 ease-out ${
             isAnimating ? 'translate-y-0 scale-100' : 'translate-y-4 scale-95'
           }`}>
-            {/* Header - Scaled for Tablet */}
             <header className="flex items-center justify-between h-16 md:h-20 px-6 md:px-10 shrink-0 border-b border-slate-200 dark:border-white/5 bg-white/50 dark:bg-black/50 backdrop-blur-md">
               <div className="flex items-center gap-3 md:gap-5">
-                <Logo />
+                <OrionLogo />
                 <span className="text-lg md:text-2xl font-black tracking-[0.3em] md:tracking-[0.4em] text-slate-900 dark:text-white uppercase leading-none">
                   Orion
                 </span>
@@ -223,7 +201,6 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               </button>
             </header>
 
-            {/* Improved Action Bar - Responsive Sizing */}
             <div className={`px-6 md:px-10 py-4 md:py-6 flex gap-2 md:gap-4 shrink-0 border-b border-slate-100 dark:border-white/5 transition-all duration-500 delay-100 ${
               isAnimating ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'
             }`}>
@@ -253,7 +230,6 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               </button>
             </div>
 
-            {/* Navigation List - Responsive Scaling */}
             <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar">
               <div className="py-2 md:py-6 px-5 md:px-10 space-y-0.5 md:space-y-2">
                 <div className="text-[7px] md:text-[10px] font-black text-blue-600/50 dark:text-blue-500/40 uppercase tracking-[0.3em] py-4 md:py-6 px-3 md:px-5">System Matrix</div>
@@ -302,7 +278,6 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               </div>
             </div>
 
-            {/* Responsive Footer */}
             <footer className="px-6 md:px-10 pb-6 md:pb-8 pt-4 md:pt-6 border-t border-slate-200 dark:border-white/5 bg-white/95 dark:bg-[#0c0c0e]/95 backdrop-blur-xl shrink-0 flex justify-center">
                <div className="text-[7px] md:text-[10px] font-black text-slate-300 dark:text-white/5 uppercase tracking-[0.4em]">
                  ORION_PRIME_V4.2_NODE

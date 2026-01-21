@@ -50,14 +50,20 @@ export const getBriefIntelligenceSummary = async (): Promise<string> => {
   }
 };
 
-// Fix: Implementation of streaming chat for the Orion Nexus assistant.
-// Returns an async iterable of content responses.
+// Streaming chat function for AI Nexus component to provide real-time investigative assistance.
 export const getStreamingChat = async (message: string) => {
-  return await ai.models.generateContentStream({
-    model: 'gemini-3-flash-preview',
-    contents: message,
-    config: {
-      systemInstruction: "You are Orion Nexus v4.2, an advanced cyber intelligence AI assistant. Provide precise, clinical analysis of threat actors, indicators of compromise (IOCs), and security grid status. Maintain a professional, objective tone appropriate for a senior OSINT investigator. Focus on factual accuracy and technical depth.",
-    }
-  });
+  try {
+    const response = await ai.models.generateContentStream({
+      model: 'gemini-3-pro-preview',
+      contents: message,
+      config: {
+        systemInstruction: "You are the Orion AI Nexus, a highly advanced intelligence OS assistant. You provide technical, objective, and clinical analysis for OSINT investigators. Use professional, neutral language. You specialize in threat actors, IOCs, and cyber security infrastructure.",
+        temperature: 0.7,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("AINexus Streaming Error:", error);
+    throw error;
+  }
 };

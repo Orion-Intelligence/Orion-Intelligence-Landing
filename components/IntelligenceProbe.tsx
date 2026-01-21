@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Loader2, Database, Shield, Search, 
@@ -40,7 +39,6 @@ const IntelligenceProbe: React.FC = () => {
       if (!response.ok) throw new Error("Connection failed");
       const data: StealerLogResponse = await response.json();
       
-      // Inject simulated analytics for richer UX if missing from API
       const enrichedData: StealerLogResponse = {
         ...data,
         intel_confidence: 94 + Math.floor(Math.random() * 5),
@@ -67,7 +65,6 @@ const IntelligenceProbe: React.FC = () => {
       <div className="h-full bg-white dark:bg-[#0d0d0f] border border-slate-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-xl flex flex-col">
         <div className="p-6 md:p-10 flex-grow flex flex-col overflow-y-auto no-scrollbar">
           
-          {/* Clean Search Form */}
           <form onSubmit={executeProbe} className="mb-8 shrink-0">
             <div className="relative group w-full">
               <div className="relative flex items-center">
@@ -97,12 +94,9 @@ const IntelligenceProbe: React.FC = () => {
             )}
           </form>
 
-          {/* Sleek Results Area */}
-          <div className="flex-grow flex flex-col justify-center min-h-[300px]">
+          <div className="flex-grow flex flex-col justify-center min-h-[350px]">
             {auditData ? (
               <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 space-y-6">
-                
-                {/* Summary Card */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="p-6 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 flex flex-col items-center text-center shadow-sm">
                     <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Risk Factor</span>
@@ -128,7 +122,6 @@ const IntelligenceProbe: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Briefing Section */}
                 <div className="p-8 rounded-xl bg-slate-900 dark:bg-black border border-slate-800 dark:border-white/5 shadow-2xl">
                   <div className="flex items-center gap-2 mb-4 text-blue-500">
                     <Activity className="w-4 h-4" />
