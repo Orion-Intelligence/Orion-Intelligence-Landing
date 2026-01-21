@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { 
   Globe, Search, Terminal, Database, ShieldAlert, Lock, 
@@ -33,7 +34,7 @@ const sourceData: IntelligenceSource[] = [
     'bertblogsoqmm4ow7nqyh5ik7etsmefdbf25stauecytvwy7tkgizhad.onion', 'black3gnkizshuynieigw6ejgpblb53mpasftzd6pydqpmq2vn2xf6yd.onion',
     'blogvl7tjyjvsfthobttze52w36wwiz34hrfcmorgvdzb6hikucb7aqd.onion', 'business_data_leaks', 'cicadabv7vicyvgz5khl7v2x5yygcgow7ryyy6yppwmxii4eoobdaztqd.onion',
     'csidb', 'darkfeed', 'darkleakyqmv62eweqwy4dnhaijg4m4dkburo73pzuqfdumcntqdokyd.onion',
-    'dataleakypypu7uwblm5kttv726l3iripago6p336xjnbstkjwrlnlid.onion', 'ddosecrets', 'ebhmkoohccl45qesdbvrjqtyro2hmhkmh6vkyfyjjzfllm3ix72aqaid.onion',
+    'dataleakypypu7uwblm5kttv726l3iripago6p336xjnbstkjwrlnlid.onion', 'bottom_up_leaks', 'ebhmkoohccl45qesdbvrjqtyro2hmhkmh6vkyfyjjzfllm3ix72aqaid.onion',
     'flock4cvoeqm4c62gyohvmncx6ck2e7ugvyqgyxqtrumklhd5ptwzpqd.onion', 'github_doormanbreach', 'gunrabxbig445sjqa535uaymzerj6fp4nwc6ngc2xughf2pedjdhk4ad.onion',
     'handala_hack', 'hptqq2o2qjva7lcaaq67w36jihzivkaitkexorauw7b2yul2z6zozpqd.onion',
     'hunters55atbdusuladzv7vzv6a423bkh6ksl2uftwrxyuarbzlfh7yd.onion', 'ijzn3sicrcy7guixkzjkib4ukbiilwc3xhnmby4mcbccnsd7j2rekvqd.onion',
@@ -138,49 +139,43 @@ const SourceInventory: React.FC = () => {
   };
 
   return (
-    <div className="py-12 animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out px-0 relative">
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10 opacity-30 w-screen left-1/2 -translate-x-1/2">
-        <div className="absolute inset-0" 
+    <div className="pt-20 pb-12 animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out px-0 relative">
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
+        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>
+        <div className="absolute inset-0 opacity-40 dark:opacity-100 transition-all duration-1000" 
              style={{ 
-               backgroundImage: `radial-gradient(1px 1px at 15% 15%, white, transparent),
-                                 radial-gradient(1.5px 1.5px at 25% 55%, white, transparent),
-                                 radial-gradient(1px 1px at 45% 25%, white, transparent),
-                                 radial-gradient(2px 2px at 65% 85%, white, transparent),
-                                 radial-gradient(1.2px 1.2px at 95% 15%, white, transparent),
-                                 radial-gradient(1.1px 1.1px at 50% 50%, white, transparent),
-                                 radial-gradient(1px 1px at 10% 80%, white, transparent),
-                                 radial-gradient(1.4px 1.4px at 80% 20%, white, transparent),
-                                 radial-gradient(1px 1px at 30% 90%, white, transparent),
-                                 radial-gradient(1.8px 1.8px at 20% 10%, white, transparent),
-                                 radial-gradient(1px 1px at 70% 40%, white, transparent),
-                                 radial-gradient(1.2px 1.2px at 5% 45%, white, transparent),
-                                 radial-gradient(1px 1px at 90% 90%, white, transparent),
-                                 radial-gradient(0.8px 0.8px at 35% 15%, white, transparent),
-                                 radial-gradient(1.3px 1.3px at 55% 85%, white, transparent),
-                                 radial-gradient(1px 1px at 15% 75%, white, transparent),
-                                 radial-gradient(1.2px 1.2px at 85% 35%, white, transparent),
-                                 radial-gradient(1.5px 1.5px at 40% 10%, white, transparent),
-                                 radial-gradient(1px 1px at 60% 95%, white, transparent),
-                                 radial-gradient(1.1px 1.1px at 5% 5%, white, transparent),
-                                 radial-gradient(1.2px 1.2px at 95% 95%, white, transparent),
-                                 radial-gradient(1px 1px at 50% 20%, white, transparent),
-                                 radial-gradient(1.3px 1.3px at 80% 80%, white, transparent),
-                                 radial-gradient(3px 3px at 15% 15%, rgba(59,130,246,0.1), transparent),
-                                 radial-gradient(4px 4px at 85% 85%, rgba(59,130,246,0.08), transparent),
-                                 repeating-radial-gradient(circle at center, transparent 0, transparent 200px, rgba(59,130,246,0.03) 201px, transparent 203px),
-                                 repeating-radial-gradient(circle at center, transparent 0, transparent 450px, rgba(59,130,246,0.02) 451px, transparent 454px)`,
-               backgroundSize: '400px 400px, 400px 400px, 400px 400px, 400px 400px, 400px 400px, 400px 400px, 300px 300px, 250px 250px, 350px 350px, 150px 150px, 450px 450px, 500px 500px, 380px 380px, 220px 220px, 420px 420px, 280px 280px, 310px 310px, 120px 120px, 180px 180px, 220px 220px, 280px 280px, 320px 320px, 380px 380px, 800px 800px, 1000px 1000px, 100% 100%, 100% 100%'
+               backgroundImage: `
+                 radial-gradient(circle at 15% 25%, rgba(59,130,246,0.12), transparent 50%),
+                 radial-gradient(circle at 85% 75%, rgba(217,70,239,0.1), transparent 50%),
+                 radial-gradient(1.5px 1.5px at 12% 12%, #fff, transparent),
+                 radial-gradient(1px 1px at 22% 82%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 72% 22%, #fff, transparent),
+                 radial-gradient(2px 2px at 92% 42%, #fff, transparent),
+                 radial-gradient(1.1px 1.1px at 37% 47%, #fff, transparent),
+                 radial-gradient(1.3px 1.3px at 67% 17%, #fff, transparent),
+                 radial-gradient(1px 1px at 47% 87%, #fff, transparent),
+                 radial-gradient(1.5px 1.5px at 17% 67%, #fff, transparent),
+                 radial-gradient(1.1px 1.1px at 85% 15%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 5% 95%, #fff, transparent),
+                 radial-gradient(1px 1px at 30% 10%, #fff, transparent),
+                 radial-gradient(1px 1px at 70% 90%, #fff, transparent),
+                 radial-gradient(1px 1px at 10% 70%, #fff, transparent),
+                 radial-gradient(1px 1px at 90% 30%, #fff, transparent),
+                 repeating-radial-gradient(circle at 20% 40%, transparent 0, transparent 150px, rgba(59,130,246,0.02) 151px, transparent 152px),
+                 repeating-radial-gradient(circle at 80% 60%, transparent 0, transparent 200px, rgba(59,130,246,0.02) 201px, transparent 202px),
+                 repeating-radial-gradient(circle at center, transparent 0, transparent 250px, rgba(59,130,246,0.03) 251px, transparent 253px)
+               `
              }}>
         </div>
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/5 blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-blue-500/5 blur-[150px] rounded-full"></div>
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 blur-[150px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-[1000px] h-[1000px] bg-blue-900/5 blur-[180px] rounded-full"></div>
       </div>
 
       <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12 px-4 md:px-0">
         <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[9px] font-bold uppercase tracking-[0.3em]">
+          <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[9px] font-black uppercase tracking-[0.3em]">
             <Database className="w-3 h-3" />
-            Extraction Core Directory
+            EXTRACTION_CORE_DIRECTORY
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">Source Inventory</h2>
           <p className="text-lg text-slate-500 dark:text-white/40 font-medium leading-relaxed">
@@ -225,10 +220,10 @@ const SourceInventory: React.FC = () => {
           <div 
             key={src.id} 
             onClick={() => handleSourceClick(src)}
-            className="group flex flex-row items-center gap-4 lg:gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-slate-200/70 dark:bg-[#0d0d0f]/60 border border-slate-300/60 dark:border-white/10 rounded-2xl transition-all cursor-pointer hover:bg-blue-100/40 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 shadow-sm dark:shadow-none backdrop-blur-3xl"
+            className="group relative flex flex-row items-center gap-4 lg:gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-slate-200/70 dark:bg-[#0d0d0f]/60 border border-slate-300/60 dark:border-white/10 rounded-2xl transition-all duration-300 cursor-pointer hover:bg-blue-100/40 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 hover:shadow-xl dark:hover:shadow-blue-500/5 backdrop-blur-3xl shadow-sm dark:shadow-none"
           >
             <div className="flex justify-start shrink-0">
-               <div className={`p-2 lg:p-2.5 rounded-xl border transition-colors ${
+               <div className={`p-2 lg:p-2.5 rounded-xl border transition-all duration-300 group-hover:scale-110 ${
                   src.type === 'onion' ? 'bg-purple-600/10 border-purple-600/20 text-purple-600' :
                   src.type === 'website' ? 'bg-green-600/10 border-green-600/20 text-green-600' :
                   'bg-blue-600/10 border-blue-600/20 text-blue-600'
@@ -240,7 +235,7 @@ const SourceInventory: React.FC = () => {
             </div>
 
             <div className="flex flex-col space-y-1 w-full min-w-0">
-              <h3 className="text-[12px] lg:text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors tracking-widest font-mono truncate">
+              <h3 className="text-[12px] lg:text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors tracking-widest font-mono truncate uppercase">
                 {src.name}
               </h3>
               <div className="flex items-center gap-2">
@@ -256,7 +251,7 @@ const SourceInventory: React.FC = () => {
 
             <div className="flex justify-end shrink-0">
               <div className="flex items-center gap-3 text-slate-300 dark:text-white/10 group-hover:text-blue-600 transition-colors">
-                <div className="p-2 rounded-lg bg-slate-100 dark:bg-white/5 group-hover:bg-blue-600/10 transition-colors">
+                <div className="p-2 rounded-lg bg-slate-100 dark:bg-white/5 group-hover:bg-blue-600/10 transition-all duration-300 group-hover:translate-x-1">
                   <ChevronRight className="w-4 h-4" />
                 </div>
               </div>
@@ -270,7 +265,7 @@ const SourceInventory: React.FC = () => {
           <div className="w-full max-w-lg bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 rounded-xl shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-hidden">
             <div className="px-10 py-8 border-b border-slate-100 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-white/[0.02]">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-xl bg-purple-600/10 dark:bg-purple-500/10 border border-purple-600/20 dark:border-purple-500/20">
+                <div className="p-3 rounded-xl bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20">
                   <ShieldAlert className="w-6 h-6 text-purple-600 dark:text-purple-500" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight uppercase">Security Advisory</h3>

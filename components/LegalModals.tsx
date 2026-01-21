@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { X, Shield, Lock, ScrollText, CheckCircle2 } from 'lucide-react';
 
@@ -17,15 +18,15 @@ const LegalModals: React.FC<LegalModalProps> = ({ isOpen, onClose, type }) => {
       body: (
         <div className="space-y-6">
           <section>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Zero-Knowledge Collection</h4>
+            <h3 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Zero-Knowledge Collection</h3>
             <p className="text-slate-600 dark:text-white/60 text-sm leading-relaxed font-medium">Orion Intelligence adheres to strict PII stripping protocols. All ingested data is normalized and scrubbed of non-essential identifiers unless explicitly required for investigative verification.</p>
           </section>
           <section>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Encryption at Rest</h4>
+            <h3 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Encryption at Rest</h3>
             <p className="text-slate-600 dark:text-white/60 text-sm leading-relaxed font-medium">All intelligence nodes utilize AES-256 encryption. Access keys are managed via hardware security modules (HSM) with no centralized persistence of client-specific decryption headers.</p>
           </section>
           <section>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Audit Logging</h4>
+            <h3 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Audit Logging</h3>
             <p className="text-slate-600 dark:text-white/60 text-sm leading-relaxed font-medium">Every query initiated through the Orion OSINT V4 environment is immutably logged for compliance auditing, ensuring transparent oversight of investigative activities.</p>
           </section>
         </div>
@@ -37,15 +38,15 @@ const LegalModals: React.FC<LegalModalProps> = ({ isOpen, onClose, type }) => {
       body: (
         <div className="space-y-6">
           <section>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Multi-Tenant Isolation</h4>
+            <h3 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Multi-Tenant Isolation</h3>
             <p className="text-slate-600 dark:text-white/60 text-sm leading-relaxed font-medium">Organizational data is siloed at the infrastructure layer. Cross-tenant leakage is prevented through hardware-level virtualization and strict network access control lists (ACLs).</p>
           </section>
           <section>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Mandatory 2FA</h4>
+            <h3 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Mandatory 2FA</h3>
             <p className="text-slate-600 dark:text-white/60 text-sm leading-relaxed font-medium">All administrative and investigative accounts require hardware-backed FIDO2/U2F or TOTP multi-factor authentication for environment entry.</p>
           </section>
           <section>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Role-Based Controls (RBAC)</h4>
+            <h3 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Role-Based Controls (RBAC)</h3>
             <p className="text-slate-600 dark:text-white/60 text-sm leading-relaxed font-medium">Granular permission sets define access to specific modules (e.g., Case Management vs. Raw Dark Web Scraping) to prevent unauthorized intelligence exposure.</p>
           </section>
         </div>
@@ -57,11 +58,11 @@ const LegalModals: React.FC<LegalModalProps> = ({ isOpen, onClose, type }) => {
       body: (
         <div className="space-y-6">
           <section>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Intelligence Standards</h4>
+            <h3 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Intelligence Standards</h3>
             <p className="text-slate-600 dark:text-white/60 text-sm leading-relaxed font-medium">Orion is fully compliant with STIX 2.1 and TAXII 2.1 protocols, enabling seamless interoperability with global ISACs and enterprise SIEM/SOAR platforms.</p>
           </section>
           <section>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Operational Frameworks</h4>
+            <h3 className="text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-widest text-[11px]">Operational Frameworks</h3>
             <p className="text-slate-600 dark:text-white/60 text-sm leading-relaxed font-medium">Our infrastructure aligns with ISO 27001 and SOC2 Type II controls. We utilize MITRE ATT&CK® tagging for all identified threat actor movements and IOCs.</p>
           </section>
           <section>
@@ -89,7 +90,7 @@ const LegalModals: React.FC<LegalModalProps> = ({ isOpen, onClose, type }) => {
             <div className="p-3 rounded-xl bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20">
               <active.icon className="w-6 h-6 text-blue-600 dark:text-blue-500" />
             </div>
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">{active.title}</h3>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">{active.title}</h2>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-colors text-slate-400 dark:text-white/40 hover:text-slate-900 dark:hover:text-white">
             <X className="w-6 h-6" />

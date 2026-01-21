@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { 
   ExternalLink, Globe, Search, Crosshair, 
@@ -40,7 +41,7 @@ const IconMap: Record<string, React.ElementType> = {
 const actors: ThreatActor[] = [
   { name: "Handala Hack", url: "https://handala-hack.to", imageKey: "handala", description: "Hacktivist “hack-and-leak” brand; politically motivated targeting under the Handala symbol.", category: "Defacement / Hacktivism", tags: ["Hacktivism", "Iran-linked"] },
   { name: "LockBit (Tor)", url: "http://lockbit7z2jwcskxpbokpemdxmltipntwlkmidcll2qirbu7ykg46eyd.onion/", imageKey: "lock", description: "Major RaaS double-extortion actor with long-running victim leak operations.", category: "Ransomware (RaaS)", tags: ["RaaS", "LockBit"] },
-  { name: "Akira (Tor)", url: "http://akiral2iz6a7qgd3ayp3l6yub7xx2uep76idk3u2kollpj5z3z636bad.onion/", imageKey: "akira", description: "Double-extortion ransomware group active since 2023 with dedicated leak site.", category: "Ransomware (RaaS)", tags: ["Akira", "Tor"] },
+  { name: "Akira (Tor)", url: "http://akiral2iz6a7getid.onion/", imageKey: "akira", description: "Double-extortion ransomware group active since 2023 with dedicated leak site.", category: "Ransomware (RaaS)", tags: ["Akira", "Tor"] },
   { name: "Rhysida (Tor)", url: "http://rhysidafohrhyy2aszi7bm32tnjat5xri65fopcxkdfxhi4tidsg7cad.onion/", imageKey: "centipede", description: "Double-extortion ransomware group; commonly branded with a centipede motif.", category: "Ransomware (RaaS)", tags: ["Rhysida", "Centipede"] },
   { name: "Hunters International (Tor)", url: "http://hunters55atbdusuladzv7vzv6a423bkh6ksl2uftwrxyuarbzlfh7yd.onion/", imageKey: "hunters", description: "RaaS-style extortion group emerging 2023; tracked across multiple intel vendors.", category: "Ransomware (RaaS)", tags: ["Hunters", "Tor"] },
   { name: "Everest (Tor)", url: "http://ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion/", imageKey: "everest", description: "Double-extortion ransomware actor active since ~2020 with Tor leak presence.", category: "Ransomware (RaaS)", tags: ["Everest", "Tor"] },
@@ -87,37 +88,44 @@ const ThreatActors: React.FC = () => {
   const categories = Array.from(new Set(actors.map(a => a.category)));
 
   return (
-    <div className="py-12 animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out relative">
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10 opacity-40 w-screen left-1/2 -translate-x-1/2">
-        <div className="absolute inset-0" 
+    <div className="pt-20 pb-12 animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out relative">
+      {/* Exact Background System from Pricing with Enhanced Solar Rings and Stars */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
+        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>
+        <div className="absolute inset-0 opacity-40 dark:opacity-100 transition-all duration-1000" 
              style={{ 
-               backgroundImage: `radial-gradient(1px 1px at 5% 5%, white, transparent),
-                                 radial-gradient(1.5px 1.5px at 15% 35%, white, transparent),
-                                 radial-gradient(1px 1px at 35% 65%, white, transparent),
-                                 radial-gradient(2px 2px at 75% 15%, white, transparent),
-                                 radial-gradient(1px 1px at 85% 75%, white, transparent),
-                                 radial-gradient(1.2px 1.2px at 55% 45%, white, transparent),
-                                 radial-gradient(1px 1px at 20% 80%, white, transparent),
-                                 radial-gradient(1.1px 1.1px at 40% 10%, white, transparent),
-                                 radial-gradient(1.3px 1.3px at 60% 90%, white, transparent),
-                                 radial-gradient(1.5px 1.5px at 90% 40%, white, transparent),
-                                 radial-gradient(3px 3px at 25% 25%, rgba(220,38,38,0.1), transparent),
-                                 radial-gradient(4px 4px at 75% 75%, rgba(217,70,239,0.08), transparent),
-                                 repeating-radial-gradient(circle at center, transparent 0, transparent 250px, rgba(59,130,246,0.04) 251px, transparent 253px),
-                                 repeating-radial-gradient(circle at center, transparent 0, transparent 500px, rgba(59,130,246,0.03) 501px, transparent 504px)`,
-               backgroundSize: '200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 300px 300px, 150px 150px, 450px 450px, 400px 400px, 800px 800px, 1000px 1000px, 100% 100%, 100% 100%'
+               backgroundImage: `
+                 radial-gradient(circle at 15% 25%, rgba(59,130,246,0.12), transparent 50%),
+                 radial-gradient(circle at 85% 75%, rgba(217,70,239,0.1), transparent 50%),
+                 radial-gradient(1.5px 1.5px at 12% 12%, #fff, transparent),
+                 radial-gradient(1px 1px at 22% 82%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 72% 22%, #fff, transparent),
+                 radial-gradient(2px 2px at 92% 42%, #fff, transparent),
+                 radial-gradient(1.1px 1.1px at 37% 47%, #fff, transparent),
+                 radial-gradient(1.3px 1.3px at 67% 17%, #fff, transparent),
+                 radial-gradient(1px 1px at 47% 87%, #fff, transparent),
+                 radial-gradient(1.5px 1.5px at 17% 67%, #fff, transparent),
+                 radial-gradient(1.1px 1.1px at 85% 15%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 5% 95%, #fff, transparent),
+                 radial-gradient(1px 1px at 40% 5%, #fff, transparent),
+                 radial-gradient(1px 1px at 60% 95%, #fff, transparent),
+                 radial-gradient(1px 1px at 5% 40%, #fff, transparent),
+                 radial-gradient(1px 1px at 95% 60%, #fff, transparent),
+                 repeating-radial-gradient(circle at 15% 15%, transparent 0, transparent 120px, rgba(59,130,246,0.02) 121px, transparent 122px),
+                 repeating-radial-gradient(circle at 85% 85%, transparent 0, transparent 180px, rgba(59,130,246,0.02) 181px, transparent 182px),
+                 repeating-radial-gradient(circle at center, transparent 0, transparent 200px, rgba(59,130,246,0.03) 201px, transparent 203px)
+               `
              }}>
         </div>
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-red-600/5 blur-[150px] rounded-full"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-blue-900/[0.03] blur-[200px] rounded-full"></div>
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 blur-[150px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-[1000px] h-[1000px] bg-blue-900/5 blur-[180px] rounded-full"></div>
       </div>
 
       <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12 px-4 md:px-0">
         <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[9px] font-bold uppercase tracking-[0.3em]">
+          <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[9px] font-black uppercase tracking-[0.3em]">
             <Crosshair className="w-3.5 h-3.5" />
-            Adversary Intelligence OS
+            ADVERSARY_INTELLIGENCE_OS
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">Threat Inventory</h2>
           <p className="text-lg text-slate-500 dark:text-white/40 font-medium leading-relaxed">
@@ -150,7 +158,7 @@ const ThreatActors: React.FC = () => {
           <button 
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`px-5 py-2 rounded-lg text-[10px) font-bold uppercase tracking-widest transition-all border ${activeCategory === cat ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-100 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white'}`}
+            className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${activeCategory === cat ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-100 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white'}`}
           >
             {cat.split(' ')[0]}
           </button>
@@ -171,12 +179,12 @@ const ThreatActors: React.FC = () => {
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex flex-col flex-1 min-w-0 space-y-1">
-                  <h3 className="text-[13px] lg:text-[14px] font-bold text-slate-900 dark:text-white tracking-widest group-hover:text-blue-600 transition-colors truncate font-mono">
+                  <h3 className="text-[13px] lg:text-[14px] font-bold text-slate-900 dark:text-white tracking-widest group-hover:text-blue-600 transition-colors truncate font-mono uppercase">
                     {actor.name}
                   </h3>
                   <div className="flex items-center gap-2">
                     <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${
-                      actor.category.includes('Ransomware') ? 'text-red-500' :
+                      actor.category.includes('Ransomware') ? 'text-blue-600 dark:text-blue-400' :
                       isDefacement ? 'text-purple-500' :
                       'text-slate-400'
                     }`}>
