@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Terminal, Code2, Database, Shield, Globe, Search, Command, ChevronRight, Copy, Check, Info, FileJson, Zap, Network, MessageSquare, Share2, Scan, FileText, Smartphone, LayoutGrid, ListFilter, Bug, ShieldAlert, Newspaper, Users, UserCheck } from 'lucide-react';
 
@@ -363,7 +364,7 @@ const ApiDocumentation: React.FC = () => {
     <div className="flex flex-col md:flex-row md:h-[calc(100vh-80px)] md:overflow-hidden animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out">
       {/* Sidebar Navigation */}
       <aside className="w-full md:w-72 lg:w-80 border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-black/20 overflow-y-auto no-scrollbar flex flex-col shrink-0">
-        <div className="p-8 border-b border-slate-200 dark:border-white/5 bg-white/[0.01]">
+        <div className="p-8 border-b border-slate-200 dark:border-white/5 bg-white/[0.01] animate-in fade-in slide-in-from-left-2 duration-700">
           <div className="flex items-center gap-3 text-blue-600 dark:text-blue-500 mb-2">
             <Code2 className="w-5 h-5" />
             <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Protocol V4.2.0</span>
@@ -372,18 +373,23 @@ const ApiDocumentation: React.FC = () => {
         </div>
 
         <nav className="flex-1 p-6 space-y-10 md:pb-20">
-          {categories.map(cat => (
-            <div key={cat.name} className="space-y-4">
+          {categories.map((cat, catIdx) => (
+            <div 
+              key={cat.name} 
+              className="space-y-4 animate-in fade-in slide-in-from-left-2"
+              style={{ animationDelay: `${catIdx * 80}ms`, animationFillMode: 'both' }}
+            >
               <div className="flex items-center gap-3 px-2">
                 <cat.icon className="w-3.5 h-3.5 text-slate-300 dark:text-white/20" />
                 <h2 className="text-[9px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-[0.2em]">{cat.label}</h2>
               </div>
               <div className="space-y-1">
-                {endpoints.filter(e => e.category === cat.name).map(e => (
+                {endpoints.filter(e => e.category === cat.name).map((e, eIdx) => (
                   <button
                     key={e.id}
                     onClick={() => setActiveId(e.id)}
-                    className={`w-full text-left px-4 py-2.5 rounded-xl text-[11px] font-bold transition-all flex items-center justify-between group ${
+                    style={{ animationDelay: `${(catIdx * 80) + (eIdx * 40)}ms`, animationFillMode: 'both' }}
+                    className={`w-full text-left px-4 py-2.5 rounded-xl text-[11px] font-bold transition-all flex items-center justify-between group animate-in fade-in slide-in-from-left-1 ${
                       activeId === e.id ? 'bg-blue-600/10 dark:bg-blue-600/10 text-blue-600 dark:text-white border border-blue-600/20 dark:border-blue-500/20 shadow-lg shadow-blue-500/5' : 'text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.02] border border-transparent'
                     }`}
                   >
@@ -396,7 +402,7 @@ const ApiDocumentation: React.FC = () => {
           ))}
         </nav>
 
-        <div className="hidden md:block p-6 border-t border-slate-200 dark:border-white/5 bg-white/[0.01]">
+        <div className="hidden md:block p-6 border-t border-slate-200 dark:border-white/5 bg-white/[0.01] animate-in fade-in duration-1000">
            <div className="flex items-center gap-3 p-4 rounded-xl bg-blue-600/5 dark:bg-blue-500/5 border border-blue-600/10 dark:border-blue-500/10">
               <div className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
               <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest leading-none">GRID STATUS: PRODUCTION</span>
@@ -405,10 +411,10 @@ const ApiDocumentation: React.FC = () => {
       </aside>
 
       {/* Main Documentation Area */}
-      <main className="flex-1 overflow-y-auto bg-white dark:bg-[#0a0a0c] p-6 md:p-10 lg:p-20 no-scrollbar">
+      <main className="flex-1 overflow-y-auto bg-white dark:bg-[#0a0a0c] p-6 md:p-10 lg:p-20 no-scrollbar animate-in fade-in slide-in-from-right-1 duration-700">
         <article className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="mb-12 lg:mb-16 space-y-6 lg:space-y-8">
+          <div className="mb-12 lg:mb-16 space-y-6 lg:space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
             <div className="flex flex-wrap items-center gap-3 lg:gap-4">
               <span className={`px-3 lg:px-4 py-1.5 rounded-lg text-[9px] lg:text-[10px] font-black uppercase tracking-widest border shadow-lg ${
                 activeEndpoint.method === 'GET' ? 'bg-blue-600/10 text-blue-600 border-blue-600/20' : 'bg-green-600/10 text-green-600 border-green-600/20'
@@ -429,7 +435,7 @@ const ApiDocumentation: React.FC = () => {
 
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             {/* Left Panel: Request Details */}
-            <div className="space-y-8 lg:space-y-12">
+            <div className="space-y-8 lg:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
               <section className="space-y-4 lg:space-y-6">
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-xl">
@@ -489,7 +495,7 @@ const ApiDocumentation: React.FC = () => {
             </div>
 
             {/* Right Panel: Example Response */}
-            <div className="space-y-6 lg:space-y-8 sticky top-0">
+            <div className="space-y-6 lg:space-y-8 sticky top-0 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
               <div className="flex items-center gap-3">
                 <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-xl">
                   <FileJson className="w-4 h-4 text-green-600 dark:text-green-500" />
