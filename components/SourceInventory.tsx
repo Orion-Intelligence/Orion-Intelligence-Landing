@@ -1,7 +1,9 @@
+
 import React, { useState, useMemo } from 'react';
 import { 
   Globe, Search, Terminal, Database, ShieldAlert, Lock, 
-  ExternalLink, ChevronRight, Fingerprint, AlertTriangle, X, HelpCircle
+  ExternalLink, ChevronRight, Fingerprint, AlertTriangle, X, HelpCircle,
+  ArrowLeft, Radar, Activity, Network, Laptop, ListTree, BarChart3, Zap
 } from 'lucide-react';
 
 type SourceType = 'onion' | 'website' | 'script';
@@ -21,7 +23,7 @@ const sourceData: IntelligenceSource[] = [
   // EXPLOIT (Clearnet)
   ...['0dayfans', 'anyrun_malwaretrends', 'cisa', 'cxsecurity', 'cybergcca', 'exploitdb', 'github_trickest_cve', 'inthewild', 'kb_cert', 'rapid7', 'sploitus', 'talosintelligence'].map(s => ({ raw: s, category: 'Exploit' })),
   // API (Mixed)
-  ...['breachdbsztfykg2fdaq2gnqnxfsbj5d35byz3yzj73hazydk4vq72qd.onion', 'pcgame_mod.py', 'pagespeed_seo_check.py', 'apk_mod.py', 'pakdbwftdzn3xwslrzewbtsju63wep2xn37klmhqjuynp554vhjtdiad.onion', 'username_checker.py'].map(s => ({ raw: s, category: 'API' })),
+  ...['breachdbsztfykg2fdaq2gnqnxfsbj5d35byz3yzj73hazydk4vq72qd.onion', 'pcgame_mod.py', 'pagespeed_seo_check.py', 'apk_mod.py', 'pakdbwftdzn3xwslrzewbtsju63wep2xn37klmh community_checker.py', 'username_checker.py'].map(s => ({ raw: s, category: 'API' })),
   // TRACKING (Clearnet)
   ...['acn', 'cert', 'certeu', 'certgovua', 'csocybercrime_tracking', 'cyber', 'cybernewsksa', 'idsirtii', 'incibe', 'msb', 'ncsc', 'ncsc_swed', 'ncscuk', 'nsm', 'nukibgovcz', 'public_tableau', 'thaicert'].map(s => ({ raw: s, category: 'Tracking' })),
   // LEAKS (Onion)
@@ -69,10 +71,16 @@ interface FormattedSource {
   url: string;
 }
 
-const SourceInventory: React.FC = () => {
+interface SourceInventoryProps {
+  onBack: () => void;
+}
+
+const SourceInventory: React.FC<SourceInventoryProps> = ({ onBack }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [torTarget, setTorTarget] = useState<string | null>(null);
+
+  const cardStyle = "bg-white/40 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-xl shadow-sm backdrop-blur-md transition-all duration-300";
 
   const formattedSources = useMemo(() => {
     return sourceData.map((src, idx) => {
@@ -137,171 +145,218 @@ const SourceInventory: React.FC = () => {
     }
   };
 
+  const stats = [
+    { label: 'Extraction Nodes', val: sourceData.length, color: 'text-red-600 dark:text-red-500', icon: Database, meta: 'Active' },
+    { label: 'Deep Web Access', val: formattedSources.filter(s => s.type === 'onion').length, color: 'text-slate-900 dark:text-white', icon: Lock, meta: 'Onion_v3' },
+    { label: 'Automated Modules', val: formattedSources.filter(s => s.type === 'script').length, color: 'text-slate-900 dark:text-white', icon: Terminal, meta: 'Heuristic' },
+    { label: 'Ingestion Rate', val: '1.4TB', color: 'text-slate-900 dark:text-white', icon: Activity, meta: 'Daily' }
+  ];
+
   return (
-    <div className="pt-20 pb-12 animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out px-0 relative">
+    <div className="relative min-h-screen -mt-20 lg:-mt-32 pt-32 pb-32 overflow-visible animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out">
+      
+      {/* Red-ish Clinical Galaxy Background */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
-        <div className="absolute inset-0 bg-slate-50 dark:bg-[#08080a] transition-colors duration-700"></div>
-        
-        {/* Galaxy Layer - Lightened and enriched with more stars and rings */}
-        <div className="absolute inset-0 opacity-70 dark:opacity-100 transition-all duration-1000" 
+        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>
+        <div className="absolute inset-0 opacity-40 dark:opacity-100 transition-all duration-1000" 
              style={{ 
                backgroundImage: `
-                 radial-gradient(circle at 15% 25%, rgba(59,130,246,0.12), transparent 50%),
-                 radial-gradient(circle at 85% 75%, rgba(217,70,239,0.1), transparent 50%),
-                 radial-gradient(1.2px 1.2px at 8% 15%, #fff, transparent),
-                 radial-gradient(1px 1px at 15% 45%, #fff, transparent),
-                 radial-gradient(1.1px 1.1px at 25% 75%, #fff, transparent),
-                 radial-gradient(1.3px 1.3px at 35% 25%, #fff, transparent),
-                 radial-gradient(1px 1px at 45% 85%, #fff, transparent),
-                 radial-gradient(1.5px 1.5px at 55% 35%, #fff, transparent),
-                 radial-gradient(1px 1px at 65% 15%, #fff, transparent),
-                 radial-gradient(1.2px 1.2px at 75% 65%, #fff, transparent),
-                 radial-gradient(1.4px 1.4px at 85% 45%, #fff, transparent),
-                 radial-gradient(1px 1px at 95% 85%, #fff, transparent),
-                 radial-gradient(1.3px 1.3px at 10% 90%, #fff, transparent),
-                 radial-gradient(1.1px 1.1px at 40% 10%, #fff, transparent),
-                 radial-gradient(1.5px 1.5px at 70% 20%, #fff, transparent),
-                 radial-gradient(1px 1px at 90% 10%, #fff, transparent),
-                 radial-gradient(1.4px 1.4px at 30% 50%, #fff, transparent),
-                 radial-gradient(1.2px 1.2px at 60% 80%, #fff, transparent),
-                 repeating-radial-gradient(circle at 25% 35%, transparent 0, transparent 100px, rgba(59,130,246,0.04) 101px, transparent 103px),
-                 repeating-radial-gradient(circle at 75% 65%, transparent 0, transparent 200px, rgba(59,130,246,0.03) 201px, transparent 203px),
-                 repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 300px, rgba(59,130,246,0.02) 301px, transparent 304px),
-                 repeating-radial-gradient(circle at center, transparent 0, transparent 450px, rgba(59,130,246,0.015) 451px, transparent 455px),
-                 repeating-radial-gradient(circle at 15% 85%, transparent 0, transparent 150px, rgba(59,130,246,0.02) 151px, transparent 153px)
+                 radial-gradient(circle at 15% 25%, rgba(220,38,38,0.08), transparent 50%),
+                 radial-gradient(circle at 85% 75%, rgba(217,70,239,0.06), transparent 50%),
+                 radial-gradient(1.5px 1.5px at 12% 12%, #fff, transparent),
+                 radial-gradient(1px 1px at 22% 82%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 72% 22%, #fff, transparent),
+                 radial-gradient(2px 2px at 92% 42%, #fff, transparent),
+                 radial-gradient(1.1px 1.1px at 37% 47%, #fff, transparent),
+                 radial-gradient(1.3px 1.3px at 67% 17%, #fff, transparent),
+                 radial-gradient(1px 1px at 47% 87%, #fff, transparent),
+                 radial-gradient(1.5px 1.5px at 17% 67%, #fff, transparent),
+                 radial-gradient(1.1px 1.1px at 85% 15%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 5% 95%, #fff, transparent),
+                 repeating-radial-gradient(circle at center, transparent 0, transparent 200px, rgba(220,38,38,0.02) 201px, transparent 203px)
                `
              }}>
         </div>
-        <div className="absolute top-0 right-0 w-[950px] h-[950px] bg-blue-500/12 blur-[170px] rounded-full"></div>
-        <div className="absolute bottom-0 left-0 w-[1150px] h-[1150px] bg-blue-900/8 blur-[200px] rounded-full"></div>
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-red-500/5 blur-[150px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-[1000px] h-[1000px] bg-red-900/5 blur-[180px] rounded-full"></div>
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12 px-4 md:px-0">
-        <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[9px] font-black uppercase tracking-[0.3em]">
-            <Database className="w-3 h-3" />
-            EXTRACTION_CORE_DIRECTORY
-          </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">Source Inventory</h2>
-          <p className="text-lg text-slate-500 dark:text-white/40 font-medium leading-relaxed">
-            Clinical mapping of {sourceData.length} extraction nodes across the clearnet, deep web, and automated investigative modules.
-          </p>
-        </div>
-      </div>
-
-      <div className="mb-8 px-4 md:px-0">
-        <div className="relative group w-full lg:max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/20 group-focus-within:text-blue-500 transition-colors" />
-          <input 
-            type="text"
-            placeholder="FILTER SOURCES..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-12 pr-6 py-3 bg-white/60 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-white/10 focus:border-blue-600/40 focus:ring-0 w-full backdrop-blur-md"
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-3 mb-8 px-4 md:px-0">
-        <button 
-          onClick={() => setSelectedCategory(null)}
-          className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${!selectedCategory ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/60 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white backdrop-blur-md'}`}
-        >
-          Total ({sourceData.length})
-        </button>
-        {categories.map(cat => (
-          <button 
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${selectedCategory === cat ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/60 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white backdrop-blur-md'}`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 md:px-0">
-        {filtered.map((src) => (
-          <div 
-            key={src.id} 
-            onClick={() => handleSourceClick(src)}
-            className="group relative flex flex-col gap-4 px-4 lg:px-6 py-4 lg:py-5 bg-white/70 dark:bg-[#0d0d0f]/60 border border-slate-200 dark:border-white/10 rounded-2xl transition-all duration-300 hover:bg-blue-50/50 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 cursor-pointer backdrop-blur-3xl shadow-sm dark:shadow-none"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex flex-col flex-1 min-w-0 space-y-1">
-                <h3 className="text-[12px] lg:text-[13px] font-bold text-slate-900 dark:text-white tracking-widest group-hover:text-blue-600 transition-colors truncate font-mono uppercase">
-                  {src.name}
-                </h3>
-                <div className="flex items-center gap-2">
-                  <span className="text-[8px] font-black text-slate-400 dark:text-white/20 uppercase tracking-[0.2em]">{src.category}</span>
-                  <div className={`px-2 py-0.5 rounded-lg text-[7px] font-black uppercase tracking-widest border ${
-                    src.type === 'onion' ? 'bg-purple-600/10 border-purple-600/20 text-purple-600' :
-                    src.type === 'script' ? 'bg-blue-600/10 border-blue-600/20 text-blue-600' :
-                    'bg-green-600/10 border-green-600/20 text-green-600'
-                  }`}>
-                    {src.type}
-                  </div>
+      <div className="relative z-10 space-y-8 px-2 md:px-3 lg:px-8 max-w-[1600px] mx-auto">
+        
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-slate-200 dark:border-white/5">
+          <div className="space-y-6">
+            <button 
+              onClick={onBack}
+              className="inline-flex items-center gap-2 text-slate-500 dark:text-white/40 hover:text-red-600 transition-colors text-[10px] font-black uppercase tracking-[0.2em] group bg-white dark:bg-white/5 px-4 py-2 rounded-full border border-slate-200 dark:border-white/10 shadow-sm"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" />
+              Return to Core Node
+            </button>
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center gap-3">
+                <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-none uppercase">Extraction Infrastructure</h2>
+                <div className="px-3 py-1 rounded-lg border text-[9px] font-black uppercase tracking-widest flex items-center gap-2 bg-red-500/10 border-red-500/20 text-red-600">
+                  <div className="w-1 h-1 rounded-full bg-red-500 animate-pulse"></div>
+                  Clinical Sources
                 </div>
               </div>
-              <div className={`p-2 rounded-lg border transition-all ${
-                src.type === 'onion' ? 'bg-purple-600/5 border-purple-600/10 text-purple-600' :
-                src.type === 'script' ? 'bg-blue-600/5 border-blue-600/10 text-blue-600' :
-                'bg-green-600/5 border-green-600/10 text-green-600'
-              } group-hover:scale-110`}>
-                {src.type === 'onion' ? <Lock className="w-3.5 h-3.5" /> : 
-                 src.type === 'script' ? <Terminal className="w-3.5 h-3.5" /> : 
-                 <Globe className="w-3.5 h-3.5" />}
+              <div className="flex items-center gap-3 py-4 bg-transparent max-w-xl">
+                <div className="p-2.5 rounded-lg bg-red-600/5 text-red-600">
+                  <ListTree className="w-4.5 h-4.5" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-lg md:text-xl font-mono text-slate-900 dark:text-white font-bold tracking-tight">EXTRACTION_CORE_DIRECTORY</span>
+                  <span className="text-[9px] text-slate-400 dark:text-white/30 uppercase font-black tracking-widest">Sovereign Source Map v4.2</span>
+                </div>
               </div>
             </div>
           </div>
-        ))}
+
+          <div className="flex gap-3">
+            <div className="px-6 py-3 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-xl">
+              Node_v4.2.0 <Activity className="w-3.5 h-3.5" />
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
+          {stats.map((stat, i) => (
+            <div key={i} className={`${cardStyle} p-4 md:p-6 space-y-3`}>
+              <div className="flex items-center gap-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest text-red-500/60">
+                <stat.icon className="w-3.5 h-3.5" />
+                {stat.label}
+              </div>
+              <div className="flex items-end gap-2">
+                <span className={`text-2xl md:text-3xl font-black tracking-tighter ${stat.color}`}>{stat.val}</span>
+                <span className="text-[9px] font-black text-slate-400 uppercase mb-1">{stat.meta}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Filters and List Section */}
+        <div className="grid lg:grid-cols-12 gap-6 items-start">
+          <div className="lg:col-span-12 space-y-6">
+            <div className={`${cardStyle} p-4 md:p-5 lg:p-8 space-y-8 bg-slate-50/50 dark:bg-white/[0.01]`}>
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 border-b border-slate-200 dark:border-white/5 pb-8">
+                <div className="relative group w-full lg:max-w-md">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/20 group-focus-within:text-red-500 transition-colors" />
+                  <input 
+                    type="text"
+                    placeholder="FILTER SOURCES..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-12 pr-6 py-3 bg-white/60 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-white/10 focus:border-red-600/40 focus:ring-0 w-full"
+                  />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button 
+                    onClick={() => setSelectedCategory(null)}
+                    className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${!selectedCategory ? 'bg-red-600 border-red-500 text-white shadow-lg' : 'bg-white/60 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-red-900 dark:hover:text-white'}`}
+                  >
+                    All ({sourceData.length})
+                  </button>
+                  {categories.map(cat => (
+                    <button 
+                      key={cat}
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${selectedCategory === cat ? 'bg-red-600 border-red-500 text-white shadow-lg' : 'bg-white/60 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-red-900 dark:hover:text-white'}`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4">
+                {filtered.map((src) => (
+                  <div 
+                    key={src.id} 
+                    onClick={() => handleSourceClick(src)}
+                    className="group relative flex flex-col gap-6 p-4 md:p-6 bg-white/60 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 rounded-xl transition-all duration-300 hover:bg-red-50/30 dark:hover:bg-red-900/10 hover:border-red-500/30 cursor-pointer shadow-sm"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex flex-col flex-1 min-w-0 space-y-1">
+                        <h3 className="text-[12px] md:text-[13px] font-bold text-slate-900 dark:text-white tracking-widest group-hover:text-red-600 transition-colors truncate font-mono uppercase">
+                          {src.name}
+                        </h3>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[8px] font-black text-slate-400 dark:text-white/20 uppercase tracking-[0.2em]">{src.category}</span>
+                          <div className={`px-2 py-0.5 rounded-lg text-[7px] font-black uppercase tracking-widest border ${
+                            src.type === 'onion' ? 'bg-purple-600/10 border-purple-600/20 text-purple-600' :
+                            src.type === 'script' ? 'bg-red-600/10 border-red-600/20 text-red-600' :
+                            'bg-green-600/10 border-green-600/20 text-green-600'
+                          }`}>
+                            {src.type}
+                          </div>
+                        </div>
+                      </div>
+                      <div className={`p-2 rounded-lg border transition-all ${
+                        src.type === 'onion' ? 'bg-purple-600/5 border-purple-600/10 text-purple-600' :
+                        src.type === 'script' ? 'bg-red-600/5 border-red-600/10 text-red-600' :
+                        'bg-green-600/5 border-green-600/10 text-green-600'
+                      } group-hover:scale-110 shadow-sm shrink-0`}>
+                        {src.type === 'onion' ? <Lock className="w-3.5 h-3.5 md:w-4 h-4" /> : 
+                         src.type === 'script' ? <Terminal className="w-3.5 h-3.5 md:w-4 h-4" /> : 
+                         <Globe className="w-3.5 h-3.5 md:w-4 h-4" />}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {filtered.length === 0 && (
+                <div className="py-24 md:py-32 flex flex-col items-center justify-center text-center space-y-6 px-4">
+                   <div className="p-8 rounded-full bg-white/60 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 shadow-sm">
+                      <HelpCircle className="w-12 h-12 text-slate-200 dark:text-white/5" strokeWidth={0.5} />
+                   </div>
+                   <div className="space-y-2">
+                     <h4 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-[0.2em]">No Sources Matched</h4>
+                     <p className="text-slate-500 dark:text-white/30 text-sm font-medium">No intelligence nodes found matching your current filters.</p>
+                   </div>
+                   <button 
+                     onClick={() => { setSearchTerm(''); setSelectedCategory(null); }}
+                     className="px-8 py-3 bg-red-600 text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-red-500 transition-all shadow-xl active:scale-95"
+                   >
+                     Clear Matrix Filters
+                   </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
 
-      {filtered.length === 0 && (
-        <div className="py-32 flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in duration-500">
-           <div className="p-8 rounded-full bg-white/60 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 shadow-sm backdrop-blur-md">
-              <HelpCircle className="w-12 h-12 text-slate-200 dark:text-white/5" strokeWidth={0.5} />
-           </div>
-           <div className="space-y-2">
-             <h4 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-[0.2em]">No Sources Matched</h4>
-             <p className="text-slate-500 dark:text-white/30 text-sm font-medium">No intelligence nodes found matching your current filter parameters.</p>
-           </div>
-           <button 
-             onClick={() => { setSearchTerm(''); setSelectedCategory(null); }}
-             className="px-8 py-3 bg-blue-600 text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-blue-500 transition-all shadow-xl shadow-blue-500/20 active:scale-95"
-           >
-             Clear Filters
-           </button>
-        </div>
-      )}
-
+      {/* Warning Popup Component */}
       {torTarget && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
-          <div className="w-full max-w-lg bg-white dark:bg-[#0a0a0c] border border-slate-200 dark:border-white/10 rounded-3xl shadow-2xl overflow-hidden">
-            <div className="px-8 py-6 border-b border-slate-100 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-white/[0.02]">
-              <div className="flex items-center gap-3">
-                <ShieldAlert className="w-5 h-5 text-purple-600" />
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight uppercase">Network Warning</h3>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-900/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="w-full max-w-lg bg-white dark:bg-[#131315] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden p-6 md:p-8 space-y-8">
+            <div className="flex flex-col items-center text-center space-y-6">
+              <div className="p-4 rounded-xl bg-purple-600/10 dark:bg-purple-500/10 border border-purple-600/20 dark:border-purple-500/20 text-purple-600">
+                <AlertTriangle className="w-8 h-8" />
               </div>
-              <button onClick={() => setTorTarget(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-colors text-slate-400">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-8 space-y-6">
-              <div className="space-y-3">
-                <p className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-widest">Tor Protocol Required</p>
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight uppercase">Tor Protocol Required</h3>
                 <p className="text-sm text-slate-600 dark:text-white/40 leading-relaxed font-medium">
-                  The target node <code className="text-purple-600 font-bold">{torTarget}</code> is only accessible via the Tor network. 
+                  The target node <code className="text-purple-600 font-bold break-all">{torTarget}</code> is only accessible via the Tor network. Ensure you are using a clinical, hardened browser instance.
                 </p>
               </div>
-              <div className="p-4 rounded-xl bg-purple-600/5 border border-purple-600/10 text-[10px] text-purple-600 font-bold uppercase tracking-widest flex items-start gap-3">
-                <AlertTriangle className="w-4 h-4 shrink-0" />
-                <span>Operational Security: Ensure you are using a clinical, hardened browser instance before proceeding.</span>
-              </div>
             </div>
-            <div className="px-8 py-6 border-t border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/[0.01] flex justify-end gap-3">
-              <button onClick={() => setTorTarget(null)} className="px-6 py-2.5 bg-slate-200 dark:bg-white/5 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl">Close</button>
-              <button onClick={() => { window.open(torTarget!, '_blank'); setTorTarget(null); }} className="px-6 py-2.5 bg-purple-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-purple-600/20">Launch Instance</button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button 
+                onClick={() => setTorTarget(null)}
+                className="flex-1 py-3 px-6 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest hover:bg-slate-200 dark:hover:bg-white/10 transition-all"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => { window.open(torTarget!, '_blank'); setTorTarget(null); }}
+                className="flex-1 py-3 px-6 rounded-xl bg-purple-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-purple-500 transition-all shadow-lg"
+              >
+                Launch Instance
+              </button>
             </div>
           </div>
         </div>

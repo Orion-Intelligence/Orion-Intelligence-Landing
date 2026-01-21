@@ -1,3 +1,4 @@
+
 import { GoogleGenAI } from "@google/genai";
 
 // Always use const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
@@ -50,20 +51,14 @@ export const getBriefIntelligenceSummary = async (): Promise<string> => {
   }
 };
 
-// Streaming chat function for AI Nexus component to provide real-time investigative assistance.
+// Start a streaming chat session with Orion Nexus AI.
 export const getStreamingChat = async (message: string) => {
-  try {
-    const response = await ai.models.generateContentStream({
-      model: 'gemini-3-pro-preview',
-      contents: message,
-      config: {
-        systemInstruction: "You are the Orion AI Nexus, a highly advanced intelligence OS assistant. You provide technical, objective, and clinical analysis for OSINT investigators. Use professional, neutral language. You specialize in threat actors, IOCs, and cyber security infrastructure.",
-        temperature: 0.7,
-      },
-    });
-    return response;
-  } catch (error) {
-    console.error("AINexus Streaming Error:", error);
-    throw error;
-  }
+  return await ai.models.generateContentStream({
+    model: 'gemini-3-flash-preview',
+    contents: message,
+    config: {
+      systemInstruction: "You are Orion Nexus, a high-fidelity threat intelligence AI assistant. You provide clinical, objective, and technical analysis of cyber threats, actors, and infrastructure. Avoid alarmist language. Use technical terminology appropriate for OSINT investigators.",
+      temperature: 0.7,
+    }
+  });
 };

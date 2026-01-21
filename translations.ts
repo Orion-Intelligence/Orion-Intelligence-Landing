@@ -4,7 +4,7 @@ export type Language = 'en' | 'fr' | 'de' | 'es' | 'it';
 export const translations = {
   en: {
     // Nav
-    nav_intelligence_os: "Intelligence OS",
+    nav_intelligence_os: "Homepage",
     nav_adversaries: "Adversaries",
     nav_sources: "Sources",
     nav_api_docs: "API Docs",
@@ -76,7 +76,7 @@ export const translations = {
     footer_copy: "© 2025 Orion Intelligence"
   },
   fr: {
-    nav_intelligence_os: "OS d'Intelligence",
+    nav_intelligence_os: "Accueil",
     nav_adversaries: "Adversaires",
     nav_sources: "Sources",
     nav_api_docs: "Docs API",
@@ -140,7 +140,7 @@ export const translations = {
     footer_copy: "© 2025 Orion Intelligence"
   },
   de: {
-    nav_intelligence_os: "Intelligence OS",
+    nav_intelligence_os: "Homepage",
     nav_adversaries: "Gegner",
     nav_sources: "Quellen",
     nav_api_docs: "API-Dokumentation",
@@ -195,7 +195,7 @@ export const translations = {
     contact_hq: "Hauptquartier Lahore",
     contact_hub: "Sydney Hub",
     contact_call: "Rufen Sie uns an",
-    contact_email: "E-Mail",
+    contact_email: "E-mail",
     contact_button: "Strategisches Onboarding Buchen",
     footer_platform: "Plattform",
     footer_intelligence: "Intelligenz",
@@ -204,7 +204,7 @@ export const translations = {
     footer_copy: "© 2025 Orion Intelligence"
   },
   es: {
-    nav_intelligence_os: "OS de Inteligencia",
+    nav_intelligence_os: "Inicio",
     nav_adversaries: "Adversarios",
     nav_sources: "Fuentes",
     nav_api_docs: "Docs API",
@@ -222,7 +222,7 @@ export const translations = {
     core_subtitle: "Plataforma de Defensa Unificada",
     core_desc: "Infraestructura de alta fidelidad para operaciones de inteligencia soberana y descubrimiento de amenazas organizativas",
     core_f1_title: "Licenciamiento por Niveles",
-    core_f1_desc: "Niveles de acceso, renovaciones, validación y desbloqueo de funciones por actualización.",
+    core_f1_desc: "Niveles de acceso, renovaciones, validaciones y desbloqueos de funciones por actualización.",
     core_f2_title: "Panel de Empresa",
     core_f2_desc: "Alertas centrales, filtros, desgloses, evidencia y acciones recomendadas.",
     core_f3_title: "Gestión de Casos",
@@ -268,7 +268,7 @@ export const translations = {
     footer_copy: "© 2025 Orion Intelligence"
   },
   it: {
-    nav_intelligence_os: "OS di Intelligence",
+    nav_intelligence_os: "Homepage",
     nav_adversaries: "Avversari",
     nav_sources: "Fonti",
     nav_api_docs: "Documentazione API",

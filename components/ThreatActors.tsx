@@ -1,252 +1,232 @@
-import React, { useState, useMemo } from 'react';
+
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
-  ExternalLink, Globe, Search, Crosshair, 
-  Terminal, LockKeyhole, Zap, Bug, Cpu, 
-  Scissors, Activity, TriangleAlert, HelpCircle,
-  Target, AlertOctagon, Ghost, Bot, Skull, 
-  Flame, Sword, Radiation, Network, Moon, 
-  Mountain, User, ShieldCheck, Dna, Tornado,
-  ChevronRight, Info
+  Search, Crosshair, Terminal, Lock, Zap, 
+  Bug, Cpu, Activity, HelpCircle, Target, AlertOctagon, 
+  Ghost, Bot, Skull, Flame, Sword, Radiation, Network, 
+  ShieldCheck, Dna, Tornado, ArrowLeft, Calendar, 
+  MapPin, Fingerprint, ShieldAlert, History, Globe,
+  FileText, Info, X, ChevronRight, Hash, Loader2,
+  Biohazard, Component, Eye, Layers, ShieldX,
+  Scan, ShieldAlert as Alert, Binary
 } from 'lucide-react';
 
-export interface ThreatActor {
+export interface ActorIntelligence {
   name: string;
-  category: 'Ransomware (RaaS)' | 'Intelligence Aggregator' | 'Defacement / Hacktivism' | 'Unattributed / identity not publicly disclosed';
   description: string;
-  url: string;
-  imageKey: string;
-  tags: string[];
+  type: string;
+  status: string;
+  activity: string;
+  tactics: string;
+  period: string;
+  notable: string;
+  victims: string;
+  impact: string;
+  origin?: string;
 }
 
-const IconMap: Record<string, React.ElementType> = {
-  'handala': Ghost,      
-  'lock': Skull,        
-  'akira': Bot,         
-  'centipede': Bug,     
-  'hunters': Crosshair,  
-  'everest': Mountain,   
-  'ciphbit': Cpu,        
-  'lunalock': Moon,      
-  'safepay': ShieldCheck,
-  'warlock': Flame,      
-  'frag': Sword,        
-  'chaos': Tornado,      
-  'runsomewares': Radiation, 
-  'worldleaks': Network,   
-  'bashe': Zap,          
-  '?': Dna              
-};
-
-const actors: ThreatActor[] = [
-  { name: "Handala Hack", url: "https://handala-hack.to", imageKey: "handala", description: "Hacktivist “hack-and-leak” brand; politically motivated targeting under the Handala symbol.", category: "Defacement / Hacktivism", tags: ["Hacktivism", "Iran-linked"] },
-  { name: "LockBit (Tor)", url: "http://lockbit7z2jwcskxpbokpemdxmltipntwlkmidcll2qirbu7ykg46eyd.onion/", imageKey: "lock", description: "Major RaaS double-extortion actor with long-running victim leak operations.", category: "Ransomware (RaaS)", tags: ["RaaS", "LockBit"] },
-  { name: "Akira (Tor)", url: "http://akiral2iz6a7getid.onion/", imageKey: "akira", description: "Double-extortion ransomware group active since 2023 with dedicated leak site.", category: "Ransomware (RaaS)", tags: ["Akira", "Tor"] },
-  { name: "Rhysida (Tor)", url: "http://rhysidafohrhyy2aszi7bm32tnjat5xri65fopcxkdfxhi4tidsg7cad.onion/", imageKey: "centipede", description: "Double-extortion ransomware group; commonly branded with a centipede motif.", category: "Ransomware (RaaS)", tags: ["Rhysida", "Centipede"] },
-  { name: "Hunters International (Tor)", url: "http://hunters55atbdusuladzv7vzv6a423bkh6ksl2uftwrxyuarbzlfh7yd.onion/", imageKey: "hunters", description: "RaaS-style extortion group emerging 2023; tracked across multiple intel vendors.", category: "Ransomware (RaaS)", tags: ["Hunters", "Tor"] },
-  { name: "Everest (Tor)", url: "http://ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion/", imageKey: "everest", description: "Double-extortion ransomware actor active since ~2020 with Tor leak presence.", category: "Ransomware (RaaS)", tags: ["Everest", "Tor"] },
-  { name: "CiphBit (Tor)", url: "http://ciphbitqyg26jor7eeo6xieyq7reouctefrompp6ogvhqjba7uo4xdid.onion/", imageKey: "ciphbit", description: "Crypto-ransomware / extortion brand tracked since 2023 with Tor leak links.", category: "Ransomware (RaaS)", tags: ["CiphBit", "Crypto"] },
-  { name: "LunaLock (Tor)", url: "http://lunalockcccxzkpfovwzifwxcytgetid.onion/", imageKey: "lunalock", description: "Newer extortion group tracked since Sep-2025, noted for “AI data submission” coercion.", category: "Ransomware (RaaS)", tags: ["LunaLock", "AI"] },
-  { name: "SafePay (Tor)", url: "http://safepaypfxntwixwjrlcscft433ggemlhgkkdupi2ynhtcmvdgubmoyd.onion/", imageKey: "safepay", description: "Centralized (non-RaaS style) double-extortion actor reported heavily active in 2025.", category: "Ransomware (RaaS)", tags: ["SafePay", "2025"] },
-  { name: "Warlock (Tor)", url: "http://warlockhga5iw3t54ps5iytlilf7hlvxy7kwrkidspn4qoh64s4vsuyd.onion/", imageKey: "warlock", description: "Enterprise ransomware/extortion operation tied in reporting to SharePoint exploitation waves.", category: "Ransomware (RaaS)", tags: ["Warlock", "SharePoint"] },
-  { name: "34o4m3f (Tor)", url: "http://34o4m3f26ucyeddzpf53bksy76wd737nf2fytslovwd3viac3by5chad.onion/", imageKey: "frag", description: "Extortion leak portal tracked as “Frag” by WatchGuard.", category: "Ransomware (RaaS)", tags: ["Frag", "Onion"] },
-  { name: "Hptqq2o (Tor)", url: "http://hptqq2o2qjva7lcaaq67w36jihzivkaitkexorauw7b2yul2z6zozpqd.onion/", imageKey: "chaos", description: "Extortion leak portal tracked as “CHAOS” by WatchGuard.", category: "Ransomware (RaaS)", tags: ["CHAOS", "Onion"] },
-  { name: "Rnsmware (Tor)", url: "http://rnsmwareartse3m4hjsumjf222pnka6gad26cqxqmbjvevhbnym5p6ad.onion/", imageKey: "runsomewares", description: "Extortion leak portal tracked as “Run Some Wares” by WatchGuard.", category: "Ransomware (RaaS)", tags: ["RunSomeWares"] },
-  { name: "Worldle (Tor)", url: "http://worldleaksartrjm3c6vasllvgacbi5u3mgzkluehrzhk2jz4taufuid.onion/", imageKey: "worldleaks", description: "“World Leaks” data-broker/extortion brand with lineage from Hunters International.", category: "Ransomware (RaaS)", tags: ["WorldLeaks", "Hunters"] },
-  { name: "Basheqt (Tor)", url: "http://basheqtvzqwz4vp6ks5lm2ocq7i6tozqgf6vjcasj4ezmsy4bkpshhyd.onion/", imageKey: "bashe", description: "Bashe/APT73/Eraleig-style extortion branding noted for deceptive/attention-seeking claims in reporting.", category: "Ransomware (RaaS)", tags: ["Bashe", "APT73"] },
-  ...[
-    "Genesis6ix", "Pdcizqz", "3bnusfu", "Peargxn", "3ev4met", "Gunrabx", "Pearsmob", "47glxku", "5butbkr", "7ukmkdt", 
-    "Ijzn3si", "Imncrew", "Arcuufp", "Incblog", "Rnsm777", "J3dp6ok", "Beast6a", "J5o5y2f", "Benzona", "Jvkpexg", 
-    "Sarcoma", "Bertblog", "K7kg3jq", "Securo4", "Black3g", "Kawasa2", "Shinypo", "Blogvl7", "Kraken", "Silentb", 
-    "Brohood", "Ks5424y", "Tezwss", "Cicada", "Leaksnd", "Tp5cwh6", "Twniiye", "Txtggyn", "Ctyfftr", "Lynxblo", 
-    "Vkvsgl7", "Mblogci", "Darklea", "Datalea", "Mydatae", "Dcarryh", "Nerqnac", "Xbkv2qe", "Yrz6bay", "Devmanb", 
-    "Nitrogen", "Nleakk6", "Z3wqggt", "Z6wkggh", "Dragonf", "Obscura", 
-    "Zfytize", "Ebhmkoo", "Om6q4a6", "Zktnif5", "Fjg4zi4", "Omegalo", "Zohlm7a", "Flock4c", "Orca66h"
-  ].map(name => ({
-    name: `${name} (Tor)`,
-    url: `http://${name.toLowerCase()}...onion/`,
-    imageKey: "?",
-    description: "Extortion leak portal (Tor); operator identity/branding not publicly disclosed (unattributed).",
-    category: "Unattributed / identity not publicly disclosed" as any,
-    tags: ["Unattributed", "Onion"]
-  }))
+const iconList = [
+  Skull, Bug, Zap, Radiation, Activity, Target, Ghost, Bot, 
+  Tornado, Sword, Flame, Dna, Biohazard, Component, Eye, 
+  ShieldX, Fingerprint, Crosshair, ShieldAlert, Cpu,
+  Scan, Alert, Binary, Network
 ];
 
-const ThreatActors: React.FC = () => {
+const colorSchemes = [
+  { bg: 'from-slate-900 via-red-950/60 to-black', text: 'text-red-500', glow: 'shadow-red-500/20', stroke: 'from-red-500/50 via-red-500/10 to-transparent' },
+  { bg: 'from-slate-900 via-purple-950/60 to-black', text: 'text-purple-500', glow: 'shadow-purple-500/20', stroke: 'from-purple-500/50 via-purple-500/10 to-transparent' },
+  { bg: 'from-slate-900 via-blue-950/60 to-black', text: 'text-blue-500', glow: 'shadow-blue-500/20', stroke: 'from-blue-500/50 via-blue-500/10 to-transparent' },
+  { bg: 'from-slate-900 via-emerald-950/60 to-black', text: 'text-emerald-500', glow: 'shadow-emerald-500/20', stroke: 'from-emerald-500/50 via-emerald-500/10 to-transparent' },
+  { bg: 'from-slate-900 via-orange-950/60 to-black', text: 'text-orange-500', glow: 'shadow-orange-500/20', stroke: 'from-orange-500/50 via-orange-500/10 to-transparent' },
+  { bg: 'from-slate-900 via-rose-950/60 to-black', text: 'text-rose-500', glow: 'shadow-rose-500/20', stroke: 'from-rose-500/50 via-rose-500/10 to-transparent' },
+  { bg: 'from-slate-900 via-cyan-950/60 to-black', text: 'text-cyan-500', glow: 'shadow-cyan-500/20', stroke: 'from-cyan-500/50 via-cyan-500/10 to-transparent' },
+];
+
+export const ActorIcon = ({ name }: { name: string }) => {
+  const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  
+  const Icon = iconList[hash % iconList.length];
+  const scheme = colorSchemes[hash % colorSchemes.length];
+  
+  const shorthand = name.split('').filter(c => /[a-zA-Z0-9]/.test(c)).slice(0, 2).join('').toUpperCase();
+  
+  return (
+    <div className={`relative w-full h-full p-[1px] rounded-2xl bg-gradient-to-br ${scheme.stroke} shadow-2xl group overflow-hidden`}>
+      <div className={`relative w-full h-full flex items-center justify-center bg-gradient-to-br ${scheme.bg} rounded-[calc(1rem-1px)] overflow-hidden border border-white/5`}>
+        {/* Static HUD Scanlines */}
+        <div className="absolute inset-0 opacity-[0.07] pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]"></div>
+        
+        {/* HUD Brackets */}
+        <div className={`absolute top-2 left-2 w-1.5 h-1.5 border-t border-l ${scheme.text} opacity-30`}></div>
+        <div className={`absolute top-2 right-2 w-1.5 h-1.5 border-t border-r ${scheme.text} opacity-30`}></div>
+
+        {/* Themed Glow behind icon (Static) */}
+        <div className={`absolute w-12 h-12 rounded-full bg-current opacity-[0.1] blur-xl ${scheme.text} ${scheme.glow}`}></div>
+        
+        {/* Transparent Icon */}
+        <Icon className={`w-3/5 h-3/5 ${scheme.text} relative z-10 transition-transform duration-300 group-hover:scale-110`} strokeWidth={1.2} />
+        
+        {/* Shorthand Tag */}
+        <div className="absolute top-0 right-0 px-1.5 py-0.5 rounded-bl bg-black/60 backdrop-blur-md border-l border-b border-white/10 z-20">
+          <span className="text-[6px] font-black text-white/50 tracking-tighter uppercase font-mono leading-none">{shorthand}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface ThreatActorsProps {
+  onSelectActor: (actor: ActorIntelligence) => void;
+  onBack: () => void;
+}
+
+const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [actors, setActors] = useState<ActorIntelligence[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchActors = async () => {
+      try {
+        const response = await fetch('/ransomware_groups_info.json');
+        if (!response.ok) throw new Error('Failed to fetch intelligence node');
+        const data = await response.json();
+        
+        const normalizedData = data.map((item: any) => ({
+          name: item.name || "Unknown Entity",
+          description: item.description || "No analysis available.",
+          type: item.type || "Unclassified",
+          status: item.status || "Unknown",
+          activity: item.activity || "N/A",
+          tactics: item.tactics || item['tactics & techniques'] || "N/A",
+          period: item.period || item['activity period'] || "N/A",
+          notable: item.notable || "N/A",
+          victims: item.victims || item['victims & reach'] || "N/A",
+          impact: item.impact || "N/A",
+          origin: item.origin
+        }));
+        
+        setActors(normalizedData);
+      } catch (error) {
+        console.error("Critical Grid Failure: Actor intelligence unreachable.", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchActors();
+  }, []);
+
+  const cardStyle = "bg-white/40 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-xl shadow-sm backdrop-blur-md transition-all duration-300";
 
   const filteredActors = useMemo(() => {
-    return actors.filter(actor => {
-      const matchesSearch = actor.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                            actor.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
-      const matchesCategory = activeCategory ? actor.category === activeCategory : true;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchTerm, activeCategory]);
-
-  const categories = Array.from(new Set(actors.map(a => a.category)));
+    return actors.filter(actor => 
+      actor.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      actor.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      actor.status.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm, actors]);
 
   return (
-    <div className="pt-20 pb-12 animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out relative">
+    <div className="relative min-h-screen -mt-20 lg:-mt-32 pt-32 pb-32 overflow-visible animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out">
+      
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
-        <div className="absolute inset-0 bg-slate-50 dark:bg-[#08080a] transition-colors duration-700"></div>
-        
-        {/* Galaxy Layer - Lightened and enriched with more stars and rings */}
-        <div className="absolute inset-0 opacity-70 dark:opacity-100 transition-all duration-1000" 
+        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>
+        <div className="absolute inset-0 opacity-40 dark:opacity-100 transition-all duration-1000" 
              style={{ 
                backgroundImage: `
-                 radial-gradient(circle at 15% 25%, rgba(59,130,246,0.12), transparent 50%),
-                 radial-gradient(circle at 85% 75%, rgba(217,70,239,0.1), transparent 50%),
-                 radial-gradient(1.2px 1.2px at 5% 5%, #fff, transparent),
-                 radial-gradient(1px 1px at 12% 12%, #fff, transparent),
-                 radial-gradient(1.1px 1.1px at 18% 85%, #fff, transparent),
-                 radial-gradient(1.3px 1.3px at 22% 32%, #fff, transparent),
-                 radial-gradient(1px 1px at 28% 68%, #fff, transparent),
-                 radial-gradient(1.5px 1.5px at 35% 15%, #fff, transparent),
-                 radial-gradient(1px 1px at 42% 78%, #fff, transparent),
-                 radial-gradient(1.2px 1.2px at 47% 47%, #fff, transparent),
-                 radial-gradient(1.4px 1.4px at 55% 10%, #fff, transparent),
-                 radial-gradient(1px 1px at 62% 90%, #fff, transparent),
-                 radial-gradient(1.3px 1.3px at 67% 17%, #fff, transparent),
-                 radial-gradient(1.1px 1.1px at 72% 52%, #fff, transparent),
-                 radial-gradient(1.5px 1.5px at 78% 82%, #fff, transparent),
-                 radial-gradient(1px 1px at 85% 15%, #fff, transparent),
-                 radial-gradient(1.4px 1.4px at 92% 42%, #fff, transparent),
-                 radial-gradient(1.2px 1.2px at 97% 97%, #fff, transparent),
-                 radial-gradient(1px 1px at 3% 40%, #fff, transparent),
-                 radial-gradient(1px 1px at 95% 60%, #fff, transparent),
-                 radial-gradient(1px 1px at 40% 5%, #fff, transparent),
-                 radial-gradient(1px 1px at 60% 95%, #fff, transparent),
-                 repeating-radial-gradient(circle at 20% 30%, transparent 0, transparent 80px, rgba(59,130,246,0.04) 81px, transparent 83px),
-                 repeating-radial-gradient(circle at 80% 70%, transparent 0, transparent 150px, rgba(59,130,246,0.03) 151px, transparent 153px),
-                 repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 250px, rgba(59,130,246,0.025) 251px, transparent 254px),
-                 repeating-radial-gradient(circle at center, transparent 0, transparent 400px, rgba(59,130,246,0.02) 401px, transparent 404px),
-                 repeating-radial-gradient(circle at 35% 65%, transparent 0, transparent 120px, rgba(59,130,246,0.02) 121px, transparent 123px)
+                 radial-gradient(circle at 15% 25%, rgba(220,38,38,0.08), transparent 50%),
+                 radial-gradient(circle at 85% 75%, rgba(217,70,239,0.06), transparent 50%),
+                 radial-gradient(1.5px 1.5px at 12% 12%, #fff, transparent),
+                 radial-gradient(1px 1px at 22% 82%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 72% 22%, #fff, transparent),
+                 repeating-radial-gradient(circle at center, transparent 0, transparent 200px, rgba(220,38,38,0.02) 201px, transparent 203px)
                `
              }}>
         </div>
-        <div className="absolute top-0 right-0 w-[900px] h-[900px] bg-blue-500/15 blur-[160px] rounded-full"></div>
-        <div className="absolute bottom-0 left-0 w-[1100px] h-[1100px] bg-blue-900/10 blur-[190px] rounded-full"></div>
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12 px-4 md:px-0">
-        <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 text-blue-600 dark:text-blue-500 text-[9px] font-black uppercase tracking-[0.3em]">
-            <Crosshair className="w-3.5 h-3.5" />
-            ADVERSARY_INTELLIGENCE_OS
-          </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">Threat Inventory</h2>
-          <p className="text-lg text-slate-500 dark:text-white/40 font-medium leading-relaxed">
-            Clinical mapping of {actors.length} investigative entities across the dark intelligence grid.
-          </p>
-        </div>
-      </div>
-
-      <div className="mb-8 px-4 md:px-0">
-        <div className="relative group w-full lg:max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/20 group-focus-within:text-blue-500 transition-colors" />
-          <input 
-            type="text"
-            placeholder="FILTER ENTITIES..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-12 pr-6 py-3 bg-white/60 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-white/10 focus:border-blue-600/40 focus:ring-0 w-full backdrop-blur-md"
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-3 mb-8 px-4 md:px-0">
-        <button 
-          onClick={() => setActiveCategory(null)}
-          className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${!activeCategory ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/60 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white backdrop-blur-md'}`}
-        >
-          Total ({actors.length})
-        </button>
-        {categories.map(cat => (
-          <button 
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${activeCategory === cat ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/60 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white backdrop-blur-md'}`}
-          >
-            {cat.split(' ')[0]}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 md:px-0">
-        {filteredActors.map((actor, idx) => {
-          const ActiveIcon = IconMap[actor.imageKey] || IconMap['?'];
-          const isUnknown = actor.imageKey === '?';
-          const isDefacement = actor.category === 'Defacement / Hacktivism';
-          
-          return (
-            <div 
-              key={idx} 
-              onClick={() => window.open(actor.url, '_blank')}
-              className="group relative flex flex-col gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-white/70 dark:bg-[#0d0d0f]/60 border border-slate-200 dark:border-white/10 rounded-2xl transition-all duration-300 hover:bg-blue-50/50 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 cursor-pointer backdrop-blur-3xl shadow-sm dark:shadow-none"
+      <div className="relative z-10 space-y-8 px-2 md:px-3 lg:px-8 max-w-[1600px] mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-slate-200 dark:border-white/5">
+          <div className="space-y-6">
+            <button 
+              onClick={onBack}
+              className="inline-flex items-center gap-2 text-slate-500 dark:text-white/40 hover:text-red-600 transition-colors text-[10px] font-black uppercase tracking-[0.2em] group bg-white dark:bg-white/5 px-4 py-2 rounded-full border border-slate-200 dark:border-white/10 shadow-sm"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex flex-col flex-1 min-w-0 space-y-1">
-                  <h3 className="text-[13px] lg:text-[14px] font-bold text-slate-900 dark:text-white tracking-widest group-hover:text-blue-600 transition-colors truncate font-mono uppercase">
-                    {actor.name}
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${
-                      actor.category.includes('Ransomware') ? 'text-blue-600 dark:text-blue-400' :
-                      isDefacement ? 'text-purple-500' :
-                      'text-slate-400'
-                    }`}>
-                      {actor.category}
-                    </span>
-                  </div>
-                </div>
-
-                <div className={`p-2 lg:p-2.5 rounded-xl border transition-all shrink-0 ${
-                  isUnknown 
-                    ? 'bg-slate-50/50 dark:bg-white/[0.02] border-slate-200 dark:border-white/10 text-slate-400' 
-                    : 'bg-blue-600/10 border-blue-500/20 text-blue-600 dark:text-blue-500 group-hover:scale-110'
-                }`}>
-                  <ActiveIcon strokeWidth={1.5} className="w-4 h-4 lg:w-4.5 lg:h-4.5" />
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <p className={`${isDefacement ? 'text-[14.5px]' : 'text-[13px]'} text-slate-500 dark:text-white/60 leading-relaxed font-medium line-clamp-2`}>
-                  {actor.description}
-                </p>
-
-                <div className="flex items-center justify-between mt-auto pt-2 border-t border-slate-100 dark:border-white/5">
-                  <div className="flex flex-wrap gap-2">
-                    {actor.tags.map(tag => (
-                      <span key={tag} className="px-2 py-0.5 rounded-lg bg-slate-50/50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 text-[8px] font-black text-slate-500 dark:text-white/30 uppercase tracking-widest">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+              <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" />
+              Return to Core Node
+            </button>
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center gap-3">
+                <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-none uppercase">Threat Inventory</h2>
+                <div className="px-3 py-1 rounded-lg border text-[9px] font-black uppercase tracking-widest flex items-center gap-2 bg-red-500/10 border-red-500/20 text-red-600">
+                  <div className="w-1 h-1 rounded-full bg-red-500 animate-pulse"></div>
+                  Intelligence Grid v4.2
                 </div>
               </div>
             </div>
-          );
-        })}
-      </div>
+          </div>
 
-      {filteredActors.length === 0 && (
-        <div className="py-32 flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in duration-500">
-           <div className="p-8 rounded-full bg-white/60 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 shadow-sm backdrop-blur-md">
-              <HelpCircle className="w-12 h-12 text-slate-200 dark:text-white/5" strokeWidth={0.5} />
-           </div>
-           <div className="space-y-2">
-             <h4 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-[0.2em]">No Intelligence Matched</h4>
-             <p className="text-slate-500 dark:text-white/30 text-sm font-medium">No adversaries found matching your current filter parameters.</p>
-           </div>
-           <button 
-             onClick={() => { setSearchTerm(''); setActiveCategory(null); }}
-             className="px-8 py-3 bg-blue-600 text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-blue-500 transition-all shadow-xl shadow-blue-500/20 active:scale-95"
-           >
-             Clear Matrix Filters
-           </button>
+          <div className="flex gap-3">
+            <div className="px-6 py-3 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-xl">
+              Node Count: {isLoading ? '...' : actors.length} <Activity className="w-3.5 h-3.5" />
+            </div>
+          </div>
         </div>
-      )}
+
+        <div className={`${cardStyle} p-4 md:p-5 lg:p-8 space-y-8 bg-slate-50/50 dark:bg-white/[0.01]`}>
+          <div className="relative group w-full max-w-md">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/20 group-focus-within:text-red-500 transition-colors" />
+            <input 
+              type="text"
+              placeholder="SEARCH ACTORS..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-12 pr-6 py-3 bg-white/60 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-white/10 focus:border-red-600/40 focus:ring-0 w-full"
+            />
+          </div>
+
+          {isLoading ? (
+            <div className="py-32 flex flex-col items-center justify-center space-y-6">
+               <Loader2 className="w-12 h-12 text-red-600 animate-spin" strokeWidth={1.5} />
+               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 animate-pulse">Synchronizing Intelligence Stream...</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+              {filteredActors.map((actor, idx) => (
+                <div 
+                  key={idx} 
+                  onClick={() => onSelectActor(actor)}
+                  className="group relative flex flex-col gap-6 p-6 bg-white/60 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 rounded-xl transition-all duration-300 hover:bg-red-50/30 dark:hover:bg-red-900/10 hover:border-red-500/30 cursor-pointer shadow-sm"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="w-14 h-14 shrink-0 group-hover:scale-105 transition-transform relative">
+                      <ActorIcon name={actor.name} />
+                    </div>
+                    <div className="flex flex-col flex-1 min-w-0 space-y-1">
+                      <h3 className="text-[14px] font-bold text-slate-900 dark:text-white tracking-widest group-hover:text-red-600 transition-colors truncate font-mono uppercase">
+                        {actor.name}
+                      </h3>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[8px] font-black text-red-600 dark:text-red-400 uppercase tracking-widest">{actor.status}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <p className="text-[11px] text-slate-500 dark:text-white/40 leading-relaxed font-medium line-clamp-2">
+                      {actor.description}
+                    </p>
+                    <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+                      <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{actor.type.split(',')[0]}</span>
+                      <ChevronRight className="w-3 h-3 text-slate-300 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
