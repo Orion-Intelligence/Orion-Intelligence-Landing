@@ -108,7 +108,6 @@ const App: React.FC = () => {
   const [activeModal, setActiveModal] = useState<'privacy' | 'access' | 'compliance' | null>(null);
   const [selectedActor, setSelectedActor] = useState<ActorIntelligence | null>(null);
   
-  // Routing Logic: Use relative naming for target segments to stay within sandbox base paths
   const getSegmentFromView = (view: ViewType): string => {
     switch (view) {
       case 'adversaries': return 'adversaries';
@@ -123,32 +122,35 @@ const App: React.FC = () => {
     }
   };
 
-  const getViewFromPath = (path: string): ViewType => {
-    const normalized = path.toLowerCase();
+  const getViewFromPath = (inputPath: string): ViewType => {
+    // 1. Force everything to lowercase for matching
+    const path = inputPath.toLowerCase();
+
+    // 2. Clinical keyword matching - highest priority
+    // We check for these anywhere in the path to handle proxy-nested subdirectories
+    if (path.includes('adversaries/dossier')) return 'actor-dossier';
+    if (path.includes('adversaries')) return 'adversaries';
+    if (path.includes('api-docs')) return 'api-docs';
+    if (path.includes('sources')) return 'sources';
+    if (path.includes('pricing')) return 'pricing';
+    if (path.includes('search')) return 'search-results';
+    if (path.includes('remediation')) return 'remediation-guide';
+
+    // 3. Fallback logic for Home vs 404
+    // Tokenize to find non-UUID segments
+    const parts = path.split('/').filter(Boolean);
+    const isUUID = (s: string) => (s.length === 36 && s.includes('-')) || (s.length > 30 && /^[0-9a-f]+$/.test(s));
     
-    // Extract actual segments, filtering out sandbox UUIDs if present
-    const parts = normalized.split('/').filter(Boolean);
-    const hasUUID = parts.length > 0 && parts[0].length > 20;
-    const segments = hasUUID ? parts.slice(1) : parts;
-    const cleanPath = '/' + segments.join('/');
+    const cleanSegments = parts.filter(p => !isUUID(p) && p !== 'index.html');
 
-    // Explicit Clinical Route Matching
-    if (cleanPath.includes('adversaries/dossier')) return 'actor-dossier';
-    if (cleanPath.includes('adversaries')) return 'adversaries';
-    if (cleanPath.includes('api-docs')) return 'api-docs';
-    if (cleanPath.includes('sources')) return 'sources';
-    if (cleanPath.includes('pricing')) return 'pricing';
-    if (cleanPath.includes('search')) return 'search-results';
-    if (cleanPath.includes('remediation')) return 'remediation-guide';
+    // If no clinical segments left, it's the home view
+    if (cleanSegments.length === 0) return 'home';
 
-    // Base paths for home
-    if (cleanPath === '/' || cleanPath === '') return 'home';
-
-    // If we've reached here and have non-empty segments, it's a 404
-    return segments.length > 0 ? '404' : 'home';
+    // If there's content left that we didn't match above, it's truly a 404
+    return '404';
   };
 
-  const [view, setView] = useState<ViewType>(() => getViewFromPath(window.location.pathname));
+  const [view, setView] = useState<ViewType>(() => getViewFromPath(window.location.href));
 
   const navigateTo = useCallback((newView: ViewType) => {
     setView(newView);
@@ -157,13 +159,15 @@ const App: React.FC = () => {
     try {
       const currentPath = window.location.pathname;
       const parts = currentPath.split('/').filter(Boolean);
-      const hasUUID = parts.length > 0 && parts[0].length > 20;
-      const base = hasUUID ? `/${parts[0]}/` : '/';
+      const isUUID = (s: string) => (s.length === 36 && s.includes('-')) || (s.length > 30 && /^[0-9a-f]+$/.test(s));
       
+      // Preserve the sandbox UUID if it's the leading segment
+      const base = (parts.length > 0 && isUUID(parts[0])) ? `/${parts[0]}/` : '/';
       const fullTargetPath = targetSegment === '' ? base : `${base}${targetSegment}`;
+      
       window.history.pushState({ view: newView }, '', fullTargetPath);
     } catch (e) {
-      console.warn('Navigation protocol rejected by sandbox security. Internal state sync active.', e);
+      console.warn('History synchronization deferred.', e);
     }
   }, []);
 
@@ -174,7 +178,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
-      const pathView = getViewFromPath(window.location.pathname);
+      const pathView = getViewFromPath(window.location.href);
       setView(pathView);
     };
     window.addEventListener('popstate', handlePopState);

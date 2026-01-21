@@ -43,15 +43,7 @@
   ],
   "rewrites": [
     {
-      "source": "/robots.txt",
-      "destination": "/robots.txt"
-    },
-    {
-      "source": "/sitemap.xml",
-      "destination": "/sitemap.xml"
-    },
-    {
-      "source": "/((?!api/|robots.txt|sitemap.xml|index.css|index.tsx|favicon.ico).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]

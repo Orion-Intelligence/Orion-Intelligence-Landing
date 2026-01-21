@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowLeft, ShieldAlert, Terminal, Globe, Lock, Search, Activity } from 'lucide-react';
+import { ArrowLeft, ShieldAlert, Terminal, Globe, Activity } from 'lucide-react';
 
 interface NotFoundProps {
   onBack: () => void;
@@ -80,7 +80,8 @@ const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
               <p>{'>>'} ERR_ID: {Math.random().toString(36).substring(7).toUpperCase()}</p>
               <p>{'>>'} STATE: UNRESOLVED_IDENTIFIER</p>
               <p>{'>>'} ACTION: REDIRECT_HOME</p>
-              <p className="truncate">{'>>'} PATH: {window.location.pathname}</p>
+              <p className="truncate">{'>>'} RAW_PATH: {window.location.pathname}</p>
+              <p className="truncate text-[9px] text-blue-500/60">{'>>'} SYS_RESOLVE: {window.location.href}</p>
             </div>
           </div>
         </div>
