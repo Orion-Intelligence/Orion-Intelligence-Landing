@@ -17,6 +17,7 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
     - Known Entities/Associations
     - Investigative Risk Level (CRITICAL, HIGH, MODERATE, LOW, NEUTRAL)`;
 
+    // Fix: Add thinkingBudget when maxOutputTokens is set for Gemini 3 series models
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: prompt,
@@ -24,6 +25,7 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
         temperature: 0.3, 
         topP: 0.8,
         maxOutputTokens: 800,
+        thinkingConfig: { thinkingBudget: 400 },
       }
     });
 
@@ -38,11 +40,13 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
 export const getBriefIntelligenceSummary = async (): Promise<string> => {
   try {
     const prompt = `Provide a concise 3-sentence technical situational report of global cyber activity. Focus on infrastructure-level events, protocol vulnerabilities, or documented threat actor movements. Do not use buzzwords.`;
+    // Fix: Add thinkingBudget when maxOutputTokens is set for Gemini 3 series models
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
       config: {
         maxOutputTokens: 150,
+        thinkingConfig: { thinkingBudget: 75 },
       }
     });
     return response.text || "Intelligence stream synchronization failed.";

@@ -11,6 +11,9 @@ import {
   Scan, ShieldAlert as Alert, Binary
 } from 'lucide-react';
 
+// Direct data import for zero-fetch reliability
+import { THREAT_ACTOR_DB } from '../data/threatData';
+
 export interface ActorIntelligence {
   name: string;
   description: string;
@@ -44,29 +47,18 @@ const colorSchemes = [
 
 export const ActorIcon = ({ name }: { name: string }) => {
   const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  
   const Icon = iconList[hash % iconList.length];
   const scheme = colorSchemes[hash % colorSchemes.length];
-  
   const shorthand = name.split('').filter(c => /[a-zA-Z0-9]/.test(c)).slice(0, 2).join('').toUpperCase();
   
   return (
     <div className={`relative w-full h-full p-[1px] rounded-2xl bg-gradient-to-br ${scheme.stroke} shadow-2xl group overflow-hidden`}>
       <div className={`relative w-full h-full flex items-center justify-center bg-gradient-to-br ${scheme.bg} rounded-[calc(1rem-1px)] overflow-hidden border border-white/5`}>
-        {/* Static HUD Scanlines */}
         <div className="absolute inset-0 opacity-[0.07] pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]"></div>
-        
-        {/* HUD Brackets */}
         <div className={`absolute top-2 left-2 w-1.5 h-1.5 border-t border-l ${scheme.text} opacity-30`}></div>
         <div className={`absolute top-2 right-2 w-1.5 h-1.5 border-t border-r ${scheme.text} opacity-30`}></div>
-
-        {/* Themed Glow behind icon (Static) */}
         <div className={`absolute w-12 h-12 rounded-full bg-current opacity-[0.1] blur-xl ${scheme.text} ${scheme.glow}`}></div>
-        
-        {/* Transparent Icon */}
         <Icon className={`w-3/5 h-3/5 ${scheme.text} relative z-10 transition-transform duration-300 group-hover:scale-110`} strokeWidth={1.2} />
-        
-        {/* Shorthand Tag */}
         <div className="absolute top-0 right-0 px-1.5 py-0.5 rounded-bl bg-black/60 backdrop-blur-md border-l border-b border-white/10 z-20">
           <span className="text-[6px] font-black text-white/50 tracking-tighter uppercase font-mono leading-none">{shorthand}</span>
         </div>
@@ -84,53 +76,16 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
   const [searchTerm, setSearchTerm] = useState('');
   const [actors, setActors] = useState<ActorIntelligence[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchActors = async () => {
-      try {
-        setError(null);
-        const response = await fetch('/ransomware_groups_info.json');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
-        }
-
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-          throw new Error('Intelligence node returned invalid format (Expected JSON)');
-        }
-
-        const data = await response.json();
-        
-        if (!Array.isArray(data)) {
-          throw new Error('Intelligence node returned unexpected data structure');
-        }
-
-        const normalizedData = data.map((item: any) => ({
-          name: item.name || "Unknown Entity",
-          description: item.description || "No analysis available.",
-          type: item.type || "Unclassified",
-          status: item.status || "Unknown",
-          activity: item.activity || "N/A",
-          tactics: item.tactics || item['tactics & techniques'] || "N/A",
-          period: item.period || item['activity period'] || "N/A",
-          notable: item.notable || "N/A",
-          victims: item.victims || item['victims & reach'] || "N/A",
-          impact: item.impact || "N/A",
-          origin: item.origin
-        }));
-        
-        setActors(normalizedData);
-      } catch (err: any) {
-        console.error("Critical Grid Failure:", err);
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
+    // Initializing the grid with the full database
+    const syncDatabase = () => {
+      setActors(THREAT_ACTOR_DB);
+      setIsLoading(false);
     };
-
-    fetchActors();
+    
+    const timer = setTimeout(syncDatabase, 600); // Tiny delay for aesthetic synchronization feel
+    return () => clearTimeout(timer);
   }, []);
 
   const cardStyle = "bg-white/40 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-xl shadow-sm backdrop-blur-md transition-all duration-300";
@@ -206,15 +161,6 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
             <div className="py-32 flex flex-col items-center justify-center space-y-6">
                <Loader2 className="w-12 h-12 text-red-600 animate-spin" strokeWidth={1.5} />
                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 animate-pulse">Synchronizing Intelligence Stream...</p>
-            </div>
-          ) : error ? (
-            <div className="py-32 flex flex-col items-center justify-center text-center space-y-6">
-               <ShieldAlert className="w-16 h-16 text-red-600/40" strokeWidth={1} />
-               <div className="space-y-2">
-                 <h3 className="text-xl font-black uppercase tracking-widest text-slate-900 dark:text-white">Grid Link Failure</h3>
-                 <p className="text-sm text-slate-500 dark:text-white/40 max-w-sm font-mono">{error}</p>
-               </div>
-               <button onClick={() => window.location.reload()} className="px-6 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest rounded-lg">Retry Sync</button>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
