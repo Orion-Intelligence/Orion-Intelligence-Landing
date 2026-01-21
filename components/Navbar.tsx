@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Command, Ghost, Lock, Code2, ListTree, Menu, X, Sun, Moon, Shield, Radio, Activity, Globe, Tag } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
@@ -22,6 +23,8 @@ const Logo = () => {
           width="40"
           height="40"
           loading="eager"
+          // Fix: fetchPriority is the correct React property name.
+          fetchPriority="high"
           className="w-full h-full object-cover scale-105"
           onError={() => setError(true)}
         />

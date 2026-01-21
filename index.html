@@ -7,30 +7,35 @@
     <meta name="description" content="Orion Intelligence is a clinical analytical ecosystem for global enterprise defense, providing unified ransomware tracking, automated scrapers, and standardized STIX 2.1 workflows.">
     <link rel="icon" type="image/png" href="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png">
     
-    <!-- Performance Hints -->
+    <!-- Performance Hints: Preconnect to critical domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://try.orionintelligence.org">
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://try.orionintelligence.org">
+
+    <!-- Preload Critical Assets to reduce LCP/FCP delay -->
+    <link rel="preload" href="/index.css" as="style">
+    <link rel="preload" href="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" as="image" fetchpriority="high">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     
-    <!-- Tailwind JIT CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind JIT CDN - Added defer to prevent render blocking -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-              mono: ['"JetBrains Mono"', 'monospace'],
-            },
+      window.addEventListener('DOMContentLoaded', () => {
+        tailwind.config = {
+          darkMode: 'class',
+          theme: {
+            extend: {
+              fontFamily: {
+                sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                mono: ['"JetBrains Mono"', 'monospace'],
+              },
+            }
           }
         }
-      }
+      });
     </script>
 
     <!-- Process Polyfill -->

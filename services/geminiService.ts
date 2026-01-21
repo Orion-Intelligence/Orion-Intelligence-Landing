@@ -16,7 +16,6 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
     - Known Entities/Associations
     - Investigative Risk Level (CRITICAL, HIGH, MODERATE, LOW, NEUTRAL)`;
 
-    // Use gemini-3-pro-preview for complex technical analysis and reasoning in OSINT tasks.
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: prompt,
@@ -27,7 +26,6 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
       }
     });
 
-    // Access the .text property directly, it is not a method.
     return response.text || "No intelligence data recovered from remote probe.";
   } catch (error) {
     console.error("Orion Probe Error:", error);
@@ -38,7 +36,6 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
 export const getBriefIntelligenceSummary = async (): Promise<string> => {
   try {
     const prompt = `Provide a concise 3-sentence technical situational report of global cyber activity. Focus on infrastructure-level events, protocol vulnerabilities, or documented threat actor movements. Do not use buzzwords.`;
-    // Use gemini-3-flash-preview for basic technical summarization tasks.
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
@@ -46,9 +43,22 @@ export const getBriefIntelligenceSummary = async (): Promise<string> => {
         maxOutputTokens: 150,
       }
     });
-    // Access the .text property directly.
     return response.text || "Intelligence stream synchronization failed.";
   } catch (error) {
     return "Intelligence stream synchronization failed.";
   }
+};
+
+/**
+ * Initiates a streaming chat session with Gemini to provide real-time AI assistance
+ * in the Orion AINexus interface.
+ */
+export const getStreamingChat = async (message: string) => {
+  const chat = ai.chats.create({
+    model: 'gemini-3-flash-preview',
+    config: {
+      systemInstruction: 'You are Orion Nexus, a specialized AI assistant for the Orion Intelligence platform. You provide technical insights on cyber threats, OSINT methodology, and platform status. Keep responses clinical, professional, and concise.',
+    },
+  });
+  return await chat.sendMessageStream({ message });
 };

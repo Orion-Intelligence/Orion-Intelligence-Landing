@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   ArrowRight, 
@@ -268,7 +267,7 @@ const App: React.FC = () => {
               <div className="absolute top-[10%] left-[10%] w-32 h-32 bg-blue-500/10 blur-[80px] rounded-full"></div>
               
               <div className="max-w-[1400px] mx-auto relative w-full flex-1 flex flex-col items-center justify-center text-center py-12 md:py-20">
-                <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 text-blue-600 dark:text-blue-400 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] mb-8 md:mb-10 animate-in fade-in slide-in-from-top-4 duration-1000 relative z-10">
+                <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-blue-600 dark:text-blue-400 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] mb-8 md:mb-10 animate-in fade-in slide-in-from-top-4 duration-1000 relative z-10">
                   <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
                   GOVERNANCE STANDARD V4.2.0
                 </div>
@@ -737,7 +736,7 @@ const App: React.FC = () => {
             <div className="flex flex-col md:flex-row items-center gap-8 text-[11px] font-bold uppercase tracking-[0.18em]">
                <span className="text-slate-500 dark:text-white/20">{t('footer_copy')}</span>
                <div className="flex items-center gap-5">
-                 <div className="px-4 py-1.5 rounded-xl bg-blue-600/5 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center gap-3 shadow-inner">
+                 <div className="px-4 py-1.5 rounded-xl bg-blue-600/5 dark:bg-white/5 border-slate-200 dark:border-white/10 flex items-center gap-3 shadow-inner">
                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></div>
                    <span className="font-mono text-slate-900 dark:text-blue-400">14.2B_RECORDS_ACTIVE</span>
                  </div>

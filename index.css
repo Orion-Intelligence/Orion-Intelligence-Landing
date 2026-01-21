@@ -45,24 +45,24 @@
         radial-gradient(at 50% 100%, hsla(220,100%,10%,1) 0, transparent 50%);
 }
 
-/* Enhanced Gradient for Sources and Adversaries in Light Mode */
+/* Enhanced Gradient for Sources and Adversaries - Lightened further as requested */
 .mesh-gradient-bright {
     @apply transition-all duration-700;
-    background-color: #f1f5f9; /* Shifted to slate-100 base for better depth against white components */
+    background-color: #f8fafc; /* Even lighter than slate-100 */
     background-attachment: fixed;
     background-image: 
-        radial-gradient(at 0% 0%, hsla(217, 100%, 98%, 1) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(210, 100%, 97%, 1) 0, transparent 50%),
-        radial-gradient(at 50% 100%, hsla(220, 100%, 96%, 1) 0, transparent 60%);
+        radial-gradient(at 0% 0%, hsla(217, 100%, 99%, 1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(210, 100%, 98%, 1) 0, transparent 50%),
+        radial-gradient(at 50% 100%, hsla(220, 100%, 97%, 1) 0, transparent 60%);
 }
 
 .dark .mesh-gradient-bright {
-    background-color: #0d0d0f;
+    background-color: #0e0e11; /* Slightly lighter than pure black for depth */
     background-attachment: fixed;
     background-image: 
-        radial-gradient(at 0% 0%, hsla(217,100%,18%,1) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(210,100%,15%,1) 0, transparent 50%),
-        radial-gradient(at 50% 100%, hsla(220,100%,16%,1) 0, transparent 60%);
+        radial-gradient(at 0% 0%, hsla(217,100%,22%,1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(210,100%,18%,1) 0, transparent 50%),
+        radial-gradient(at 50% 100%, hsla(220,100%,20%,1) 0, transparent 60%);
 }
 
 .grain {

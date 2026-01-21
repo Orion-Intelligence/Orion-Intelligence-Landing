@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { 
   ExternalLink, Globe, Search, Crosshair, 
@@ -89,36 +88,45 @@ const ThreatActors: React.FC = () => {
 
   return (
     <div className="pt-20 pb-12 animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out relative">
-      {/* Exact Background System from Pricing with Enhanced Solar Rings and Stars */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
-        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>
-        <div className="absolute inset-0 opacity-40 dark:opacity-100 transition-all duration-1000" 
+        <div className="absolute inset-0 bg-slate-50 dark:bg-[#08080a] transition-colors duration-700"></div>
+        
+        {/* Galaxy Layer - Lightened and enriched with more stars and rings */}
+        <div className="absolute inset-0 opacity-70 dark:opacity-100 transition-all duration-1000" 
              style={{ 
                backgroundImage: `
                  radial-gradient(circle at 15% 25%, rgba(59,130,246,0.12), transparent 50%),
                  radial-gradient(circle at 85% 75%, rgba(217,70,239,0.1), transparent 50%),
-                 radial-gradient(1.5px 1.5px at 12% 12%, #fff, transparent),
-                 radial-gradient(1px 1px at 22% 82%, #fff, transparent),
-                 radial-gradient(1.2px 1.2px at 72% 22%, #fff, transparent),
-                 radial-gradient(2px 2px at 92% 42%, #fff, transparent),
-                 radial-gradient(1.1px 1.1px at 37% 47%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 5% 5%, #fff, transparent),
+                 radial-gradient(1px 1px at 12% 12%, #fff, transparent),
+                 radial-gradient(1.1px 1.1px at 18% 85%, #fff, transparent),
+                 radial-gradient(1.3px 1.3px at 22% 32%, #fff, transparent),
+                 radial-gradient(1px 1px at 28% 68%, #fff, transparent),
+                 radial-gradient(1.5px 1.5px at 35% 15%, #fff, transparent),
+                 radial-gradient(1px 1px at 42% 78%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 47% 47%, #fff, transparent),
+                 radial-gradient(1.4px 1.4px at 55% 10%, #fff, transparent),
+                 radial-gradient(1px 1px at 62% 90%, #fff, transparent),
                  radial-gradient(1.3px 1.3px at 67% 17%, #fff, transparent),
-                 radial-gradient(1px 1px at 47% 87%, #fff, transparent),
-                 radial-gradient(1.5px 1.5px at 17% 67%, #fff, transparent),
-                 radial-gradient(1.1px 1.1px at 85% 15%, #fff, transparent),
-                 radial-gradient(1.2px 1.2px at 5% 95%, #fff, transparent),
+                 radial-gradient(1.1px 1.1px at 72% 52%, #fff, transparent),
+                 radial-gradient(1.5px 1.5px at 78% 82%, #fff, transparent),
+                 radial-gradient(1px 1px at 85% 15%, #fff, transparent),
+                 radial-gradient(1.4px 1.4px at 92% 42%, #fff, transparent),
+                 radial-gradient(1.2px 1.2px at 97% 97%, #fff, transparent),
+                 radial-gradient(1px 1px at 3% 40%, #fff, transparent),
+                 radial-gradient(1px 1px at 95% 60%, #fff, transparent),
                  radial-gradient(1px 1px at 40% 5%, #fff, transparent),
                  radial-gradient(1px 1px at 60% 95%, #fff, transparent),
-                 radial-gradient(1px 1px at 5% 40%, #fff, transparent),
-                 radial-gradient(1px 1px at 95% 60%, #fff, transparent),
-                 repeating-radial-gradient(circle at 15% 15%, transparent 0, transparent 120px, rgba(59,130,246,0.02) 121px, transparent 122px),
-                 repeating-radial-gradient(circle at 85% 85%, transparent 0, transparent 180px, rgba(59,130,246,0.02) 181px, transparent 182px),
-                 repeating-radial-gradient(circle at center, transparent 0, transparent 200px, rgba(59,130,246,0.03) 201px, transparent 203px)
+                 repeating-radial-gradient(circle at 20% 30%, transparent 0, transparent 80px, rgba(59,130,246,0.04) 81px, transparent 83px),
+                 repeating-radial-gradient(circle at 80% 70%, transparent 0, transparent 150px, rgba(59,130,246,0.03) 151px, transparent 153px),
+                 repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 250px, rgba(59,130,246,0.025) 251px, transparent 254px),
+                 repeating-radial-gradient(circle at center, transparent 0, transparent 400px, rgba(59,130,246,0.02) 401px, transparent 404px),
+                 repeating-radial-gradient(circle at 35% 65%, transparent 0, transparent 120px, rgba(59,130,246,0.02) 121px, transparent 123px)
                `
              }}>
         </div>
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 blur-[150px] rounded-full"></div>
-        <div className="absolute bottom-0 left-0 w-[1000px] h-[1000px] bg-blue-900/5 blur-[180px] rounded-full"></div>
+        <div className="absolute top-0 right-0 w-[900px] h-[900px] bg-blue-500/15 blur-[160px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-[1100px] h-[1100px] bg-blue-900/10 blur-[190px] rounded-full"></div>
       </div>
 
       <div className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-12 border-b border-slate-200 dark:border-white/5 pb-12 px-4 md:px-0">
@@ -142,7 +150,7 @@ const ThreatActors: React.FC = () => {
             placeholder="FILTER ENTITIES..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-12 pr-6 py-3 bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-white/10 focus:border-blue-600/40 focus:ring-0 w-full"
+            className="pl-12 pr-6 py-3 bg-white/60 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-white/10 focus:border-blue-600/40 focus:ring-0 w-full backdrop-blur-md"
           />
         </div>
       </div>
@@ -150,7 +158,7 @@ const ThreatActors: React.FC = () => {
       <div className="flex flex-wrap gap-3 mb-8 px-4 md:px-0">
         <button 
           onClick={() => setActiveCategory(null)}
-          className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${!activeCategory ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-100 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white'}`}
+          className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${!activeCategory ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/60 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white backdrop-blur-md'}`}
         >
           Total ({actors.length})
         </button>
@@ -158,7 +166,7 @@ const ThreatActors: React.FC = () => {
           <button 
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${activeCategory === cat ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-100 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white'}`}
+            className={`px-5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${activeCategory === cat ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/60 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white backdrop-blur-md'}`}
           >
             {cat.split(' ')[0]}
           </button>
@@ -175,7 +183,7 @@ const ThreatActors: React.FC = () => {
             <div 
               key={idx} 
               onClick={() => window.open(actor.url, '_blank')}
-              className="group relative flex flex-col gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-slate-200/80 dark:bg-[#0d0d0f]/60 border border-slate-300/60 dark:border-white/10 rounded-2xl transition-all duration-300 hover:bg-blue-100/40 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 cursor-pointer backdrop-blur-3xl shadow-sm dark:shadow-none"
+              className="group relative flex flex-col gap-6 px-4 lg:px-6 py-4 lg:py-5 bg-white/70 dark:bg-[#0d0d0f]/60 border border-slate-200 dark:border-white/10 rounded-2xl transition-all duration-300 hover:bg-blue-50/50 dark:hover:bg-blue-900/15 hover:border-blue-500/30 dark:hover:border-blue-500/30 cursor-pointer backdrop-blur-3xl shadow-sm dark:shadow-none"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex flex-col flex-1 min-w-0 space-y-1">
@@ -195,7 +203,7 @@ const ThreatActors: React.FC = () => {
 
                 <div className={`p-2 lg:p-2.5 rounded-xl border transition-all shrink-0 ${
                   isUnknown 
-                    ? 'bg-slate-100/50 dark:bg-white/[0.02] border-slate-200 dark:border-white/10 text-slate-400' 
+                    ? 'bg-slate-50/50 dark:bg-white/[0.02] border-slate-200 dark:border-white/10 text-slate-400' 
                     : 'bg-blue-600/10 border-blue-500/20 text-blue-600 dark:text-blue-500 group-hover:scale-110'
                 }`}>
                   <ActiveIcon strokeWidth={1.5} className="w-4 h-4 lg:w-4.5 lg:h-4.5" />
@@ -210,7 +218,7 @@ const ThreatActors: React.FC = () => {
                 <div className="flex items-center justify-between mt-auto pt-2 border-t border-slate-100 dark:border-white/5">
                   <div className="flex flex-wrap gap-2">
                     {actor.tags.map(tag => (
-                      <span key={tag} className="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 text-[8px] font-black text-slate-500 dark:text-white/30 uppercase tracking-widest">
+                      <span key={tag} className="px-2 py-0.5 rounded-lg bg-slate-50/50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 text-[8px] font-black text-slate-500 dark:text-white/30 uppercase tracking-widest">
                         {tag}
                       </span>
                     ))}
@@ -224,7 +232,7 @@ const ThreatActors: React.FC = () => {
 
       {filteredActors.length === 0 && (
         <div className="py-32 flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in duration-500">
-           <div className="p-8 rounded-full bg-slate-100 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5">
+           <div className="p-8 rounded-full bg-white/60 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 shadow-sm backdrop-blur-md">
               <HelpCircle className="w-12 h-12 text-slate-200 dark:text-white/5" strokeWidth={0.5} />
            </div>
            <div className="space-y-2">
