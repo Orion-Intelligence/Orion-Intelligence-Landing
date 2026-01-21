@@ -84,7 +84,7 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
       setIsLoading(false);
     };
     
-    const timer = setTimeout(syncDatabase, 600); // Tiny delay for aesthetic synchronization feel
+    const timer = setTimeout(syncDatabase, 1000); // Extended delay for a better viewing of the animation sequence
     return () => clearTimeout(timer);
   }, []);
 
@@ -158,9 +158,17 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
           </div>
 
           {isLoading ? (
-            <div className="py-32 flex flex-col items-center justify-center space-y-6">
-               <Loader2 className="w-12 h-12 text-red-600 animate-spin" strokeWidth={1.5} />
-               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 animate-pulse">Synchronizing Intelligence Stream...</p>
+            <div className="py-32 flex flex-col items-center justify-center space-y-10">
+               <div className="relative">
+                 <Loader2 className="w-12 h-12 text-red-600 animate-spin" strokeWidth={1.5} />
+                 <div className="absolute inset-0 bg-red-600/20 blur-xl rounded-full animate-pulse"></div>
+               </div>
+               <div className="flex flex-col items-center gap-2">
+                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Synchronizing Intelligence Stream...</p>
+                 <div className="w-48 h-1 bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full bg-red-600 animate-progress"></div>
+                 </div>
+               </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
@@ -168,7 +176,11 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
                 <div 
                   key={idx} 
                   onClick={() => onSelectActor(actor)}
-                  className="group relative flex flex-col gap-6 p-6 bg-white/60 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 rounded-xl transition-all duration-300 hover:bg-red-50/30 dark:hover:bg-red-900/10 hover:border-red-500/30 cursor-pointer shadow-sm"
+                  style={{ 
+                    animationDelay: `${idx * 40}ms`,
+                    animationFillMode: 'both'
+                  }}
+                  className="group relative flex flex-col gap-6 p-6 bg-white/60 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 rounded-xl shadow-sm cursor-pointer hover:bg-red-50/30 dark:hover:bg-red-900/10 hover:border-red-500/30 transition-all duration-300 animate-in fade-in slide-in-from-bottom-2"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="w-14 h-14 shrink-0 group-hover:scale-105 transition-transform relative">
