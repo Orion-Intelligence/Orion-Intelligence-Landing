@@ -1,3 +1,4 @@
+
 import { GoogleGenAI } from "@google/genai";
 
 // Always use const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
@@ -16,8 +17,9 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
     - Known Entities/Associations
     - Investigative Risk Level (CRITICAL, HIGH, MODERATE, LOW, NEUTRAL)`;
 
+    // Fix: Add thinkingBudget when maxOutputTokens is set for Gemini 3 series models
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-pro-preview',
       contents: prompt,
       config: {
         temperature: 0.3, 
@@ -38,8 +40,9 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
 export const getBriefIntelligenceSummary = async (): Promise<string> => {
   try {
     const prompt = `Provide a concise 3-sentence technical situational report of global cyber activity. Focus on infrastructure-level events, protocol vulnerabilities, or documented threat actor movements. Do not use buzzwords.`;
+    // Fix: Add thinkingBudget when maxOutputTokens is set for Gemini 3 series models
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-flash-preview',
       contents: prompt,
       config: {
         maxOutputTokens: 150,
@@ -55,7 +58,7 @@ export const getBriefIntelligenceSummary = async (): Promise<string> => {
 // Start a streaming chat session with Orion Nexus AI.
 export const getStreamingChat = async (message: string) => {
   return await ai.models.generateContentStream({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3-flash-preview',
     contents: message,
     config: {
       systemInstruction: "You are Orion Nexus, a high-fidelity threat intelligence AI assistant. You provide clinical, objective, and technical analysis of cyber threats, actors, and infrastructure. Avoid alarmist language. Use technical terminology appropriate for OSINT investigators.",
