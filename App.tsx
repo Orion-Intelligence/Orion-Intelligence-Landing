@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   ArrowRight, 
@@ -373,6 +374,14 @@ const App: React.FC = () => {
                         {isSearching ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <>Audit <Search className="w-3.5 h-3.5" /></>}
                       </button>
                     </div>
+                    {searchError && (
+                      <div className="mt-4 flex justify-end pr-2">
+                        <div className="flex items-center gap-2 text-red-500 animate-in fade-in slide-in-from-top-1">
+                          <span className="text-[10px] font-black uppercase tracking-widest">Please enter a valid email address.</span>
+                          <ShieldAlert className="w-4 h-4" />
+                        </div>
+                      </div>
+                    )}
                   </form>
                 </div>
 
