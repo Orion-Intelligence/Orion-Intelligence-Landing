@@ -3,62 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion Intelligence | Unified OSINT & Investigative Intelligence</title>
-    <meta name="description" content="Orion Intelligence is a clinical analytical ecosystem for global enterprise defense, providing unified ransomware tracking, automated scrapers, and standardized STIX 2.1 workflows.">
-    <link rel="icon" type="image/png" href="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png">
-    
-    <!-- Performance Hints: Preconnect to critical domains -->
+    <title>Orion Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://try.orionintelligence.org">
-    <link rel="dns-prefetch" href="https://try.orionintelligence.org">
-
-    <!-- Preload Critical Assets to reduce LCP/FCP delay -->
-    <link rel="preload" href="/index.css" as="style">
-    <link rel="preload" href="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" as="image" fetchpriority="high">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    
-    <!-- Process Polyfill -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      window.process = { env: { API_KEY: "" } };
+      // Set dark mode by default, consistent with App.tsx initial state
+      if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', 'dark');
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
     </script>
-<script type="importmap">
+    <script type="importmap">
 {
   "imports": {
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
-    "vite": "https://esm.sh/vite@^7.3.1",
+    "rxjs": "https://esm.sh/rxjs@^7.8.1?conditions=es2015",
+    "rxjs/operators": "https://esm.sh/rxjs@^7.8.1/operators?conditions=es2015",
     "react": "https://esm.sh/react@^19.2.3",
-    "react/": "https://esm.sh/react@^19.2.3/",
+    "react/jsx-runtime": "https://esm.sh/react@^19.2.3/jsx-runtime",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@angular/core": "https://esm.sh/@angular/core@^21.1.1?external=rxjs",
+    "@angular/common": "https://esm.sh/@angular/common@^21.1.1?external=rxjs"
   }
 }
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#0a0a0c] text-[#fafafa] selection:bg-blue-500/30">
+<body>
     <div id="root"></div>
-
-    <!-- Move Scripts to bottom to prevent render blocking -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-        tailwind.config = {
-          darkMode: 'class',
-          theme: {
-            extend: {
-              fontFamily: {
-                sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                mono: ['"JetBrains Mono"', 'monospace'],
-              },
-            }
-          }
-        }
-      });
-    </script>
-    <script type="module" src="/index.tsx"></script>
-</body>
+    </body>
 </html>
