@@ -20,7 +20,7 @@ export interface ActorIntelligence {
   type: string;
   status: string;
   activity: string;
-  tactics & techniques: string;
+  tactics_techniques: string;
   tactics: string;
   period: string;
   notable: string;
