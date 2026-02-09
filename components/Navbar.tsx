@@ -5,7 +5,7 @@ import { Language } from '../translations';
 
 interface NavbarProps {
   onNavigate: (view: 'home' | 'adversaries' | 'api-docs' | 'sources' | 'pricing') => void;
-  currentView: 'home' | 'adversaries' | 'api-docs' | 'sources' | 'pricing';
+  currentView: 'home' | 'adversaries' | 'api-docs' | 'sources' | 'pricing' | 'actor-dossier';
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
 }
@@ -109,9 +109,9 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                 <button 
                   key={item.id}
                   onClick={() => handleNavigate(item.id as any)} 
-                  className={`${currentView === item.id ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-white/40'} hover:text-blue-600 dark:hover:text-white transition-all text-[10px] font-black uppercase tracking-widest flex items-center gap-2`}
+                  className={`${(currentView === item.id || (item.id === 'adversaries' && currentView === 'actor-dossier')) ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-white/40'} hover:text-blue-600 dark:hover:text-white transition-all text-[10px] font-black uppercase tracking-widest flex items-center gap-2`}
                 >
-                  {item.icon && <item.icon className={`w-3 h-3 ${currentView === item.id ? 'opacity-100' : 'opacity-40'}`} />}
+                  {item.icon && <item.icon className={`w-3 h-3 ${(currentView === item.id || (item.id === 'adversaries' && currentView === 'actor-dossier')) ? 'opacity-100' : 'opacity-40'}`} />}
                   {item.label}
                 </button>
               ))}
@@ -266,13 +266,13 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                     className={`group relative w-full text-left py-2 md:py-3.5 px-3 md:px-5 rounded-lg md:rounded-2xl transition-all duration-200 flex items-center gap-3 md:gap-5 ${
                       isAnimating ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
                     } ${
-                      currentView === item.id 
+                      (currentView === item.id || (item.id === 'adversaries' && currentView === 'actor-dossier'))
                         ? 'bg-blue-600/5 text-blue-600 dark:text-blue-400' 
                         : 'text-slate-600 dark:text-white/30 hover:bg-slate-50 dark:hover:bg-white/[0.02]'
                     }`}
                   >
                     <div className={`p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 ${
-                      currentView === item.id ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100/50 dark:bg-white/5 text-slate-500 dark:text-white/10'
+                      (currentView === item.id || (item.id === 'adversaries' && currentView === 'actor-dossier')) ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100/50 dark:bg-white/5 text-slate-500 dark:text-white/10'
                     }`}>
                       <item.icon className="w-3.5 h-3.5 md:w-5 md:h-5" />
                     </div>
