@@ -42,6 +42,7 @@ export const THREAT_ACTOR_DB: ActorIntelligence[] =
   },
   {
     "name": "Adminlocker",
+    "type": "Unknown",
     "description": "Adminlocker is a low-profile, opportunistic ransomware strain active since late 2021 that primarily targets individual users and small businesses through cracked software and malicious email attachments. Operating as a likely independent or small-scale group with unconfirmed geographical origins, it utilizes a hybrid of AES and RSA encryption to lock files—often appending extensions like .admin1 or .1admin—and demands Bitcoin payments via local text file instructions. Unlike more advanced syndicates, Adminlocker typically focuses on single-extortion file encryption rather than maintaining a public data-leak site, resulting in a more localized and limited global impact as of 2026.",
     "status": "Active (low visibility)",
     "activity": "File-encrypting ransomware",
