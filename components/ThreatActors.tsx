@@ -17,7 +17,7 @@ import { THREAT_ACTOR_DB } from '../data/threatData';
 export interface ActorIntelligence {
   name: string;
   description: string;
-  type: "Unknown"
+  type: string;
   status: string;
   activity: string;
   tactics: string;
