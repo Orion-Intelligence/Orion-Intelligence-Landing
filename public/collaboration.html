@@ -1541,7 +1541,7 @@
   }
 
   .fullscreen-btn{
-    font-size:14px !important;
+    font-size:17px !important;
   }
 
   body.is-fullscreen .tab-shell{
@@ -3228,6 +3228,18 @@
     let ticking = false;
     let navLocked = false;
     let navUnlockTimer = null;
+
+    document.querySelectorAll('img[src*="orion-search.readthedocs.io/en/latest/_images/"]').forEach((img) => {
+      const primarySrc = img.getAttribute('src');
+      if (!primarySrc) return;
+      const fallbackSrc = primarySrc.replace('/en/latest/_images/', '/en/latest/app_docs/_images/');
+      if (fallbackSrc === primarySrc) return;
+      img.addEventListener('error', () => {
+        if (img.dataset.fallbackApplied === '1') return;
+        img.dataset.fallbackApplied = '1';
+        img.src = fallbackSrc;
+      }, { once: true });
+    });
 
     panels.forEach((panel) => {
       const slides = Array.from(panel.querySelectorAll('.slide'));
