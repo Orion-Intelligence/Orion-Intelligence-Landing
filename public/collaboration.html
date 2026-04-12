@@ -1,0 +1,3044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orion Strategic Collaboration Deck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Carlito:wght@400;700&display=swap');
+  :root{
+    --ink:#10233f;
+    --ink-soft:#4f6481;
+    --paper:#f3f5f8;
+    --panel:#ffffff;
+    --line:#d7dee8;
+    --navy:#0d2140;
+    --blue:#1f6fff;
+    --cyan:#4bc7ff;
+    --teal:#16b39a;
+    --gold:#d6a33d;
+    --rose:#e788b7;
+    --mist:#e9f3ff;
+    --shadow:0 18px 40px rgba(16,35,63,.12);
+    --slide-height:820px;
+    --slide-gap:82px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Manrope",Arial,Helvetica,sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(75,199,255,.16), transparent 24%),
+      radial-gradient(circle at 85% 18%, rgba(231,136,183,.12), transparent 22%),
+      linear-gradient(180deg, #eef3f8 0%, #e4ebf3 100%);
+    color:var(--ink);
+    scroll-snap-type:y mandatory;
+    scroll-padding-top:calc((100vh - var(--slide-height)) / 2);
+    scroll-padding-bottom:calc((100vh - var(--slide-height)) / 2);
+  }
+
+  body.is-loading{
+    overflow:hidden;
+  }
+
+  .page-loader{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(circle at top left, rgba(75,199,255,.16), transparent 24%),
+      radial-gradient(circle at 85% 18%, rgba(231,136,183,.12), transparent 22%),
+      linear-gradient(180deg, #eef3f8 0%, #e4ebf3 100%);
+    transition:opacity .35s ease, visibility .35s ease;
+  }
+
+  .page-loader.is-hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+
+  .loader-card{
+    min-width:280px;
+    padding:28px 28px 24px;
+    border-radius:24px;
+    text-align:center;
+    background:
+      radial-gradient(circle at top right, rgba(75,199,255,.12), transparent 26%),
+      linear-gradient(180deg, rgba(248,251,255,.96), rgba(239,245,252,.94));
+    border:1px solid rgba(197,211,228,.9);
+    box-shadow:0 18px 40px rgba(16,35,63,.12), inset 0 1px 0 rgba(255,255,255,.76);
+  }
+
+  .loader-mark{
+    width:64px;
+    height:64px;
+    margin:0 auto 16px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(circle at top right, rgba(255,255,255,.18), transparent 30%),
+      linear-gradient(135deg, rgba(13,32,61,.92), rgba(28,79,150,.88) 58%, rgba(75,199,255,.82));
+    box-shadow:0 14px 24px rgba(23,63,120,.18);
+  }
+
+  .loader-mark img{
+    width:42px;
+    height:42px;
+    object-fit:contain;
+  }
+
+  .loader-title{
+    margin:0 0 8px;
+    font:700 18px/1.2 "Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
+    letter-spacing:-.02em;
+    color:var(--ink);
+  }
+
+  .loader-copy{
+    margin:0;
+    font:500 13px/1.45 "Manrope",Arial,Helvetica,sans-serif;
+    color:#617690;
+  }
+
+  .loader-bar{
+    width:180px;
+    height:6px;
+    margin:18px auto 0;
+    border-radius:999px;
+    background:rgba(31,111,255,.08);
+    overflow:hidden;
+    position:relative;
+  }
+
+  .loader-bar::before{
+    content:"";
+    position:absolute;
+    inset:0 auto 0 0;
+    width:42%;
+    border-radius:999px;
+    background:linear-gradient(90deg, #1f6fff, #4bc7ff);
+    animation:loader-slide 1s cubic-bezier(.22,1,.36,1) infinite;
+  }
+
+  @keyframes loader-slide{
+    0%{transform:translateX(-120%)}
+    100%{transform:translateX(360%)}
+  }
+
+  .tab-shell{
+    position:fixed;
+    top:14px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:40;
+    display:flex;
+    gap:8px;
+    padding:8px;
+    border-radius:18px;
+    background:rgba(13,33,64,.9);
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 14px 30px rgba(16,35,63,.18);
+  }
+
+  .tab-btn{
+    border:0;
+    border-radius:12px;
+    padding:10px 16px;
+    cursor:pointer;
+    font:700 12px/1 Arial,Helvetica,sans-serif;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:#d8e4f5;
+    background:rgba(255,255,255,.08);
+  }
+
+  .tab-btn.is-active{
+    background:linear-gradient(135deg, #ffffff, #edf4ff);
+    color:#163861;
+  }
+
+  .tab-panel{
+    display:none;
+  }
+
+  .tab-panel.is-active{
+    display:block;
+  }
+
+  .deck{
+    padding:calc((100vh - var(--slide-height)) / 2 + 42px) 0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0;
+  }
+
+  .slide{
+    width:1280px;
+    height:var(--slide-height);
+    margin:0 auto;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.985), rgba(245,249,253,.985)),
+      var(--paper);
+    border:1px solid rgba(13,33,64,.08);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    position:relative;
+    border-radius:28px;
+    scroll-snap-align:center;
+    scroll-snap-stop:always;
+    transition:
+      transform .42s cubic-bezier(.22,1,.36,1),
+      box-shadow .42s cubic-bezier(.22,1,.36,1),
+      opacity .32s ease;
+    transform:scale(.988);
+    opacity:.86;
+    will-change:transform, opacity;
+  }
+
+  .slide.is-active{
+    transform:scale(1);
+    opacity:1;
+    box-shadow:0 20px 44px rgba(16,35,63,.13);
+  }
+
+  .slide::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 8% 10%, rgba(75,199,255,.13), transparent 18%),
+      radial-gradient(circle at 92% 18%, rgba(31,111,255,.09), transparent 20%),
+      linear-gradient(90deg, rgba(13,33,64,.025) 1px, transparent 1px),
+      linear-gradient(rgba(13,33,64,.025) 1px, transparent 1px);
+    background-size:auto, auto, 72px 72px, 72px 72px;
+    mask-image:linear-gradient(180deg, rgba(0,0,0,.22), transparent 90%);
+    pointer-events:none;
+  }
+
+  .slide::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:28px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.82);
+    pointer-events:none;
+  }
+
+  .topbar{
+    height:66px;
+    background:linear-gradient(90deg, #0a1a34 0%, #12305d 58%, #1e57a8 100%);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    position:relative;
+    z-index:1;
+    border-radius:28px 28px 0 0;
+    transition:transform .42s cubic-bezier(.22,1,.36,1), opacity .28s ease;
+    transform:translateY(-6px);
+    opacity:.94;
+  }
+
+  .slide.is-active .topbar{
+    transform:translateY(0);
+    opacity:1;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .brand-mark{
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    object-fit:contain;
+    display:block;
+    background:rgba(255,255,255,.12);
+    padding:4px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+  }
+
+  .brand-copy strong{
+    display:block;
+    font-size:13px;
+    letter-spacing:.16em;
+    font-weight:800;
+  }
+
+  .brand-copy span{
+    display:block;
+    font-size:10px;
+    letter-spacing:.14em;
+    opacity:.82;
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+
+  .tag{
+    font-family:"Manrope",Arial,Helvetica,sans-serif;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    padding:8px 12px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+  }
+
+  .body{
+    padding:28px 34px 42px;
+    position:relative;
+    z-index:1;
+  }
+
+  .body > *{
+    transition:
+      transform .42s cubic-bezier(.22,1,.36,1),
+      opacity .28s ease;
+    transform:translateY(12px);
+    opacity:0;
+    will-change:transform, opacity;
+  }
+
+  .slide.is-active .body > *{
+    transform:translateY(0);
+    opacity:1;
+  }
+
+  .slide.is-active .body > *:nth-child(1){transition-delay:.02s}
+  .slide.is-active .body > *:nth-child(2){transition-delay:.05s}
+  .slide.is-active .body > *:nth-child(3){transition-delay:.08s}
+  .slide.is-active .body > *:nth-child(4){transition-delay:.11s}
+  .slide.is-active .body > *:nth-child(5){transition-delay:.14s}
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font:800 11px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    color:#25588f;
+    background:linear-gradient(180deg, #eef6ff, #e6f2ff);
+    border:1px solid #d2e5fb;
+    border-radius:999px;
+    padding:8px 12px;
+    margin-bottom:14px;
+  }
+
+  .eyebrow::before{
+    content:"";
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--cyan);
+  }
+
+  h1{
+    margin:0 0 22px;
+    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
+    font-size:38px;
+    line-height:1.02;
+    letter-spacing:-.035em;
+    max-width:920px;
+    font-weight:700;
+  }
+
+  .lead{
+    margin:0 0 20px;
+    max-width:680px;
+    font-size:15px;
+    line-height:1.42;
+    color:#546a87;
+    font-weight:500;
+  }
+
+  .two-col{
+    display:grid;
+    grid-template-columns:1.12fr .88fr;
+    gap:20px;
+  }
+
+  .compact-hero{
+    gap:20px;
+  }
+
+  .compact-hero .lead{
+    font-size:18px;
+    line-height:1.45;
+    margin-bottom:20px;
+  }
+
+  .compact-hero .metric-grid{
+    margin-top:18px;
+    gap:14px;
+  }
+
+  .compact-hero .metric{
+    min-height:104px;
+    padding:18px 18px 16px 26px;
+  }
+
+  .compact-hero .metric h3{
+    font-size:16px;
+    margin-bottom:8px;
+  }
+
+  .compact-hero .metric p{
+    font-size:13px;
+    line-height:1.5;
+  }
+
+  .compact-hero .quote{
+    margin-top:14px;
+    font-size:15px;
+    line-height:1.55;
+  }
+
+  .compact-hero .accent-card{
+    min-height:200px;
+    padding:24px;
+  }
+
+  .compact-hero .accent-card h2{
+    font-size:24px;
+    margin-bottom:10px;
+  }
+
+  .compact-hero .accent-card p{
+    font-size:14px;
+    line-height:1.6;
+  }
+
+  .compact-hero .pill-list{
+    margin-top:16px;
+    gap:10px;
+  }
+
+  .compact-hero .pill{
+    padding:12px 14px;
+    font-size:12px;
+  }
+
+  .compact-hero .list-panel h2{
+    font-size:24px;
+    margin-bottom:12px;
+  }
+
+  .compact-hero .clean-list{
+    gap:10px;
+  }
+
+  .compact-hero .clean-list li{
+    padding:14px 16px;
+    font-size:14px;
+    line-height:1.45;
+  }
+
+  .equal-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+
+  .panel{
+    background:
+      radial-gradient(circle at top right, rgba(75,199,255,.12), transparent 26%),
+      radial-gradient(circle at left bottom, rgba(231,136,183,.08), transparent 20%),
+      linear-gradient(180deg, rgba(248,251,255,.96), rgba(239,245,252,.94));
+    border:1px solid rgba(197,211,228,.9);
+    border-radius:20px;
+    padding:18px;
+    box-shadow:0 10px 24px rgba(16,35,63,.06), inset 0 1px 0 rgba(255,255,255,.7);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .panel::before{
+    content:"";
+    position:absolute;
+    left:18px;
+    right:18px;
+    top:0;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.9) 18%, rgba(255,255,255,.9) 82%, transparent);
+    pointer-events:none;
+  }
+
+  .hero-panel{
+    min-height:0;
+    background:
+      radial-gradient(circle at top right, rgba(75,199,255,.18), transparent 28%),
+      linear-gradient(180deg, #ffffff, #f7faff);
+  }
+
+  .metric-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:16px;
+  }
+
+  .metric{
+    min-height:104px;
+    border-radius:16px;
+    border:1px solid rgba(205,216,230,.95);
+    background:linear-gradient(180deg, #ffffff, #f9fbfe);
+    padding:16px 16px 14px 24px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .metric::before{
+    content:"";
+    position:absolute;
+    left:12px;
+    top:14px;
+    bottom:14px;
+    width:4px;
+    border-radius:999px;
+    background:linear-gradient(180deg, var(--cyan), var(--blue));
+  }
+
+  .metric.teal::before{background:linear-gradient(180deg, #41d5be, var(--teal))}
+  .metric.gold::before{background:linear-gradient(180deg, #efcc79, var(--gold))}
+  .metric.violet::before{background:linear-gradient(180deg, #8eb4ff, #4d72d9)}
+
+  .metric h3{
+    margin:0 0 8px 10px;
+    font:700 16px/1.2 Arial,Helvetica,sans-serif;
+    color:var(--ink);
+    letter-spacing:-.02em;
+  }
+
+  .metric p{
+    margin:0 0 0 10px;
+    font:400 13px/1.45 Arial,Helvetica,sans-serif;
+    color:#617690;
+  }
+
+  .quote{
+    margin-top:14px;
+    padding:14px 16px;
+    border-radius:16px;
+    background:linear-gradient(135deg, #eef5ff, #f9fbff 60%, #f5efff);
+    border:1px solid #d7e4f7;
+    font-size:15px;
+    line-height:1.5;
+    color:#315173;
+    box-shadow:0 6px 16px rgba(32,76,132,.05);
+  }
+
+  .visual-stack{
+    display:grid;
+    gap:14px;
+    height:100%;
+  }
+
+  .accent-card{
+    border-radius:22px;
+    padding:22px;
+    min-height:180px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at top right, rgba(255,255,255,.18), transparent 28%),
+      linear-gradient(135deg, #0d203d, #17396d 56%, #2268c5 100%);
+  }
+
+  .accent-card::before{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-90px;
+    top:-90px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,.18), transparent 68%);
+  }
+
+  .accent-card::after{
+    content:"";
+    position:absolute;
+    left:22px;
+    right:22px;
+    bottom:22px;
+    height:1px;
+    background:rgba(255,255,255,.14);
+  }
+
+  .accent-card h2{
+    margin:0 0 10px;
+    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
+    font-size:28px;
+    line-height:1.02;
+    letter-spacing:-.03em;
+    font-weight:700;
+  }
+
+  .accent-card p{
+    margin:0;
+    max-width:440px;
+    font:400 14px/1.55 Arial,Helvetica,sans-serif;
+    color:rgba(255,255,255,.86);
+  }
+
+  .pill-list{
+    display:grid;
+    gap:8px;
+    margin-top:14px;
+  }
+
+  .pill{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    padding:10px 12px;
+    border-radius:12px;
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.08);
+    font:600 11px/1.25 Arial,Helvetica,sans-serif;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+
+  .pill span:last-child{
+    color:#9ed7ff;
+  }
+
+  .list-panel h2,
+  .flow-panel h2,
+  .split-title{
+    margin:0 0 16px;
+    font-size:24px;
+    line-height:1.12;
+    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
+    letter-spacing:-.03em;
+    font-weight:700;
+  }
+
+  .clean-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+    display:grid;
+    gap:10px;
+  }
+
+  .clean-list li{
+    border:1px solid rgba(206,217,231,.92);
+    background:linear-gradient(180deg, #ffffff, #fbfcfe);
+    border-radius:14px;
+    padding:12px 14px;
+    font:400 14px/1.45 Arial,Helvetica,sans-serif;
+    color:#5e738e;
+    box-shadow:0 4px 12px rgba(16,35,63,.035);
+  }
+
+  .clean-list strong{
+    color:var(--ink);
+  }
+
+  .flow{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:8px;
+  }
+
+  .flow-step{
+    background:linear-gradient(180deg, #ffffff, #fbfcfe);
+    border:1px solid rgba(206,217,231,.92);
+    border-radius:16px;
+    padding:18px 14px;
+    position:relative;
+    min-height:140px;
+  }
+
+  .flow-step:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    right:-11px;
+    width:22px;
+    height:2px;
+    background:linear-gradient(90deg, #7fb4ff, #2f6fff);
+  }
+
+  .flow-step .num{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg, #1f6fff, #4bc7ff);
+    color:#fff;
+    font:700 16px/1 Arial,Helvetica,sans-serif;
+    margin-bottom:14px;
+  }
+
+  .flow-step h3{
+    margin:0 0 8px;
+    font:700 17px/1.2 Arial,Helvetica,sans-serif;
+  }
+
+  .flow-step p{
+    margin:0;
+    font:400 13px/1.45 Arial,Helvetica,sans-serif;
+    color:var(--ink-soft);
+  }
+
+  .value-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:14px;
+  }
+
+  .value-box{
+    background:
+      radial-gradient(circle at top right, rgba(75,199,255,.12), transparent 28%),
+      linear-gradient(180deg, #f8fbff, #eff5fb);
+    border:1px solid rgba(197,211,228,.9);
+    border-radius:18px;
+    padding:18px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 10px 22px rgba(16,35,63,.055), inset 0 1px 0 rgba(255,255,255,.76);
+  }
+
+  .value-box h2{
+    margin:0 0 12px;
+    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
+    font-size:28px;
+    line-height:1.02;
+    letter-spacing:-.03em;
+    font-weight:700;
+  }
+
+  .value-box::before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    right:-62px;
+    top:-72px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(75,199,255,.16), transparent 68%);
+  }
+
+  .value-box.partner::before{
+    background:radial-gradient(circle, rgba(31,111,255,.16), transparent 68%);
+  }
+
+  .value-box.client{
+    background:
+      radial-gradient(circle at top right, rgba(22,179,154,.12), transparent 28%),
+      linear-gradient(180deg, #f7fdfb, #eef8f5);
+  }
+
+  .value-box.client::before{
+    background:radial-gradient(circle, rgba(22,179,154,.16), transparent 68%);
+  }
+
+  .value-label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 10px;
+    border-radius:999px;
+    background:linear-gradient(180deg, #edf5ff, #e6f0ff);
+    border:1px solid #d5e4fb;
+    font:800 10px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    color:#2a5f99;
+    margin-bottom:12px;
+    position:relative;
+    z-index:1;
+  }
+
+  .value-label::before{
+    content:"";
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--blue);
+  }
+
+  .value-box.client .value-label{
+    background:linear-gradient(180deg, #edfdf8, #e2f8f0);
+    border-color:#cdeee1;
+    color:#21745e;
+  }
+
+  .value-box.client .value-label::before{
+    background:var(--teal);
+  }
+
+  .value-points{
+    display:grid;
+    gap:10px;
+    position:relative;
+    z-index:1;
+  }
+
+  .value-item{
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:12px;
+    align-items:start;
+    padding:12px 12px 12px 10px;
+    border-radius:14px;
+    border:1px solid rgba(200,214,231,.88);
+    background:linear-gradient(180deg, rgba(255,255,255,.58), rgba(242,247,253,.48));
+    backdrop-filter:blur(4px);
+  }
+
+  .value-icon{
+    width:28px;
+    height:28px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg, #1f6fff, #4bc7ff);
+    color:#fff;
+    font:800 12px/1 "Manrope",Arial,Helvetica,sans-serif;
+    box-shadow:0 8px 14px rgba(31,111,255,.18);
+  }
+
+  .value-box.client .value-icon{
+    background:linear-gradient(135deg, #16b39a, #59d9bf);
+    box-shadow:0 8px 14px rgba(22,179,154,.18);
+  }
+
+  .value-copy strong{
+    display:block;
+    font:700 14px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    color:var(--ink);
+    margin-bottom:4px;
+    letter-spacing:-.01em;
+  }
+
+  .value-copy span{
+    display:block;
+    font:400 13px/1.45 "Manrope",Arial,Helvetica,sans-serif;
+    color:#617690;
+  }
+
+  .industry-band{
+    display:grid;
+    grid-template-columns:360px 1fr;
+    gap:18px;
+    align-items:stretch;
+  }
+
+  .industry-title{
+    border-radius:20px;
+    padding:24px 22px;
+    color:#fff;
+    background:
+      radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 24%),
+      linear-gradient(160deg, #0c203d, #1a427c 62%, #3e8af0);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .industry-title::before{
+    content:"";
+    position:absolute;
+    right:-40px;
+    bottom:-36px;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,.2), transparent 66%);
+  }
+
+  .industry-title h2{
+    margin:0 0 10px;
+    font-family:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+    font-size:32px;
+    line-height:1.02;
+    letter-spacing:-.02em;
+    font-weight:700;
+  }
+
+  .industry-title p{
+    margin:0;
+    font:400 14px/1.55 Arial,Helvetica,sans-serif;
+    color:rgba(255,255,255,.84);
+  }
+
+  .section-card{
+    background:
+      radial-gradient(circle at top right, rgba(75,199,255,.12), transparent 26%),
+      linear-gradient(180deg, #f8fbff, #eef5fb);
+    border:1px solid rgba(206,217,231,.92);
+    border-radius:20px;
+    padding:18px;
+    box-shadow:0 10px 22px rgba(16,35,63,.05), inset 0 1px 0 rgba(255,255,255,.76);
+  }
+
+  .section-card h3{
+    margin:0 0 16px;
+    font:700 15px/1.2 Arial,Helvetica,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    color:#426b9b;
+  }
+
+  .ui-shell{
+    background:
+      linear-gradient(180deg, #fbfdff, #f4f8fc);
+    border:1px solid #d9e3ef;
+    border-radius:26px;
+    overflow:hidden;
+  }
+
+  .ui-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 18px;
+    background:linear-gradient(90deg, #f6faff, #edf4fb);
+    border-bottom:1px solid #dce6f1;
+    font:700 12px/1 Arial,Helvetica,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    color:#537295;
+  }
+
+  .ui-dots{
+    display:flex;
+    gap:8px;
+  }
+
+  .ui-dots span{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#bdd2e8;
+  }
+
+  .ui-board{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    gap:0;
+    min-height:360px;
+  }
+
+  .ui-side{
+    padding:22px 18px;
+    background:linear-gradient(180deg, #0f2444, #173764);
+    color:#fff;
+  }
+
+  .ui-side h3{
+    margin:0 0 10px;
+    font-size:28px;
+    line-height:1.08;
+  }
+
+  .ui-side p{
+    margin:0;
+    font:400 14px/1.7 Arial,Helvetica,sans-serif;
+    color:rgba(255,255,255,.82);
+  }
+
+  .ui-meta{
+    display:grid;
+    gap:10px;
+    margin-top:20px;
+  }
+
+  .ui-chip{
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.08);
+    border-radius:14px;
+    padding:12px 14px;
+    font:600 12px/1.4 Arial,Helvetica,sans-serif;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+
+  .ui-main{
+    padding:20px;
+    background:
+      radial-gradient(circle at top right, rgba(75,199,255,.08), transparent 26%),
+      #f8fbfe;
+  }
+
+  .ui-main h3{
+    margin:0 0 16px;
+    font:700 14px/1.2 Arial,Helvetica,sans-serif;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:#4c6f95;
+  }
+
+  .ui-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  .pair-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:14px;
+  }
+
+  .fit-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  .fit-box{
+    background:
+      radial-gradient(circle at top right, rgba(75,199,255,.12), transparent 26%),
+      linear-gradient(180deg, #f8fbff, #eef5fb);
+    border:1px solid rgba(206,217,231,.92);
+    border-radius:20px;
+    padding:18px;
+    box-shadow:0 10px 22px rgba(16,35,63,.05), inset 0 1px 0 rgba(255,255,255,.76);
+  }
+
+  .fit-box h2{
+    margin:0 0 12px;
+    font-size:26px;
+    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
+    letter-spacing:-.03em;
+    font-weight:700;
+  }
+
+  .compare-box{
+    background:
+      radial-gradient(circle at top right, rgba(75,199,255,.12), transparent 28%),
+      linear-gradient(180deg, #f8fbff, #eef5fb);
+    border:1px solid rgba(197,211,228,.9);
+    border-radius:20px;
+    padding:18px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 10px 22px rgba(16,35,63,.055), inset 0 1px 0 rgba(255,255,255,.76);
+  }
+
+  .compare-box::before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    right:-62px;
+    top:-72px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(75,199,255,.15), transparent 68%);
+  }
+
+  .compare-box.alt{
+    background:
+      radial-gradient(circle at top right, rgba(22,179,154,.12), transparent 28%),
+      linear-gradient(180deg, #f7fdfb, #eef8f5);
+  }
+
+  .compare-box.alt::before{
+    background:radial-gradient(circle, rgba(22,179,154,.15), transparent 68%);
+  }
+
+  .compare-label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 10px;
+    border-radius:999px;
+    background:linear-gradient(180deg, #edf5ff, #e6f0ff);
+    border:1px solid #d5e4fb;
+    font:800 10px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    color:#2a5f99;
+    margin-bottom:12px;
+    position:relative;
+    z-index:1;
+  }
+
+  .compare-label::before{
+    content:"";
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--blue);
+  }
+
+  .compare-box.alt .compare-label{
+    background:linear-gradient(180deg, #edfdf8, #e2f8f0);
+    border-color:#cdeee1;
+    color:#21745e;
+  }
+
+  .compare-box.alt .compare-label::before{
+    background:var(--teal);
+  }
+
+  .tech-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    margin-top:18px;
+  }
+
+  .signal-board{
+    display:grid;
+    gap:12px;
+    padding-top:4px;
+  }
+
+  .signal{
+    border-radius:14px;
+    padding:14px 16px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.72), rgba(243,248,254,.62));
+    border:1px solid rgba(206,217,231,.92);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    box-shadow:0 8px 16px rgba(16,35,63,.04);
+  }
+
+  .signal strong{
+    font:700 15px/1.25 Arial,Helvetica,sans-serif;
+  }
+
+  .signal span{
+    font:400 13px/1.4 Arial,Helvetica,sans-serif;
+    color:var(--ink-soft);
+    max-width:420px;
+    text-align:right;
+  }
+
+  .signal em{
+    font:700 10px/1 Arial,Helvetica,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    color:#3271ba;
+    background:#eff6ff;
+    border:1px solid #d9e8fb;
+    border-radius:999px;
+    padding:6px 8px;
+    font-style:normal;
+  }
+
+  .closing{
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:28px 88px 40px;
+    position:relative;
+  }
+
+  .closing::before,
+  .closing::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+  }
+
+  .closing::before{
+    width:420px;
+    height:420px;
+    top:-120px;
+    left:-140px;
+    background:radial-gradient(circle, rgba(75,199,255,.18), transparent 64%);
+  }
+
+  .closing::after{
+    width:360px;
+    height:360px;
+    right:-100px;
+    bottom:-120px;
+    background:radial-gradient(circle, rgba(31,111,255,.15), transparent 66%);
+  }
+
+  .closing-card{
+    max-width:980px;
+    position:relative;
+    z-index:1;
+    padding:18px 10px 0;
+  }
+
+  .closing-card h1{
+    max-width:none;
+    font-size:60px;
+    margin-bottom:16px;
+  }
+
+  .closing-card p{
+    margin:0 auto;
+    max-width:860px;
+    font-size:20px;
+    line-height:1.5;
+    color:#546a87;
+  }
+
+  .closing-line{
+    width:320px;
+    height:1px;
+    background:linear-gradient(90deg, transparent, #c5d4e5 18%, #c5d4e5 82%, transparent);
+    margin:24px auto;
+  }
+
+  .closing-mark{
+    width:72px;
+    height:72px;
+    margin:0 auto 18px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(circle at top right, rgba(255,255,255,.18), transparent 30%),
+      linear-gradient(135deg, rgba(13,32,61,.92), rgba(28,79,150,.88) 58%, rgba(75,199,255,.82));
+    box-shadow:0 12px 22px rgba(23,63,120,.16);
+  }
+
+  .closing-mark img{
+    width:48px;
+    height:48px;
+    object-fit:contain;
+    filter:drop-shadow(0 4px 8px rgba(8,24,51,.14));
+  }
+
+  .closing-sub{
+    display:inline-block;
+    margin-top:6px;
+    font:800 11px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.2em;
+    color:#5e7ea5;
+  }
+
+  .closing-points{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:0 auto 10px;
+    max-width:760px;
+  }
+
+  .closing-chip{
+    padding:10px 14px;
+    border-radius:999px;
+    background:linear-gradient(180deg, #f2f7ff, #e8f1fd);
+    border:1px solid #d7e4f5;
+    color:#3a5c86;
+    font:700 11px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+
+  .shot-layout{
+    display:grid;
+    grid-template-columns:1.08fr .92fr;
+    gap:18px;
+    align-items:start;
+  }
+
+  .shot-stack{
+    display:grid;
+    gap:14px;
+  }
+
+  .shot-card{
+    background:
+      radial-gradient(circle at top right, rgba(75,199,255,.12), transparent 26%),
+      linear-gradient(180deg, #f8fbff, #eef5fb);
+    border:1px solid rgba(206,217,231,.92);
+    border-radius:18px;
+    padding:14px;
+    box-shadow:0 10px 22px rgba(16,35,63,.055), inset 0 1px 0 rgba(255,255,255,.72);
+  }
+
+  .shot-card img{
+    width:100%;
+    display:block;
+    border-radius:12px;
+    border:1px solid #d8e2ee;
+    background:#eef3f8;
+    box-shadow:0 8px 18px rgba(16,35,63,.08);
+  }
+
+  .shot-card h3{
+    margin:0 0 10px;
+    font:700 15px/1.2 Arial,Helvetica,sans-serif;
+    color:var(--ink);
+  }
+
+  .shot-card p{
+    margin:10px 0 0;
+    font:400 13px/1.45 Arial,Helvetica,sans-serif;
+    color:var(--ink-soft);
+  }
+
+  .tech-side{
+    display:grid;
+    gap:12px;
+  }
+
+  .tech-kpis{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .tech-kpi{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.84), rgba(244,248,253,.74));
+    border:1px solid rgba(206,217,231,.92);
+    border-radius:14px;
+    padding:14px;
+    box-shadow:0 8px 16px rgba(16,35,63,.04);
+  }
+
+  .tech-kpi strong{
+    display:block;
+    font:700 13px/1.2 Arial,Helvetica,sans-serif;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:#4d6b90;
+    margin-bottom:6px;
+  }
+
+  .tech-kpi span{
+    display:block;
+    font:500 15px/1.3 "Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
+    letter-spacing:-.02em;
+    color:#6b7c92;
+    text-wrap:balance;
+  }
+
+  .footer{
+    position:absolute;
+    left:34px;
+    right:34px;
+    bottom:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-top:1px solid rgba(16,35,63,.1);
+    padding-top:10px;
+    z-index:1;
+  }
+
+  .footer span{
+    font:400 12px/1.2 Arial,Helvetica,sans-serif;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:#5c708c;
+  }
+
+  .footer strong{
+    font:700 13px/1 Arial,Helvetica,sans-serif;
+    letter-spacing:.12em;
+    color:#234367;
+    opacity:0;
+  }
+
+  .between-slide{
+    width:1280px;
+    height:var(--slide-gap);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+
+  .between-slide::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:50%;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(16,35,63,.16) 12%, rgba(16,35,63,.16) 88%, transparent);
+  }
+
+  .between-slide span{
+    position:relative;
+    z-index:1;
+    min-width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:linear-gradient(180deg, #ffffff, #f0f5fb);
+    border:1px solid #d3deea;
+    box-shadow:0 8px 20px rgba(16,35,63,.08);
+    font:700 12px/1 Arial,Helvetica,sans-serif;
+    letter-spacing:.16em;
+    color:#28476d;
+    transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease;
+  }
+
+  .between-slide.is-near span{
+    transform:scale(1.04);
+    box-shadow:0 10px 20px rgba(16,35,63,.11);
+  }
+
+  .slideshow-nav{
+    position:fixed;
+    right:18px;
+    bottom:16px;
+    z-index:30;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    padding:8px;
+    border-radius:18px;
+    background:rgba(13,33,64,.9);
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 14px 30px rgba(16,35,63,.18);
+    transition:transform .35s ease, opacity .35s ease;
+  }
+
+  .slideshow-nav.is-hidden{
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(8px);
+  }
+
+  .slideshow-nav button{
+    border:0;
+    width:40px;
+    height:40px;
+    border-radius:999px;
+    cursor:pointer;
+    background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
+    color:#fff;
+    font:700 16px/1 "Manrope",Arial,Helvetica,sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+  }
+
+  .slideshow-nav button:hover{
+    background:linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.12));
+    transform:translateY(-1px);
+  }
+
+  .slideshow-nav button:disabled{
+    cursor:not-allowed;
+    background:linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+  }
+
+  .nav-arrow{
+    width:18px;
+    height:18px;
+    display:block;
+    position:relative;
+  }
+
+  .nav-arrow::before{
+    content:"";
+    position:absolute;
+    width:12px;
+    height:12px;
+    top:3px;
+    border-top:2px solid currentColor;
+    border-right:2px solid currentColor;
+  }
+
+  .nav-arrow.left::before{
+    transform:rotate(-135deg);
+    transform-origin:center;
+    left:5px;
+  }
+
+  .nav-arrow.right::before{
+    transform:rotate(45deg);
+    transform-origin:center;
+    left:1px;
+  }
+
+  .nav-arrow::after{
+    content:"";
+    position:absolute;
+    top:8px;
+    width:12px;
+    height:2px;
+    border-radius:999px;
+    background:currentColor;
+  }
+
+  .nav-arrow.left::after{
+    left:5px;
+  }
+
+  .nav-arrow.right::after{
+    left:1px;
+  }
+
+  .slideshow-status{
+    min-width:88px;
+    text-align:center;
+    color:#dce8f8;
+    font:700 12px/1.2 Arial,Helvetica,sans-serif;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    padding:0 6px;
+  }
+
+  .slideshow-divider{
+    width:1px;
+    height:28px;
+    background:rgba(255,255,255,.12);
+  }
+
+  .fullscreen-btn{
+    font-size:14px !important;
+  }
+
+  body.is-fullscreen .tab-shell{
+    top:10px;
+  }
+
+  body.is-fullscreen .slideshow-nav{
+    bottom:10px;
+    right:10px;
+  }
+
+  @media print{
+    body{background:#fff}
+    .page-loader{display:none}
+    .tab-shell{display:none}
+    .tab-panel{display:block}
+    .deck{padding:0}
+    .slide{margin:0;box-shadow:none;page-break-after:always;border-radius:0}
+    .between-slide,.slideshow-nav{display:none}
+    .footer strong{opacity:1}
+  }
+</style>
+</head>
+<body class="is-loading">
+<div class="page-loader" id="pageLoader" aria-live="polite" aria-busy="true">
+  <div class="loader-card">
+    <div class="loader-mark">
+      <img src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+    </div>
+    <p class="loader-title">Loading Orion Deck</p>
+    <p class="loader-copy">Preparing slides, restoring navigation, and loading resources.</p>
+    <div class="loader-bar" aria-hidden="true"></div>
+  </div>
+</div>
+<div class="tab-shell" role="tablist" aria-label="Pitch deck tabs">
+  <button class="tab-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="marketing-panel" data-tab="marketing-panel">Marketing Pitch</button>
+  <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="technical-panel" data-tab="technical-panel">Technical Pitch</button>
+</div>
+
+<section class="tab-panel is-active" id="marketing-panel" role="tabpanel">
+<main class="deck">
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Strategic Collaboration</div>
+    </div>
+    <div class="body two-col compact-hero">
+      <div class="hero-panel panel">
+        <div class="eyebrow">Slide 1</div>
+        <h1>Partner with Orion to launch a stronger intelligence offering</h1>
+        <p class="lead">Orion is a collaboration-ready intelligence platform that helps a partner deliver discovery, investigation, validation, and reporting workflows from one product base.</p>
+        <div class="metric-grid">
+          <article class="metric"><h3>Ready platform base</h3><p>Start from a working intelligence workflow, not a fragmented build.</p></article>
+          <article class="metric violet"><h3>Faster go-to-market</h3><p>Move quicker by focusing on packaging, sales, and delivery.</p></article>
+          <article class="metric teal"><h3>Collaboration model</h3><p>Support white-label, managed delivery, and sector-led offerings.</p></article>
+          <article class="metric gold"><h3>Commercial potential</h3><p>Create a stronger path to recurring client-facing revenue.</p></article>
+        </div>
+        <div class="quote">Orion should be positioned as a partner platform that can be commercialized, localized, and extended for specific markets and customers.</div>
+      </div>
+      <div class="visual-stack">
+        <section class="accent-card">
+          <h2>Positioning Thesis</h2>
+          <p>Orion is not being presented as software alone. It is the operating base for a stronger intelligence business.</p>
+          <div class="pill-list">
+            <div class="pill"><span>Platform Foundation</span><span>Launch Faster</span></div>
+            <div class="pill"><span>Partner-Led Delivery</span><span>Regional Fit</span></div>
+            <div class="pill"><span>Commercial Extension</span><span>Long-Term Scale</span></div>
+          </div>
+        </section>
+        <section class="panel list-panel">
+          <h2>What this means in practice</h2>
+          <ul class="clean-list">
+            <li><strong>Commercializable:</strong> Package services, monitoring, and premium investigations from one base.</li>
+            <li><strong>Localizable:</strong> Adapt delivery by market, industry, and client maturity.</li>
+            <li><strong>Extendable:</strong> Grow without losing the core workflow story.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>01</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Market Need</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 2</div>
+      <h1>Why this collaboration matters now</h1>
+      <p class="lead">The market case is simple: buyers need usable intelligence outcomes, and partnership makes delivery faster, more local, and more commercial.</p>
+      <div class="equal-col">
+        <section class="panel list-panel">
+          <h2>Why the timing works</h2>
+          <ul class="clean-list">
+            <li>Organizations want intelligence capability but lack usable workflows.</li>
+            <li>Buyers want outcomes, not tools.</li>
+            <li>Partners can move faster with an existing platform.</li>
+            <li>Local adaptation is easier through partnership.</li>
+          </ul>
+        </section>
+        <section class="panel list-panel">
+          <h2>What a partner brings</h2>
+          <ul class="clean-list">
+            <li><strong>Regional access:</strong> Immediate entry into relationships, sectors, and trust networks.</li>
+            <li><strong>Sector focus:</strong> Sharper packaging around high-demand commercial problems.</li>
+            <li><strong>Managed delivery:</strong> Analyst services, onboarding, review, and reporting operations.</li>
+            <li><strong>Commercial leverage:</strong> Stronger conversion through solution-led selling.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>02</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Platform Summary</div>
+    </div>
+    <div class="body two-col">
+      <div>
+        <div class="eyebrow">Slide 3</div>
+        <h1>What Orion is</h1>
+        <p class="lead">A unified intelligence workflow platform combining search, investigation, validation, and reporting.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Discovery</h3><p>Identify relevant signals and surface what deserves attention first.</p></article>
+          <article class="metric violet"><h3>Investigation</h3><p>Examine context, evidence, and linked activity without breaking flow.</p></article>
+          <article class="metric teal"><h3>Validation</h3><p>Confirm what matters and reduce noise before action is taken.</p></article>
+          <article class="metric gold"><h3>Reporting</h3><p>Turn findings into usable outputs for clients, teams, and service delivery.</p></article>
+        </div>
+        <div class="quote">Orion is not just a search tool. It is a workflow system that enables real delivery.</div>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Workflow system, not a feature stack</h2>
+        <div class="signal-board">
+          <div class="signal"><strong>Search</strong><span>Bring signals into view fast</span><em>Input</em></div>
+          <div class="signal"><strong>Context</strong><span>Move from raw hits to useful understanding</span><em>Analysis</em></div>
+          <div class="signal"><strong>Validation</strong><span>Establish confidence before reporting</span><em>Quality</em></div>
+          <div class="signal"><strong>Output</strong><span>Deliver a report, a case, or a managed service result</span><em>Outcome</em></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>03</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Workflow</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 4</div>
+      <h1>How the system works in practice</h1>
+      <p class="lead">Orion connects the operational steps that usually live across different tools, so analysts can move from signal to outcome in one continuous workflow.</p>
+      <div class="panel flow-panel">
+        <h2>Operational flow</h2>
+        <div class="flow">
+          <article class="flow-step"><div class="num">1</div><h3>Find signal</h3><p>Start with the first meaningful lead and remove guesswork from the opening step.</p></article>
+          <article class="flow-step"><div class="num">2</div><h3>Validate</h3><p>Check confidence, relevance, and current significance before escalation.</p></article>
+          <article class="flow-step"><div class="num">3</div><h3>Investigate</h3><p>Expand the picture through evidence, context, and related records.</p></article>
+          <article class="flow-step"><div class="num">4</div><h3>Deliver outcome</h3><p>Produce a usable output that can support action, reporting, or service delivery.</p></article>
+        </div>
+      </div>
+      <div class="quote">Continuity across steps is what enables consistent client outcomes.</div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>04</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Value Creation</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 5</div>
+      <h1>Value creation</h1>
+      <p class="lead">The platform creates value on both sides of the relationship: stronger packaging and economics for the partner, and clearer operational outcomes for the client.</p>
+      <div class="value-grid">
+        <section class="value-box partner">
+          <div class="value-label">Partner Value</div>
+          <h2>Partner Value</h2>
+          <div class="signal-board">
+            <div class="signal"><strong>Less tool sprawl</strong><span>One operating base reduces the need to stitch together disconnected products and analyst workflows.</span><em>Efficiency</em></div>
+            <div class="signal"><strong>Better service packaging</strong><span>Platform, analysts, reporting, and monitoring can be sold as one coherent offer.</span><em>Packaging</em></div>
+            <div class="signal"><strong>Faster onboarding</strong><span>Clients reach a usable workflow faster because the platform story is already structured.</span><em>Adoption</em></div>
+            <div class="signal"><strong>Stronger retention</strong><span>Recurring workflows and ongoing reporting make long-term account value easier to sustain.</span><em>Growth</em></div>
+          </div>
+        </section>
+        <section class="value-box client">
+          <div class="value-label">Client Value</div>
+          <h2>Client Value</h2>
+          <div class="signal-board">
+            <div class="signal"><strong>Faster insight</strong><span>Move from signal to interpretation with fewer handoffs and less wasted analyst time.</span><em>Speed</em></div>
+            <div class="signal"><strong>Better confidence</strong><span>Validation and context make outputs more defensible for operational and executive review.</span><em>Trust</em></div>
+            <div class="signal"><strong>Clearer reporting</strong><span>Findings are easier to communicate because the output structure is already built into the workflow.</span><em>Clarity</em></div>
+            <div class="signal"><strong>Operational continuity</strong><span>The same system can support one-off investigations and repeatable monitoring over time.</span><em>Continuity</em></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>05</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Industry: Financial</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 6</div>
+      <h1>Financial services</h1>
+      <p class="lead">For financial organizations, Orion supports faster exposure review, stronger investigative handling, and more premium service delivery.</p>
+      <div class="industry-band">
+        <section class="industry-title">
+          <h2>Commercial fit for financial services</h2>
+          <p>Position Orion as a structured intelligence layer that improves visibility, investigative response, and service packaging for sensitive environments.</p>
+        </section>
+        <section class="section-card">
+          <h3>Key Uses</h3>
+          <div class="grid-2">
+            <article class="metric"><h3>Exposure monitoring</h3><p>Support faster visibility into external risk and client-impacting intelligence.</p></article>
+            <article class="metric violet"><h3>Fraud investigation</h3><p>Strengthen investigative speed and review quality around suspicious activity.</p></article>
+            <article class="metric teal"><h3>Analyst efficiency</h3><p>Reduce movement between discovery, context review, and reporting.</p></article>
+            <article class="metric gold"><h3>Managed services</h3><p>Package monitoring and intelligence review into recurring commercial offers.</p></article>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>06</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Industry: Telecom</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 7</div>
+      <h1>Telecom &amp; digital infrastructure</h1>
+      <p class="lead">In telecom and digital infrastructure environments, Orion helps combine visibility, investigation, and reporting into a more usable operational workflow.</p>
+      <div class="industry-band">
+        <section class="industry-title">
+          <h2>Operational visibility at scale</h2>
+          <p>Use Orion to support infrastructure-oriented intelligence services where evidence, follow-through, and reporting quality matter.</p>
+        </section>
+        <section class="section-card">
+          <h3>Key Uses</h3>
+          <div class="grid-2">
+            <article class="metric"><h3>Asset visibility</h3><p>Surface exposed systems, relevant signals, and operational blind spots more clearly.</p></article>
+            <article class="metric violet"><h3>Investigation workflows</h3><p>Move from detection into context-building inside a single delivery structure.</p></article>
+            <article class="metric teal"><h3>Operational reporting</h3><p>Translate findings into outputs that teams and clients can act on.</p></article>
+            <article class="metric gold"><h3>Managed offerings</h3><p>Support recurring reviews, monitoring, and premium service layers.</p></article>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>07</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Industry: Government</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 8</div>
+      <h1>Government &amp; public sector</h1>
+      <p class="lead">For public-sector use, the platform is best framed around structured review, governance-friendly process, and regionally aligned delivery.</p>
+      <section class="ui-shell">
+        <div class="ui-top">
+          <span>Public Sector Delivery Alignment</span>
+          <div class="ui-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="ui-board">
+          <aside class="ui-side">
+            <h3>Structured delivery</h3>
+            <p>Disciplined workflow support for environments where process clarity and regional alignment matter.</p>
+            <div class="ui-meta">
+              <div class="ui-chip">Repeatable review</div>
+              <div class="ui-chip">Operational discipline</div>
+              <div class="ui-chip">Regional alignment</div>
+            </div>
+          </aside>
+          <div class="ui-main">
+            <h3>Key Uses</h3>
+            <div class="ui-grid">
+              <article class="metric"><h3>Structured intelligence review</h3><p>Support repeatable review processes instead of ad hoc investigative handling.</p></article>
+              <article class="metric violet"><h3>Digital visibility</h3><p>Improve understanding of relevant signals and evidence across public-sector contexts.</p></article>
+              <article class="metric teal"><h3>Governance-friendly usage</h3><p>Give teams a clearer route from evidence to output with more operational discipline.</p></article>
+              <article class="metric gold"><h3>Regional delivery alignment</h3><p>Adapt service delivery to sovereign, regional, or policy-led realities.</p></article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>08</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Collaboration Model</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 9</div>
+      <h1>Collaboration model</h1>
+      <p class="lead">The partnership model works because each side owns a clear part of the value chain while still operating from one shared platform story.</p>
+      <div class="pair-grid">
+        <section class="compare-box">
+          <div class="compare-label">Partner Use</div>
+          <h2>Partner Use</h2>
+          <div class="signal-board">
+            <div class="signal"><strong>White-label platform</strong><span>Launch Orion under partner branding with local ownership of the client relationship.</span><em>Brand</em></div>
+            <div class="signal"><strong>Managed intelligence service</strong><span>Combine the platform with analyst operations, reporting, and support delivery.</span><em>Service</em></div>
+            <div class="signal"><strong>Sector-focused solution</strong><span>Package Orion around a specific industry problem or buyer environment.</span><em>Vertical</em></div>
+            <div class="signal"><strong>Co-developed expansion</strong><span>Use market feedback to shape the product roadmap around real commercial demand.</span><em>Growth</em></div>
+          </div>
+        </section>
+        <section class="compare-box alt">
+          <div class="compare-label">Orion Contribution</div>
+          <h2>Orion Contribution</h2>
+          <div class="signal-board">
+            <div class="signal"><strong>Product foundation</strong><span>A working intelligence workflow base already connects search, context, and reporting.</span><em>Base</em></div>
+            <div class="signal"><strong>Operational speed</strong><span>Reduces the time and product effort required before commercial launch.</span><em>Speed</em></div>
+            <div class="signal"><strong>Service flexibility</strong><span>Supports resale, managed monitoring, advisory delivery, and hybrid models.</span><em>Model</em></div>
+            <div class="signal"><strong>Extensibility</strong><span>Provides room to adapt for local demand, sector use, and future scale.</span><em>Scale</em></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>09</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Differentiation</div>
+    </div>
+    <div class="body two-col">
+      <div>
+        <div class="eyebrow">Slide 10</div>
+        <h1>What makes Orion commercially stronger</h1>
+        <p class="lead">The strongest differentiation is not just the data layer. It is the way Orion helps a partner package, demonstrate, and deliver value more effectively.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Workflow, not a point tool</h3><p>The product story is operational and end-to-end, not just feature-led.</p></article>
+          <article class="metric violet"><h3>Built for collaboration</h3><p>The platform supports partnership models without losing clarity of use.</p></article>
+          <article class="metric teal"><h3>Faster commercial path</h3><p>Partners can move toward delivery sooner with a credible product base.</p></article>
+          <article class="metric gold"><h3>Practical client outcomes</h3><p>Value is easier to explain because the workflow leads to usable outputs.</p></article>
+        </div>
+        <div class="quote">The differentiation is not just data. It’s how value is delivered.</div>
+      </div>
+      <div class="accent-card">
+        <h2>Commercial strength comes from delivery logic</h2>
+        <p>Orion is stronger when positioned around client outcomes, recurring services, and the speed of turning signal into action.</p>
+        <div class="pill-list">
+          <div class="pill"><span>Outcome-Led</span><span>Clearer Sales Story</span></div>
+          <div class="pill"><span>Workflow-Led</span><span>Better Demo Logic</span></div>
+          <div class="pill"><span>Service-Led</span><span>Recurring Revenue Fit</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>10</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Pitch Readiness</div>
+    </div>
+    <div class="body two-col">
+      <div>
+        <div class="eyebrow">Slide 11</div>
+        <h1>A platform you can confidently take into partner meetings</h1>
+        <p class="lead">Orion already behaves like a usable client-facing system, not a prototype.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Client-ready experience</h3><p>The platform story is coherent enough to support serious meetings and demos.</p></article>
+          <article class="metric violet"><h3>Strong first impression</h3><p>Buyers can understand the value proposition quickly and visually.</p></article>
+          <article class="metric teal"><h3>Lower sales friction</h3><p>A clearer workflow reduces the burden of explanation in early discussions.</p></article>
+          <article class="metric gold"><h3>Easier packaging</h3><p>Partners can frame the offer as a usable service, not a future roadmap promise.</p></article>
+        </div>
+        <div class="quote">Orion is ready for real partner conversations and demos.</div>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Meeting-ready characteristics</h2>
+        <ul class="clean-list">
+          <li><strong>Readable story:</strong> The workflow is easy to explain from first signal to delivery.</li>
+          <li><strong>Commercial credibility:</strong> The product already supports a service-led conversation.</li>
+          <li><strong>Packaging flexibility:</strong> It can be shown as a platform, a managed offer, or a white-label base.</li>
+          <li><strong>Demo confidence:</strong> The platform feels concrete enough to support serious discussions.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>11</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Commercial Value</div>
+    </div>
+    <div class="body two-col">
+      <div>
+        <div class="eyebrow">Slide 12</div>
+        <h1>Why Orion is easier to sell as a service</h1>
+        <p class="lead">Value comes from turning findings into usable outputs, not just discovery.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Clearer outputs</h3><p>Clients understand the value faster when the result is structured and usable.</p></article>
+          <article class="metric violet"><h3>Higher trust</h3><p>Better validation and reporting increase confidence in delivery quality.</p></article>
+          <article class="metric teal"><h3>Service-led positioning</h3><p>The platform supports a solution sale instead of a narrow tooling sale.</p></article>
+          <article class="metric gold"><h3>Recurring revenue fit</h3><p>Managed services and monitoring models become easier to justify commercially.</p></article>
+        </div>
+        <div class="quote">Orion enables repeatable, client-facing delivery.</div>
+      </div>
+      <div class="accent-card">
+        <h2>Why service-led selling works</h2>
+        <p>Orion supports a commercial model where insight becomes a deliverable, not just a dashboard view.</p>
+        <div class="pill-list">
+          <div class="pill"><span>Findings</span><span>Become Outputs</span></div>
+          <div class="pill"><span>Outputs</span><span>Build Trust</span></div>
+          <div class="pill"><span>Trust</span><span>Supports Recurring Revenue</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>12</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Delivery Strategy</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 13</div>
+      <h1>How to commercialize it</h1>
+      <p class="lead">The fastest route to market is to sell Orion as a workflow-led service offer with clear packaging, clear pricing, and a simple demo story.</p>
+      <div class="pair-grid">
+        <section class="compare-box">
+          <div class="compare-label">Pitch Flow</div>
+          <h2>Pitch Flow</h2>
+          <div class="signal-board">
+            <div class="signal"><strong>Start with business problem</strong><span>Lead with visibility, risk, or reporting gaps instead of technical jargon.</span><em>Entry</em></div>
+            <div class="signal"><strong>Show workflow</strong><span>Demonstrate how Orion moves from signal to validated output.</span><em>Demo</em></div>
+            <div class="signal"><strong>Package the service</strong><span>Frame the offer as platform plus delivery, not software access alone.</span><em>Offer</em></div>
+            <div class="signal"><strong>Close with partnership value</strong><span>End on localization, responsiveness, and long-term commercial upside.</span><em>Close</em></div>
+          </div>
+        </section>
+        <section class="compare-box alt">
+          <div class="compare-label">Revenue Models</div>
+          <h2>Revenue Models</h2>
+          <div class="signal-board">
+            <div class="signal"><strong>Subscription</strong><span>Core platform access for clients that want direct usage and internal analyst adoption.</span><em>SaaS</em></div>
+            <div class="signal"><strong>Managed monitoring</strong><span>Recurring alerting, review, and monthly or quarterly reporting.</span><em>Recurring</em></div>
+            <div class="signal"><strong>Premium investigations</strong><span>Higher-touch analyst casework layered on top of standard monitoring.</span><em>Premium</em></div>
+            <div class="signal"><strong>White-label</strong><span>Partner-led growth with branded local delivery in target markets.</span><em>Channel</em></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>13</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Strategic Fit</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 14</div>
+      <h1>Strategic fit</h1>
+      <p class="lead">The strategic alignment is strongest when Orion continues to evolve the product base while the partner leads market access, delivery, and growth.</p>
+      <div class="fit-grid">
+        <section class="compare-box">
+          <div class="compare-label">Orion Drives</div>
+          <h2>Orion Drives</h2>
+          <div class="signal-board">
+            <div class="signal"><strong>Platform evolution</strong><span>Continue strengthening the shared workflow foundation and product quality.</span><em>Roadmap</em></div>
+            <div class="signal"><strong>Feature expansion</strong><span>Add capabilities that improve partner usefulness and buyer value.</span><em>Capability</em></div>
+            <div class="signal"><strong>Integration support</strong><span>Help shape the product around real delivery and integration requirements.</span><em>Enablement</em></div>
+            <div class="signal"><strong>Operational enablement</strong><span>Support the partner with the product layer needed for credible execution.</span><em>Support</em></div>
+          </div>
+        </section>
+        <section class="compare-box alt">
+          <div class="compare-label">Partner Owns</div>
+          <h2>Partner Owns</h2>
+          <div class="signal-board">
+            <div class="signal"><strong>Market access</strong><span>Use local reach, trust, and sales channels to reach the right buyers.</span><em>Access</em></div>
+            <div class="signal"><strong>Client delivery</strong><span>Wrap Orion inside an industry-appropriate service and support model.</span><em>Delivery</em></div>
+            <div class="signal"><strong>Regional positioning</strong><span>Adjust messaging, pricing, and packaging for market reality.</span><em>Position</em></div>
+            <div class="signal"><strong>Revenue growth</strong><span>Turn the collaboration into recurring accounts and sector-specific expansion.</span><em>Scale</em></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>14</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Technical Strength I</div>
+    </div>
+    <div class="body two-col">
+      <div>
+        <div class="eyebrow">Slide 15</div>
+        <h1>Unified workflow</h1>
+        <p class="lead">Discovery, validation, and reporting exist in one system.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Single workflow spine</h3><p>A consistent operational backbone keeps steps connected.</p></article>
+          <article class="metric violet"><h3>Faster analyst movement</h3><p>Less switching means faster movement from signal to output.</p></article>
+          <article class="metric teal"><h3>Better demo clarity</h3><p>The end-to-end logic is easier to show and easier to understand.</p></article>
+          <article class="metric gold"><h3>Stronger service layer</h3><p>The platform is easier to commercialize as a delivery system.</p></article>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Why this matters technically</h2>
+        <ul class="clean-list">
+          <li>Search is not isolated from investigation.</li>
+          <li>Validation is not detached from evidence handling.</li>
+          <li>Reporting is part of the workflow, not a separate afterthought.</li>
+          <li>That continuity improves analyst speed and commercial clarity at the same time.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>15</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Technical Strength II</div>
+    </div>
+    <div class="body two-col">
+      <div>
+        <div class="eyebrow">Slide 16</div>
+        <h1>Evidence → output</h1>
+        <p class="lead">Orion turns intelligence into structured outputs.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Evidence review</h3><p>Give analysts a clear place to work through findings and supporting material.</p></article>
+          <article class="metric violet"><h3>Clear outputs</h3><p>Make reporting more usable for clients, stakeholders, and delivery teams.</p></article>
+          <article class="metric teal"><h3>Operational usefulness</h3><p>Structure turns information into something that can drive action.</p></article>
+          <article class="metric gold"><h3>Commercial relevance</h3><p>Better outputs create a stronger case for premium and recurring services.</p></article>
+        </div>
+      </div>
+      <div class="accent-card">
+        <h2>Output quality is a commercial advantage</h2>
+        <p>Evidence becomes more valuable when it can be reviewed, validated, and delivered in a format clients can immediately use.</p>
+        <div class="pill-list">
+          <div class="pill"><span>Evidence Review</span><span>Confidence</span></div>
+          <div class="pill"><span>Clear Output</span><span>Client Trust</span></div>
+          <div class="pill"><span>Usable Delivery</span><span>Commercial Value</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>16</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Technical Strength III</div>
+    </div>
+    <div class="body two-col">
+      <div>
+        <div class="eyebrow">Slide 17</div>
+        <h1>Flexible platform</h1>
+        <p class="lead">Supports multiple partnership models without changing workflow.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>White-label capable</h3><p>The system can sit behind partner branding and client ownership models.</p></article>
+          <article class="metric violet"><h3>Service-ready</h3><p>It supports recurring delivery structures, not just one-time product access.</p></article>
+          <article class="metric teal"><h3>Sector adaptable</h3><p>The same operating logic can be packaged for different industries.</p></article>
+          <article class="metric gold"><h3>Scalable base</h3><p>Expansion can happen without rebuilding the core story or workflow.</p></article>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Partnership flexibility without workflow loss</h2>
+        <ul class="clean-list">
+          <li>One platform can support multiple go-to-market models.</li>
+          <li>The delivery logic stays coherent even when the commercial wrapper changes.</li>
+          <li>That makes Orion easier to localize, extend, and scale with partners.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>17</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Conclusion</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Slide 18</div>
+      <h1>Why this collaboration is worth exploring</h1>
+      <p class="lead">The opportunity is compelling because Orion already provides a credible platform base while leaving substantial room for service-led growth.</p>
+      <div class="grid-2">
+        <article class="metric"><h3>Credible platform base</h3><p>Orion already offers a serious foundation for intelligence delivery.</p></article>
+        <article class="metric violet"><h3>Faster route to market</h3><p>Partners can launch sooner with an existing platform and workflow base.</p></article>
+        <article class="metric teal"><h3>Service-led growth</h3><p>The platform aligns naturally with recurring services and stronger client retention.</p></article>
+        <article class="metric gold"><h3>Room to scale</h3><p>The model can expand across sectors, regions, and deeper delivery layers.</p></article>
+      </div>
+      <div class="quote">Orion is best positioned as a collaboration-ready intelligence platform that enables partners to launch quickly, deliver clear client value, and build a scalable, long-term service business.</div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>18</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Strategic Collaboration Deck</span></div>
+      </div>
+      <div class="tag">Closing</div>
+    </div>
+    <div class="closing">
+      <div class="closing-card">
+        <div class="closing-mark">
+          <img src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        </div>
+        <div class="closing-sub">Strategic Collaboration Conclusion</div>
+        <h1>Thank you</h1>
+        <p class="lead">Orion is a collaboration-ready intelligence platform built to help partners launch faster, deliver stronger client outcomes, and build a scalable long-term service business.</p>
+        <div class="closing-line"></div>
+        <div class="closing-points">
+          <div class="closing-chip">Launch Faster</div>
+          <div class="closing-chip">Deliver Clearly</div>
+          <div class="closing-chip">Scale Confidently</div>
+        </div>
+        <p style="font-size:18px;max-width:760px;">We welcome the opportunity to explore a focused partnership around market access, delivery strength, and long-term commercial growth.</p>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Partnership Pitch</span><strong>19</strong></div>
+  </section>
+
+</main>
+</section>
+
+<section class="tab-panel" id="technical-panel" role="tabpanel">
+<main class="deck">
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Technical Pitch</div>
+    </div>
+    <div class="body two-col">
+      <div class="hero-panel panel">
+        <div class="eyebrow">Technical 1</div>
+        <h1>Orion is a unified investigation and monitoring workspace</h1>
+        <p class="lead">The technical value of Orion is that indexed search, live lookups, graph analysis, reporting, and tenant operations sit inside one platform instead of across disconnected tools.</p>
+        <div class="metric-grid">
+          <article class="metric"><h3>Indexed intelligence</h3><p>Search across consolidated, breach, exploit, social, and other investigation modules.</p></article>
+          <article class="metric violet"><h3>Live lookups and scans</h3><p>Run entity APIs, file scans, web scans, and network intel in the same environment.</p></article>
+          <article class="metric teal"><h3>Graph workflows</h3><p>Move into CTI Graph and Social Intel when relationship mapping becomes necessary.</p></article>
+          <article class="metric gold"><h3>Operational delivery</h3><p>Export, report, summarize, and manage tenants without leaving the platform.</p></article>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Why the technical story matters</h2>
+        <ul class="clean-list">
+          <li>One interface supports search, review, enrichment, graph pivots, and output.</li>
+          <li>Role-aware navigation adapts what users see based on tenant, license, and permissions.</li>
+          <li>The platform supports both analyst investigation and operational monitoring workflows.</li>
+          <li>That architectural continuity is what makes Orion usable in real delivery environments.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>01</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Application Layout</div>
+    </div>
+    <div class="body shot-layout">
+      <div class="shot-card">
+        <h3>Dashboard landing view</h3>
+        <img src="https://orion-search.readthedocs.io/en/latest/_images/homepage-overview-20260326.png" alt="Orion dashboard landing view from the user manual">
+        <p>The main application layout combines the left sidebar, global search area, workspace, and inline filters in one operating surface.</p>
+      </div>
+      <div class="tech-side">
+        <div>
+        <div class="eyebrow">Technical 2</div>
+        <h1>Main application layout</h1>
+        <p class="lead">After authentication, Orion opens in the dashboard workspace where navigation, search, results, and analyst actions stay connected.</p>
+        </div>
+        <div class="tech-kpis">
+          <div class="tech-kpi"><strong>Sidebar</strong><span>Role-aware module access</span></div>
+          <div class="tech-kpi"><strong>Search</strong><span>Shared entry across indexed workflows</span></div>
+          <div class="tech-kpi"><strong>Workspace</strong><span>Cards, reports, analytics, and filters</span></div>
+          <div class="tech-kpi"><strong>Ops</strong><span>Tenant and admin features in-platform</span></div>
+        </div>
+        <ul class="clean-list">
+          <li>The sidebar groups indexed search modules, live scan modules, graph tools, and support links.</li>
+          <li>The result area changes by module but consistently supports counts, cards or rows, analytics, filters, and pagination.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>02</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Search Workflow</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Technical 3</div>
+      <h1>Shared search workflow across indexed investigation</h1>
+      <p class="lead">Across indexed modules, Orion keeps the search experience consistent so analysts can refine queries and review results without relearning the interface each time.</p>
+      <div class="equal-col">
+        <div class="shot-stack">
+          <div class="shot-card">
+            <h3>Search entry area</h3>
+            <img src="https://orion-search.readthedocs.io/en/latest/_images/homepage-searchbar-20260326.png" alt="Orion search bar with advanced mode and tools controls">
+            <p>Search modes and tools let analysts choose how broadly or narrowly the query should be interpreted.</p>
+          </div>
+        </div>
+        <div class="shot-stack">
+          <div class="shot-card">
+            <h3>Indexed filter controls</h3>
+            <img src="https://orion-search.readthedocs.io/en/latest/_images/search-filters-20260326.png" alt="Orion indexed search filters">
+            <p>Advanced filtering exposes dropdowns, text inputs, dates, apply, and reset flows for refined investigation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>03</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Insights</div>
+    </div>
+    <div class="body shot-layout">
+      <div class="shot-card">
+        <h3>Consolidated result insights</h3>
+        <img src="https://orion-search.readthedocs.io/en/latest/_images/consolidated-insights-20260326.png" alt="Orion result insights side panel">
+        <p>The insights side panel accelerates triage with keyword summaries, threat-actor helpers, URL pivots, and extracted-data sections.</p>
+      </div>
+      <div class="tech-side">
+        <div class="eyebrow">Technical 4</div>
+        <h1>Analyst triage is built into the result workflow</h1>
+        <p class="lead">Instead of forcing the user to open every result manually, Orion exposes coverage summaries and pivots beside the main result stream.</p>
+        <ul class="clean-list">
+          <li>Quickly answer what themes dominate the result set.</li>
+          <li>Identify actor- or URL-based pivots before opening a full report.</li>
+          <li>Use extracted sections to decide which reports deserve deeper inspection.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>04</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Graph Investigation</div>
+    </div>
+    <div class="body shot-layout">
+      <div class="shot-card">
+        <h3>CTI Graph workspace</h3>
+        <img src="https://orion-search.readthedocs.io/en/latest/_images/cti-graph-20260326.png" alt="Orion CTI graph workspace">
+        <p>CTI Graph provides session tabs, graph and list views, filters, listings, highlighting, expand controls, and export/report flows.</p>
+      </div>
+      <div class="tech-side">
+        <div class="eyebrow">Technical 5</div>
+        <h1>Relationship mapping for deeper cyber threat pivots</h1>
+        <p class="lead">When analysts need structural analysis instead of row-based review, Orion pivots into CTI Graph without changing the overall investigation model.</p>
+        <ul class="clean-list">
+          <li>Supports cluster, document, and property nodes with directional connections.</li>
+          <li>Includes session management, graph/list switching, node search, and report export.</li>
+          <li>The listings panel turns graph state back into a document-oriented review surface.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>05</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Social Intel</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Technical 6</div>
+      <h1>Social Intel is a multi-state workspace, not a single-screen graph</h1>
+      <p class="lead">The Social Intel workflow combines graph exploration, account selection, and profile review in a more structured investigation loop than a simple node map.</p>
+      <div class="equal-col">
+        <div class="shot-card">
+          <h3>Social graph workspace</h3>
+          <img src="https://orion-search.readthedocs.io/en/latest/_images/social-intel-20260326.png" alt="Orion Social Intel graph workspace">
+          <p>Used for username scans, relationship mapping, session management, and graph-first exploration.</p>
+        </div>
+        <div class="shot-card">
+          <h3>Manage-profiles modal</h3>
+          <img src="https://orion-search.readthedocs.io/en/latest/_images/social-manage-profiles-20260326.png" alt="Orion manage profiles modal">
+          <p>Central control surface for filtering candidate platforms, fetching accounts, and pushing selected profiles into the graph.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>06</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Profile Review</div>
+    </div>
+    <div class="body shot-layout">
+      <div class="shot-card">
+        <h3>Social Intel list view</h3>
+        <img src="https://orion-search.readthedocs.io/en/latest/_images/social-intel-list-view-20260326.png" alt="Orion Social Intel list view">
+        <p>List view supports profile-by-profile review after graph ingestion, giving analysts a structured inspection mode beside the graph.</p>
+      </div>
+      <div class="tech-side">
+        <div class="eyebrow">Technical 7</div>
+        <h1>Graph and list views work together</h1>
+        <p class="lead">Social investigations often alternate between relationship structure and detail inspection. Orion supports both without forcing a context switch to another tool.</p>
+        <ul class="clean-list">
+          <li>Start from a known username, uploaded image, or analyst-defined entity.</li>
+          <li>Fetch selected profiles into the graph, then switch into list mode for systematic review.</li>
+          <li>Use summary and metadata popups to pivot into platform-specific details and enrichment actions.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>07</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Access Flows</div>
+    </div>
+    <div class="body two-col">
+      <div class="panel">
+        <div class="eyebrow">Technical 8</div>
+        <h1>Access and entry flows are role-aware</h1>
+        <p class="lead">The user manual describes login, password reset, and tenant onboarding as part of a larger authenticated lifecycle, not isolated screens.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Login</h3><p>Standard entry point into the dashboard workspace.</p></article>
+          <article class="metric violet"><h3>Password reset</h3><p>Two-stage reset flow with tokenized new-password handling.</p></article>
+          <article class="metric teal"><h3>Tenant onboarding</h3><p>Multi-step onboarding with company information and IOC setup.</p></article>
+          <article class="metric gold"><h3>Role variance</h3><p>Modules and actions differ by tenant state, role, and license.</p></article>
+        </div>
+      </div>
+      <div class="shot-card">
+        <h3>Login entry point</h3>
+        <img src="https://orion-search.readthedocs.io/en/latest/_images/login-page-20260326.png" alt="Orion login screen">
+        <p>The access layer is part of a permission-aware product model rather than a generic sign-in shell.</p>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>08</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Homepage</div>
+    </div>
+    <div class="body shot-layout">
+      <div class="shot-card">
+        <h3>Homepage summary view</h3>
+        <img src="https://orion-search.readthedocs.io/en/latest/_images/homepage-overview-20260326.png" alt="Orion homepage summary">
+        <p>The homepage acts as an operational launch surface for search, high-level summaries, and workspace handoff.</p>
+      </div>
+      <div class="tech-side">
+        <div class="eyebrow">Technical 9</div>
+        <h1>Homepage and analytics orient the analyst fast</h1>
+        <p class="lead">The manual positions homepage summaries and analytics as part of the investigation loop, not as decorative dashboards.</p>
+        <ul class="clean-list">
+          <li>Summaries shorten time to first useful action.</li>
+          <li>Heatmap and summary areas help prioritize where analysts start.</li>
+          <li>The homepage hands off naturally into search and result workflows.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>09</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Indexed Modules</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Technical 10</div>
+      <h1>Indexed investigation modules are structured by problem space</h1>
+      <p class="lead">The indexed side of Orion is organized into source- and problem-specific modules so search remains broad where needed and targeted where useful.</p>
+      <div class="grid-2">
+        <article class="metric"><h3>Consolidated</h3><p>Broad cross-source investigation and ranked review.</p></article>
+        <article class="metric violet"><h3>Data Breach &amp; Defacement</h3><p>Targeted workflows for exposed-data and website-impact review.</p></article>
+        <article class="metric teal"><h3>Social, Exploit, Feed</h3><p>Source-specific surfaces for narrower intelligence categories.</p></article>
+        <article class="metric gold"><h3>Dump and support modules</h3><p>Supplementary indexed areas and navigation-driven operational tools.</p></article>
+      </div>
+      <div class="quote">The product is not one monolithic search page. It is a family of indexed modules sharing the same operational search pattern.</div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>10</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Stealer Logs</div>
+    </div>
+    <div class="body two-col">
+      <div class="panel">
+        <div class="eyebrow">Technical 11</div>
+        <h1>Stealer Logs uses a richer search and review model</h1>
+        <p class="lead">The manual gives Stealer Logs its own treatment because it combines search modes, advanced filters, metrics, supporting actions, and record review.</p>
+        <ul class="clean-list">
+          <li>Basic and advanced modes support different entry behaviors.</li>
+          <li>Filter builder helps narrow credential- and exposure-related queries.</li>
+          <li>Metrics and supporting actions make triage more operational.</li>
+        </ul>
+      </div>
+      <div class="shot-card">
+        <h3>Shared search surface reused in specialized modules</h3>
+        <img src="https://orion-search.readthedocs.io/en/latest/_images/search-filters-20260326.png" alt="Orion filter controls">
+        <p>Stealer Logs extends the same platform logic with deeper filter and result-review behavior.</p>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>11</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Entity API</div>
+    </div>
+    <div class="body two-col">
+      <div class="panel">
+        <div class="eyebrow">Technical 12</div>
+        <h1>Entity API extends Orion beyond indexed data</h1>
+        <p class="lead">Live lookup modules let Orion run targeted checks against entities such as domains, emails, IPs, usernames, and other identifiers.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Targeted lookup</h3><p>Run direct entity checks when indexed search is not enough.</p></article>
+          <article class="metric violet"><h3>Common use cases</h3><p>Support operational enrichment against known entities.</p></article>
+          <article class="metric teal"><h3>Same workspace logic</h3><p>Lookups remain inside the Orion operating environment.</p></article>
+          <article class="metric gold"><h3>Analyst pivot value</h3><p>Useful when investigation needs confirmation and enrichment.</p></article>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Technical implication</h2>
+        <ul class="clean-list">
+          <li>The platform is not limited to what has already been indexed.</li>
+          <li>Analysts can move from broad search to precise lookup inside the same product.</li>
+          <li>This reduces context switching during deeper investigations.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>12</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">File Scanner</div>
+    </div>
+    <div class="body two-col">
+      <div class="panel">
+        <div class="eyebrow">Technical 13</div>
+        <h1>File Scanner adds artifact-level inspection</h1>
+        <p class="lead">The manual describes file scanning around main modes, supported behavior, and IOC extraction output.</p>
+        <ul class="clean-list">
+          <li>Submit files directly for platform-level review.</li>
+          <li>Extract indicators from uploaded artifacts.</li>
+          <li>Treat scan output as another investigation input, not a separate product.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Why it matters</h2>
+        <ul class="clean-list">
+          <li>Orion covers document and file artifacts, not only text search and graph views.</li>
+          <li>Analysts can bring suspicious files into the same operating context as indexed and live investigation.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>13</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Web Scans</div>
+    </div>
+    <div class="body two-col">
+      <div class="panel">
+        <div class="eyebrow">Technical 14</div>
+        <h1>Web Scans support structured scanning workflows</h1>
+        <p class="lead">Available scan types, standard workflow, report structure, and findings states are all covered explicitly in the manual.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Scan types</h3><p>Different web scan modes support different investigative questions.</p></article>
+          <article class="metric violet"><h3>Standard workflow</h3><p>Consistent operational path from submission to results.</p></article>
+          <article class="metric teal"><h3>Report structure</h3><p>Scan output is reviewed as structured evidence.</p></article>
+          <article class="metric gold"><h3>Error states</h3><p>Operational visibility includes findings and failure conditions.</p></article>
+        </div>
+      </div>
+      <div class="shot-card">
+        <h3>Report-style evidence handling</h3>
+        <img src="https://orion-search.readthedocs.io/en/latest/_images/consolidated-insights-20260326.png" alt="Orion results insights and report-oriented layout">
+        <p>Even scan-oriented workflows return to the same evidence-and-output logic used across the platform.</p>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>14</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Network Intel</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Technical 15</div>
+      <h1>Network Intel broadens Orion into host and vulnerability review</h1>
+      <p class="lead">This expands Orion from document-style intelligence into technical validation workflows around hosts, IPs, and vulnerability-oriented investigation.</p>
+      <div class="grid-2">
+        <article class="metric"><h3>Host Recon</h3><p>Review infrastructure-level context around a host target.</p></article>
+        <article class="metric violet"><h3>IP Scan</h3><p>Investigate exposed hosts and relevant network-facing indicators.</p></article>
+        <article class="metric teal"><h3>Vulnerability Scan</h3><p>Surface weakness-oriented findings as part of technical investigation.</p></article>
+        <article class="metric gold"><h3>Shared toolbar</h3><p>Common toolbar features keep the interaction model consistent.</p></article>
+      </div>
+      <div class="quote">This is a key technical point: Orion does not stop at document-style intelligence. It also supports host-, IP-, and vulnerability-oriented workflows.</div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>15</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Report Workflows</div>
+    </div>
+    <div class="body shot-layout">
+      <div class="shot-card">
+        <h3>Result insights and report workflow reference</h3>
+        <img src="https://orion-search.readthedocs.io/en/latest/_images/consolidated-insights-20260326.png" alt="Orion result insights side panel">
+        <p>The report area is treated as an active workflow surface with metadata, screenshots, JSON sections, and AI assistance.</p>
+      </div>
+      <div class="tech-side">
+        <div class="eyebrow">Technical 16</div>
+        <h1>Reports are first-class analyst surfaces</h1>
+        <p class="lead">Reports in Orion are built as working analyst surfaces with actions, metadata, evidence sections, and output helpers rather than static result pages.</p>
+        <ul class="clean-list">
+          <li>Toolbar actions include download, export, translation, AI summary, share, source URL, and graph pivot.</li>
+          <li>Report pages expose metadata, screenshots, JSON, and conversational summary helpers.</li>
+          <li>This turns individual records into usable operational outputs.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>16</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Support Links</div>
+    </div>
+    <div class="body two-col">
+      <div class="panel">
+        <div class="eyebrow">Technical 17</div>
+        <h1>Links and support are integrated into the product shell</h1>
+        <p class="lead">Directory, links, onion access, whistle blowing, and documentation are documented as navigable product surfaces.</p>
+        <ul class="clean-list">
+          <li>Support paths exist inside the same operational environment.</li>
+          <li>External navigation is treated as part of workflow support.</li>
+          <li>This matters for analyst continuity and tenant usability.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Operational implication</h2>
+        <ul class="clean-list">
+          <li>The product is built for real users who need help, references, and controlled outward pivots.</li>
+          <li>Support and documentation are part of the platform’s daily usability model.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>17</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Tenant Operations</div>
+    </div>
+    <div class="body">
+      <div class="eyebrow">Technical 18</div>
+      <h1>Profile, tenant, and alert workflows are part of the core platform</h1>
+      <p class="lead">Operational ownership does not sit outside Orion. Tenant workflows, monitored indicators, and profile controls are embedded into the same platform model.</p>
+      <div class="grid-2">
+        <article class="metric"><h3>Account settings</h3><p>User-level configuration and preference control.</p></article>
+        <article class="metric violet"><h3>Tenant homepage</h3><p>Tenant-focused operating view and status context.</p></article>
+        <article class="metric teal"><h3>Manage IOCs</h3><p>Operational control over monitored indicator sets.</p></article>
+        <article class="metric gold"><h3>Tenant settings and statistics</h3><p>Broader lifecycle and monitoring support for organizational usage.</p></article>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>18</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Administration</div>
+    </div>
+    <div class="body two-col">
+      <div class="panel">
+        <div class="eyebrow">Technical 19</div>
+        <h1>User, tenant, and system administration are built into Orion</h1>
+        <p class="lead">The manual covers tenant users, tenant administration, audit logs, system settings, asset management, configuration, and service status.</p>
+        <ul class="clean-list">
+          <li>User and tenant administration support controlled multi-tenant operations.</li>
+          <li>Audit logs provide visibility into administrative activity.</li>
+          <li>System settings include asset, configuration, and service-state management.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Why this matters technically</h2>
+        <ul class="clean-list">
+          <li>Orion is a platform, not just an analyst front-end.</li>
+          <li>Administrative capability is part of the same product model as investigation capability.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>19</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Workflows & Conclusion</div>
+    </div>
+    <div class="body two-col">
+      <div class="panel">
+        <div class="eyebrow">Technical 20</div>
+        <h1>Practical workflows show how the platform connects end to end</h1>
+        <p class="lead">The manual closes with practical workflows such as broad investigation, identity exposure check, infrastructure review, profile mapping, and tenant monitoring.</p>
+        <div class="grid-2">
+          <article class="metric"><h3>Broad investigation</h3><p>Start in indexed search and move toward structured review.</p></article>
+          <article class="metric violet"><h3>Identity exposure</h3><p>Use targeted checks and supporting modules for entity-driven review.</p></article>
+          <article class="metric teal"><h3>Infrastructure review</h3><p>Combine scans and investigation views for technical validation.</p></article>
+          <article class="metric gold"><h3>Tenant monitoring</h3><p>Move from investigation into repeatable operational oversight.</p></article>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 class="split-title">Technical conclusion</h2>
+        <ul class="clean-list">
+          <li>Orion spans access flows, dashboarding, search, reports, scans, graphs, tenant operations, and administration.</li>
+          <li>The strength of the platform is continuity across those modes, not one isolated feature.</li>
+          <li>That is what makes Orion technically credible as a serious intelligence and monitoring platform.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>20</strong></div>
+  </section>
+
+  <section class="slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical Product Pitch</span></div>
+      </div>
+      <div class="tag">Conclusion</div>
+    </div>
+    <div class="closing">
+      <div class="closing-card">
+        <div class="closing-mark">
+          <img src="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" alt="Orion logo">
+        </div>
+        <div class="closing-sub">Technical Platform Conclusion</div>
+        <h1>Why the technical platform stands out</h1>
+        <p class="lead">Orion combines indexed intelligence, live lookups, graph analysis, report workflows, tenant operations, and administrative control in one connected system.</p>
+        <div class="closing-line"></div>
+        <div class="closing-points">
+          <div class="closing-chip">Unified Workflow</div>
+          <div class="closing-chip">Operational Depth</div>
+          <div class="closing-chip">Platform Continuity</div>
+        </div>
+        <p style="font-size:18px;max-width:780px;">The technical strength is not a single module. It is the continuity between search, investigation, validation, output, and operations across the same platform.</p>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical Pitch</span><strong>21</strong></div>
+  </section>
+</main>
+</section>
+<div class="slideshow-nav" aria-label="Slideshow controls">
+  <button type="button" id="prevSlide" aria-label="Previous slide"><span class="nav-arrow left" aria-hidden="true"></span></button>
+  <div class="slideshow-status" id="slideStatus">01 / 19</div>
+  <button type="button" id="nextSlide" aria-label="Next slide"><span class="nav-arrow right" aria-hidden="true"></span></button>
+  <div class="slideshow-divider" aria-hidden="true"></div>
+  <button type="button" id="fullscreenToggle" class="fullscreen-btn" aria-label="Toggle fullscreen">&#9974;</button>
+</div>
+<script>
+  (function () {
+    const ACTIVE_TAB_KEY = 'orion_preview_active_tab';
+    const panels = Array.from(document.querySelectorAll('.tab-panel'));
+    const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
+    const status = document.getElementById('slideStatus');
+    const prev = document.getElementById('prevSlide');
+    const next = document.getElementById('nextSlide');
+    const fullscreenToggle = document.getElementById('fullscreenToggle');
+    const slideshowNav = document.querySelector('.slideshow-nav');
+    const pageLoader = document.getElementById('pageLoader');
+    let ticking = false;
+    let navLocked = false;
+    let navUnlockTimer = null;
+
+    panels.forEach((panel) => {
+      const slides = Array.from(panel.querySelectorAll('.slide'));
+      slides.forEach((slide, index) => {
+        slide.id = panel.id + '-slide-' + (index + 1);
+
+        if (index < slides.length - 1) {
+          const footerNumber = slide.querySelector('.footer strong');
+          const marker = document.createElement('div');
+          marker.className = 'between-slide';
+          marker.setAttribute('aria-hidden', 'true');
+          marker.innerHTML = '<span>' + (footerNumber ? footerNumber.textContent : String(index + 1).padStart(2, '0')) + '</span>';
+          slide.insertAdjacentElement('afterend', marker);
+        }
+      });
+    });
+
+    const getActivePanel = () => document.querySelector('.tab-panel.is-active');
+    const getSlides = () => Array.from(getActivePanel().querySelectorAll('.slide'));
+    const getSeparators = () => Array.from(getActivePanel().querySelectorAll('.between-slide'));
+    const setFullscreenState = () => {
+      const isFullscreen = !!document.fullscreenElement;
+      document.body.classList.toggle('is-fullscreen', isFullscreen);
+      fullscreenToggle.setAttribute('aria-label', isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen');
+      fullscreenToggle.textContent = isFullscreen ? '×' : '⛶';
+    };
+
+    const scrollToSlide = (index) => {
+      if (navLocked) return;
+
+      const slides = getSlides();
+      const clamped = Math.max(0, Math.min(index, slides.length - 1));
+      const active = slides.findIndex((slide) => slide.classList.contains('is-active'));
+      if (clamped === active) return;
+      navLocked = true;
+      prev.disabled = true;
+      next.disabled = true;
+      clearTimeout(navUnlockTimer);
+      slides[clamped].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      navUnlockTimer = window.setTimeout(() => {
+        navLocked = false;
+        updateStatus();
+      }, 520);
+    };
+
+    const updateStatus = () => {
+      const slides = getSlides();
+      const separators = getSeparators();
+      let activeIndex = 0;
+      let closest = Infinity;
+
+      slides.forEach((slide, index) => {
+        const rect = slide.getBoundingClientRect();
+        const distance = Math.abs((rect.top + rect.height / 2) - (window.innerHeight / 2));
+        if (distance < closest) {
+          closest = distance;
+          activeIndex = index;
+        }
+      });
+
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('is-active', index === activeIndex);
+      });
+
+      separators.forEach((separator, index) => {
+        const nearFocusedPair = index === activeIndex || index === activeIndex - 1;
+        separator.classList.toggle('is-near', nearFocusedPair);
+      });
+
+      status.textContent = String(activeIndex + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+      prev.disabled = navLocked || activeIndex === 0;
+      next.disabled = navLocked || activeIndex === slides.length - 1;
+      prev.style.opacity = activeIndex === 0 || navLocked ? '.45' : '1';
+      next.style.opacity = activeIndex === slides.length - 1 || navLocked ? '.45' : '1';
+    };
+
+    const activateTab = (panelId) => {
+      clearTimeout(navUnlockTimer);
+      navLocked = false;
+
+      try {
+        window.localStorage.setItem(ACTIVE_TAB_KEY, panelId);
+      } catch (error) {
+      }
+
+      panels.forEach((panel) => {
+        panel.classList.toggle('is-active', panel.id === panelId);
+      });
+
+      tabButtons.forEach((button) => {
+        const isActive = button.dataset.tab === panelId;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      document.querySelectorAll('.slide').forEach((slide) => slide.classList.remove('is-active'));
+      document.querySelectorAll('.between-slide').forEach((separator) => separator.classList.remove('is-near'));
+
+      const firstSlide = getSlides()[0];
+      if (firstSlide) {
+        firstSlide.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }
+      updateStatus();
+    };
+
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', () => activateTab(button.dataset.tab));
+    });
+
+    fullscreenToggle.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        } else {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (error) {
+      }
+    });
+
+    prev.addEventListener('click', () => {
+      const slides = getSlides();
+      const current = slides.findIndex((slide) => slide.classList.contains('is-active'));
+      scrollToSlide((current === -1 ? 0 : current) - 1);
+    });
+
+    next.addEventListener('click', () => {
+      const slides = getSlides();
+      const current = slides.findIndex((slide) => slide.classList.contains('is-active'));
+      scrollToSlide((current === -1 ? 0 : current) + 1);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (
+        event.key !== 'ArrowDown' &&
+        event.key !== 'PageDown' &&
+        event.key !== 'ArrowUp' &&
+        event.key !== 'PageUp' &&
+        event.key !== 'ArrowLeft' &&
+        event.key !== 'ArrowRight'
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      const slides = getSlides();
+      const current = slides.findIndex((slide) => slide.classList.contains('is-active'));
+      const index = current === -1 ? 0 : current;
+
+      if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === 'ArrowRight') {
+        scrollToSlide(index + 1);
+      } else {
+        scrollToSlide(index - 1);
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateStatus();
+        ticking = false;
+      });
+    }, { passive: true });
+    document.addEventListener('fullscreenchange', setFullscreenState);
+    window.addEventListener('load', async () => {
+      slideshowNav.classList.add('is-hidden');
+      try {
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+        }
+      } catch (error) {
+      }
+      let initialTab = 'marketing-panel';
+      try {
+        const savedTab = window.localStorage.getItem(ACTIVE_TAB_KEY);
+        if (savedTab && panels.some((panel) => panel.id === savedTab)) {
+          initialTab = savedTab;
+        }
+      } catch (error) {
+      }
+      activateTab(initialTab);
+      requestAnimationFrame(() => {
+        slideshowNav.classList.remove('is-hidden');
+        pageLoader.classList.add('is-hidden');
+        document.body.classList.remove('is-loading');
+      });
+    });
+    setFullscreenState();
+  }());
+</script>
+</body>
+</html>

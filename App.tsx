@@ -75,7 +75,7 @@ export interface StealerLogResponse {
   global_percentile?: number;
 }
 
-type ViewType = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | '404';
+type ViewType = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | '404';
 
 const BrandLogos = {
   X: (props: any) => (
@@ -108,6 +108,18 @@ const BrandLogos = {
 const App: React.FC = () => {
   const [activeModal, setActiveModal] = useState<'privacy' | 'access' | 'compliance' | null>(null);
   const [selectedActor, setSelectedActor] = useState<ActorIntelligence | null>(null);
+  const getEnvironmentBasePath = (): string => {
+    try {
+      const parts = window.location.pathname.split('/').filter(Boolean);
+      const isProxyUUID = (s: string) =>
+        (s.length === 36 && s.includes('-')) ||
+        (s.length > 30 && /^[0-9a-f-]+$/.test(s));
+
+      return parts.length > 0 && isProxyUUID(parts[0]) ? `/${parts[0]}` : '';
+    } catch {
+      return '';
+    }
+  };
   
   const getSegmentFromView = (view: ViewType): string => {
     switch (view) {
@@ -116,6 +128,7 @@ const App: React.FC = () => {
       case 'api-docs': return 'api-docs';
       case 'sources': return 'sources';
       case 'pricing': return 'pricing';
+      case 'collaboration': return 'collaboration';
       case 'search-results': return 'search';
       case 'remediation-guide': return 'remediation';
       case 'home': return '';
@@ -152,6 +165,7 @@ const App: React.FC = () => {
     if (effectivePath.startsWith('/api-docs')) return 'api-docs';
     if (effectivePath.startsWith('/sources')) return 'sources';
     if (effectivePath.startsWith('/pricing')) return 'pricing';
+    if (effectivePath.startsWith('/collaboration')) return 'collaboration';
     if (effectivePath.startsWith('/search')) return 'search-results';
     if (effectivePath.startsWith('/remediation')) return 'remediation-guide';
 
@@ -166,17 +180,7 @@ const App: React.FC = () => {
     const targetSegment = getSegmentFromView(newView);
     
     try {
-      const currentPath = window.location.pathname;
-      const parts = currentPath.split('/').filter(Boolean);
-      
-      // Heuristic to detect if we are in a sub-pathed environment (like Studio UUIDs)
-      // Usually the first segment is the UUID in those cases.
-      const isProxyUUID = (s: string) => 
-        (s.length === 36 && s.includes('-')) || 
-        (s.length > 30 && /^[0-9a-f-]+$/.test(s));
-
-      const hasPrefix = parts.length > 0 && isProxyUUID(parts[0]);
-      const base = hasPrefix ? `/${parts[0]}/` : '/';
+      const base = `${getEnvironmentBasePath()}/`;
       
       // Construct the absolute path relative to the environment root
       const fullTargetPath = targetSegment === '' ? base : `${base}${targetSegment}`;
@@ -274,7 +278,7 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const bgClass = ['adversaries', 'actor-dossier', 'sources', 'search-results', 'remediation-guide', 'pricing'].includes(view) ? 'mesh-gradient-bright' : 'mesh-gradient';
+  const bgClass = ['adversaries', 'actor-dossier', 'sources', 'search-results', 'remediation-guide', 'pricing', 'collaboration'].includes(view) ? 'mesh-gradient-bright' : 'mesh-gradient';
 
   return (
     <ErrorBoundary>
@@ -314,6 +318,17 @@ const App: React.FC = () => {
           ) : view === 'pricing' ? (
             <div className="pt-[90px] px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
               <Pricing />
+            </div>
+          ) : view === 'collaboration' ? (
+            <div className="pt-[90px] px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
+              <div className="h-[calc(100vh-120px)] min-h-[780px] overflow-hidden rounded-[28px] border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-black/20 shadow-2xl backdrop-blur-xl">
+                <iframe
+                  src={`${getEnvironmentBasePath()}/collaboration.html`}
+                  title="Orion Collaboration Deck"
+                  className="h-full w-full border-0 bg-white"
+                  loading="lazy"
+                />
+              </div>
             </div>
           ) : (view === 'search-results' && searchResult) ? (
             <div className="pt-[90px] px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
