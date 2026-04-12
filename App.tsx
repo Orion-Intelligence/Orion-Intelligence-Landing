@@ -176,6 +176,11 @@ const App: React.FC = () => {
   const [view, setView] = useState<ViewType>(() => getViewFromPath(window.location.href));
 
   const navigateTo = useCallback((newView: ViewType) => {
+    if (newView === 'collaboration') {
+      window.location.assign(`${getEnvironmentBasePath()}/collaboration.html`);
+      return;
+    }
+
     setView(newView);
     const targetSegment = getSegmentFromView(newView);
     
