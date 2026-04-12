@@ -1540,6 +1540,359 @@
     right:10px;
   }
 
+  @media (max-width: 1360px){
+    .slide,
+    .between-slide{
+      width:min(calc(100vw - 32px), 1280px);
+    }
+  }
+
+  @media (max-width: 1024px){
+    body{
+      scroll-snap-type:none;
+      scroll-padding-top:0;
+      scroll-padding-bottom:0;
+    }
+
+    .tab-shell{
+      top:10px;
+      width:calc(100vw - 20px);
+      max-width:720px;
+      padding:6px;
+      gap:6px;
+    }
+
+    .tab-btn{
+      flex:1;
+      padding:10px 12px;
+      font-size:11px;
+      letter-spacing:.08em;
+    }
+
+    .deck{
+      padding:88px 0 34px;
+    }
+
+    .slide,
+    .between-slide{
+      width:calc(100vw - 24px);
+    }
+
+    .slide{
+      height:auto;
+      min-height:0;
+      scroll-snap-align:none;
+      border-radius:24px;
+    }
+
+    .topbar{
+      height:auto;
+      min-height:64px;
+      padding:14px 18px;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+      border-radius:24px 24px 0 0;
+    }
+
+    .brand-copy span{
+      margin-top:3px;
+    }
+
+    .body{
+      padding:22px 20px 20px;
+    }
+
+    .footer{
+      position:static;
+      left:auto;
+      right:auto;
+      bottom:auto;
+      margin-top:18px;
+    }
+
+    h1{
+      font-size:31px;
+      line-height:1.04;
+      max-width:none;
+    }
+
+    .lead{
+      max-width:none;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .two-col,
+    .equal-col,
+    .grid-2,
+    .metric-grid,
+    .value-grid,
+    .industry-band,
+    .ui-board,
+    .ui-grid,
+    .pair-grid,
+    .fit-grid,
+    .tech-grid,
+    .shot-layout,
+    .tech-kpis,
+    .flow{
+      grid-template-columns:1fr;
+    }
+
+    .flow-step:not(:last-child)::after{
+      display:none;
+    }
+
+    .industry-title,
+    .section-card,
+    .compare-box,
+    .fit-box,
+    .value-box,
+    .panel,
+    .shot-card{
+      padding:16px;
+    }
+
+    .ui-board{
+      min-height:0;
+    }
+
+    .ui-side,
+    .ui-main{
+      padding:18px 16px;
+    }
+
+    .signal{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+
+    .signal span{
+      max-width:none;
+      text-align:left;
+    }
+
+    .closing{
+      padding:26px 22px 30px;
+    }
+
+    .closing-card h1{
+      font-size:48px;
+    }
+
+    .closing-card p{
+      font-size:18px;
+    }
+
+    .slideshow-nav{
+      left:50%;
+      right:auto;
+      bottom:12px;
+      transform:translateX(-50%);
+      width:calc(100vw - 24px);
+      max-width:420px;
+      justify-content:center;
+    }
+
+    .fullscreen-btn{
+      display:none !important;
+    }
+  }
+
+  @media (max-width: 640px){
+    .tab-shell{
+      top:8px;
+      width:calc(100vw - 16px);
+      border-radius:16px;
+    }
+
+    .tab-btn{
+      padding:9px 10px;
+      font-size:10px;
+      letter-spacing:.05em;
+    }
+
+    .deck{
+      padding:80px 0 28px;
+    }
+
+    .slide,
+    .between-slide{
+      width:calc(100vw - 16px);
+    }
+
+    .slide{
+      border-radius:20px;
+    }
+
+    .topbar{
+      padding:12px 14px;
+      border-radius:20px 20px 0 0;
+    }
+
+    .brand{
+      gap:10px;
+    }
+
+    .brand-mark{
+      width:32px;
+      height:32px;
+      border-radius:9px;
+    }
+
+    .brand-copy strong{
+      font-size:11px;
+      letter-spacing:.12em;
+    }
+
+    .brand-copy span,
+    .tag{
+      font-size:9px;
+    }
+
+    .tag{
+      padding:7px 10px;
+    }
+
+    .body{
+      padding:18px 14px 16px;
+    }
+
+    .eyebrow{
+      margin-bottom:12px;
+      font-size:10px;
+      letter-spacing:.13em;
+      padding:7px 10px;
+    }
+
+    h1{
+      margin-bottom:16px;
+      font-size:26px;
+    }
+
+    .lead{
+      margin-bottom:16px;
+      font-size:13px;
+      line-height:1.48;
+    }
+
+    .metric,
+    .flow-step,
+    .clean-list li,
+    .value-item,
+    .signal,
+    .shot-card,
+    .panel,
+    .compare-box,
+    .fit-box,
+    .value-box,
+    .section-card{
+      border-radius:16px;
+    }
+
+    .metric h3,
+    .flow-step h3{
+      font-size:15px;
+    }
+
+    .metric p,
+    .flow-step p,
+    .shot-card p,
+    .clean-list li,
+    .value-copy span{
+      font-size:13px;
+    }
+
+    .value-box h2,
+    .fit-box h2,
+    .accent-card h2,
+    .list-panel h2,
+    .flow-panel h2,
+    .split-title{
+      font-size:22px;
+    }
+
+    .industry-title{
+      padding:18px 16px;
+    }
+
+    .industry-title h2{
+      font-size:26px;
+    }
+
+    .ui-top{
+      padding:12px 14px;
+      font-size:11px;
+      letter-spacing:.1em;
+    }
+
+    .ui-side h3{
+      font-size:24px;
+    }
+
+    .closing{
+      padding:22px 16px 24px;
+    }
+
+    .closing-mark{
+      width:60px;
+      height:60px;
+      border-radius:16px;
+      margin-bottom:14px;
+    }
+
+    .closing-mark img{
+      width:40px;
+      height:40px;
+    }
+
+    .closing-card h1{
+      font-size:38px;
+      margin-bottom:12px;
+    }
+
+    .closing-card p{
+      font-size:15px;
+    }
+
+    .closing-line{
+      width:100%;
+      max-width:260px;
+      margin:18px auto;
+    }
+
+    .between-slide{
+      height:52px;
+    }
+
+    .between-slide span{
+      min-width:38px;
+      height:38px;
+      font-size:11px;
+    }
+
+    .slideshow-nav{
+      width:calc(100vw - 16px);
+      bottom:8px;
+      padding:6px;
+      gap:6px;
+      border-radius:16px;
+    }
+
+    .slideshow-nav button{
+      width:38px;
+      height:38px;
+    }
+
+    .slideshow-status{
+      min-width:72px;
+      font-size:11px;
+      letter-spacing:.12em;
+      padding:0 2px;
+    }
+  }
+
   @media print{
     body{background:#fff}
     .page-loader{display:none}
