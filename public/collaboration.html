@@ -1293,6 +1293,8 @@
   }
 
   .shot-card{
+    display:grid;
+    gap:8px;
     background:
       radial-gradient(circle at top right, rgba(75,199,255,.12), transparent 26%),
       linear-gradient(180deg, #f8fbff, #eef5fb);
@@ -1307,19 +1309,19 @@
     display:block;
     border-radius:12px;
     border:1px solid #d8e2ee;
-    background:#eef3f8;
+    background:transparent;
     box-shadow:0 8px 18px rgba(16,35,63,.08);
   }
 
   .shot-card h3{
-    margin:0 0 10px;
+    margin:0;
     font:800 15px/1.18 var(--font-display);
     letter-spacing:-.02em;
     color:var(--ink);
   }
 
   .shot-card p{
-    margin:10px 0 0;
+    margin:0;
     font:500 13px/1.5 var(--font-body);
     color:var(--ink-soft);
   }
