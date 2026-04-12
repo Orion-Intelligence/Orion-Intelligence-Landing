@@ -1144,7 +1144,7 @@
     border:1px solid rgba(206,217,231,.92);
     display:flex;
     align-items:center;
-    justify-content:space-between;
+    justify-content:flex-start;
     gap:12px;
     box-shadow:0 8px 16px rgba(16,35,63,.04);
   }
@@ -1152,13 +1152,16 @@
   .signal strong{
     font:800 15px/1.2 var(--font-display);
     letter-spacing:-.02em;
+    width:120px;
+    min-width:120px;
   }
 
   .signal span{
     font:500 13px/1.48 var(--font-body);
     color:var(--ink-soft);
-    max-width:420px;
-    text-align:right;
+    flex:1;
+    max-width:none;
+    text-align:left;
   }
 
   .signal em{
@@ -1171,6 +1174,9 @@
     border-radius:999px;
     padding:6px 8px;
     font-style:normal;
+    width:92px;
+    min-width:92px;
+    text-align:center;
   }
 
   .closing{
@@ -1721,6 +1727,12 @@
       flex-direction:column;
     }
 
+    .signal strong,
+    .signal em{
+      width:auto;
+      min-width:0;
+    }
+
     .signal span{
       max-width:none;
       text-align:left;
@@ -2182,7 +2194,7 @@
       <p class="lead">For financial organizations, Orion supports faster exposure review, stronger investigative handling, and more premium service delivery.</p>
       <div class="industry-band">
         <section class="industry-title">
-          <h2>Commercial fit for finance</h2>
+          <h2>Finance fit</h2>
           <p>Position Orion as a structured intelligence layer that improves visibility, investigative response, and service packaging for sensitive environments.</p>
         </section>
         <section class="section-card">
