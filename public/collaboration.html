@@ -7,6 +7,10 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Carlito:wght@400;700&display=swap');
   :root{
+    --font-ui:"Manrope","Segoe UI",Arial,Helvetica,sans-serif;
+    --font-display:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
+    --font-body:"Manrope","Segoe UI",Arial,Helvetica,sans-serif;
+    --font-alt:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
     --ink:#10233f;
     --ink-soft:#4f6481;
     --paper:#f3f5f8;
@@ -29,12 +33,16 @@
   html,body{height:100%}
   body{
     margin:0;
-    font-family:"Manrope",Arial,Helvetica,sans-serif;
+    font-family:var(--font-body);
     background:
       radial-gradient(circle at top left, rgba(75,199,255,.16), transparent 24%),
       radial-gradient(circle at 85% 18%, rgba(231,136,183,.12), transparent 22%),
       linear-gradient(180deg, #eef3f8 0%, #e4ebf3 100%);
     color:var(--ink);
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    font-feature-settings:"liga" 1, "kern" 1, "calt" 1;
     scroll-snap-type:y mandatory;
     scroll-padding-top:calc((100vh - var(--slide-height)) / 2);
     scroll-padding-bottom:calc((100vh - var(--slide-height)) / 2);
@@ -98,14 +106,14 @@
 
   .loader-title{
     margin:0 0 8px;
-    font:700 18px/1.2 "Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
-    letter-spacing:-.02em;
+    font:800 18px/1.15 var(--font-display);
+    letter-spacing:-.03em;
     color:var(--ink);
   }
 
   .loader-copy{
     margin:0;
-    font:500 13px/1.45 "Manrope",Arial,Helvetica,sans-serif;
+    font:500 13px/1.5 var(--font-body);
     color:#617690;
   }
 
@@ -154,8 +162,8 @@
     border-radius:12px;
     padding:10px 16px;
     cursor:pointer;
-    font:700 12px/1 Arial,Helvetica,sans-serif;
-    letter-spacing:.14em;
+    font:800 12px/1.05 var(--font-ui);
+    letter-spacing:.12em;
     text-transform:uppercase;
     color:#d8e4f5;
     background:rgba(255,255,255,.08);
@@ -274,24 +282,24 @@
 
   .brand-copy strong{
     display:block;
-    font-size:13px;
-    letter-spacing:.16em;
-    font-weight:800;
+    font:800 13px/1 var(--font-display);
+    letter-spacing:.18em;
   }
 
   .brand-copy span{
     display:block;
-    font-size:10px;
-    letter-spacing:.14em;
+    font:700 10px/1.1 var(--font-ui);
+    letter-spacing:.15em;
     opacity:.82;
     text-transform:uppercase;
     margin-top:4px;
   }
 
   .tag{
-    font-family:"Manrope",Arial,Helvetica,sans-serif;
-    font-size:12px;
-    letter-spacing:.12em;
+    font-family:var(--font-ui);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.14em;
     text-transform:uppercase;
     padding:8px 12px;
     border:1px solid rgba(255,255,255,.18);
@@ -330,9 +338,9 @@
     display:inline-flex;
     align-items:center;
     gap:10px;
-    font:800 11px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    font:800 10px/1.2 var(--font-ui);
     text-transform:uppercase;
-    letter-spacing:.16em;
+    letter-spacing:.18em;
     color:#25588f;
     background:linear-gradient(180deg, #eef6ff, #e6f2ff);
     border:1px solid #d2e5fb;
@@ -351,21 +359,22 @@
 
   h1{
     margin:0 0 22px;
-    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
-    font-size:38px;
-    line-height:1.02;
-    letter-spacing:-.035em;
+    font-family:var(--font-display);
+    font-size:39px;
+    line-height:1.01;
+    letter-spacing:-.045em;
     max-width:920px;
-    font-weight:700;
+    font-weight:800;
+    text-wrap:balance;
   }
 
   .lead{
     margin:0 0 20px;
     max-width:680px;
-    font-size:15px;
-    line-height:1.42;
-    color:#546a87;
-    font-weight:500;
+    font:500 15px/1.5 var(--font-body);
+    color:#566c89;
+    letter-spacing:-.01em;
+    text-wrap:pretty;
   }
 
   .two-col{
@@ -379,8 +388,8 @@
   }
 
   .compact-hero .lead{
-    font-size:18px;
-    line-height:1.45;
+    font-size:17px;
+    line-height:1.52;
     margin-bottom:20px;
   }
 
@@ -395,13 +404,13 @@
   }
 
   .compact-hero .metric h3{
-    font-size:16px;
+    font-size:15px;
     margin-bottom:8px;
   }
 
   .compact-hero .metric p{
     font-size:13px;
-    line-height:1.5;
+    line-height:1.52;
   }
 
   .compact-hero .quote{
@@ -416,13 +425,13 @@
   }
 
   .compact-hero .accent-card h2{
-    font-size:24px;
+    font-size:23px;
     margin-bottom:10px;
   }
 
   .compact-hero .accent-card p{
     font-size:14px;
-    line-height:1.6;
+    line-height:1.62;
   }
 
   .compact-hero .pill-list{
@@ -527,14 +536,14 @@
 
   .metric h3{
     margin:0 0 8px 10px;
-    font:700 16px/1.2 Arial,Helvetica,sans-serif;
+    font:800 15px/1.18 var(--font-display);
     color:var(--ink);
-    letter-spacing:-.02em;
+    letter-spacing:-.025em;
   }
 
   .metric p{
     margin:0 0 0 10px;
-    font:400 13px/1.45 Arial,Helvetica,sans-serif;
+    font:500 13px/1.5 var(--font-body);
     color:#617690;
   }
 
@@ -544,8 +553,8 @@
     border-radius:16px;
     background:linear-gradient(135deg, #eef5ff, #f9fbff 60%, #f5efff);
     border:1px solid #d7e4f7;
-    font-size:15px;
-    line-height:1.5;
+    font:600 15px/1.55 var(--font-body);
+    letter-spacing:-.012em;
     color:#315173;
     box-shadow:0 6px 16px rgba(32,76,132,.05);
   }
@@ -591,17 +600,17 @@
 
   .accent-card h2{
     margin:0 0 10px;
-    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
+    font-family:var(--font-display);
     font-size:28px;
     line-height:1.02;
-    letter-spacing:-.03em;
-    font-weight:700;
+    letter-spacing:-.04em;
+    font-weight:800;
   }
 
   .accent-card p{
     margin:0;
     max-width:440px;
-    font:400 14px/1.55 Arial,Helvetica,sans-serif;
+    font:500 14px/1.6 var(--font-body);
     color:rgba(255,255,255,.86);
   }
 
@@ -620,8 +629,8 @@
     border-radius:12px;
     background:rgba(255,255,255,.09);
     border:1px solid rgba(255,255,255,.08);
-    font:600 11px/1.25 Arial,Helvetica,sans-serif;
-    letter-spacing:.08em;
+    font:700 11px/1.25 var(--font-ui);
+    letter-spacing:.1em;
     text-transform:uppercase;
   }
 
@@ -635,9 +644,9 @@
     margin:0 0 16px;
     font-size:24px;
     line-height:1.12;
-    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
-    letter-spacing:-.03em;
-    font-weight:700;
+    font-family:var(--font-display);
+    letter-spacing:-.035em;
+    font-weight:800;
   }
 
   .clean-list{
@@ -653,7 +662,7 @@
     background:linear-gradient(180deg, #ffffff, #fbfcfe);
     border-radius:14px;
     padding:12px 14px;
-    font:400 14px/1.45 Arial,Helvetica,sans-serif;
+    font:500 14px/1.52 var(--font-body);
     color:#5e738e;
     box-shadow:0 4px 12px rgba(16,35,63,.035);
   }
@@ -697,18 +706,19 @@
     justify-content:center;
     background:linear-gradient(135deg, #1f6fff, #4bc7ff);
     color:#fff;
-    font:700 16px/1 Arial,Helvetica,sans-serif;
+    font:800 16px/1 var(--font-display);
     margin-bottom:14px;
   }
 
   .flow-step h3{
     margin:0 0 8px;
-    font:700 17px/1.2 Arial,Helvetica,sans-serif;
+    font:800 16px/1.18 var(--font-display);
+    letter-spacing:-.02em;
   }
 
   .flow-step p{
     margin:0;
-    font:400 13px/1.45 Arial,Helvetica,sans-serif;
+    font:500 13px/1.5 var(--font-body);
     color:var(--ink-soft);
   }
 
@@ -733,11 +743,11 @@
 
   .value-box h2{
     margin:0 0 12px;
-    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
-    font-size:28px;
-    line-height:1.02;
-    letter-spacing:-.03em;
-    font-weight:700;
+    font-family:var(--font-display);
+    font-size:27px;
+    line-height:1.03;
+    letter-spacing:-.04em;
+    font-weight:800;
   }
 
   .value-box::before{
@@ -773,7 +783,7 @@
     border-radius:999px;
     background:linear-gradient(180deg, #edf5ff, #e6f0ff);
     border:1px solid #d5e4fb;
-    font:800 10px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    font:800 10px/1.2 var(--font-ui);
     text-transform:uppercase;
     letter-spacing:.16em;
     color:#2a5f99;
@@ -839,15 +849,15 @@
 
   .value-copy strong{
     display:block;
-    font:700 14px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    font:800 14px/1.2 var(--font-display);
     color:var(--ink);
     margin-bottom:4px;
-    letter-spacing:-.01em;
+    letter-spacing:-.02em;
   }
 
   .value-copy span{
     display:block;
-    font:400 13px/1.45 "Manrope",Arial,Helvetica,sans-serif;
+    font:500 13px/1.5 var(--font-body);
     color:#617690;
   }
 
@@ -882,16 +892,16 @@
 
   .industry-title h2{
     margin:0 0 10px;
-    font-family:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+    font-family:var(--font-display);
     font-size:32px;
-    line-height:1.02;
-    letter-spacing:-.02em;
-    font-weight:700;
+    line-height:1.03;
+    letter-spacing:-.04em;
+    font-weight:800;
   }
 
   .industry-title p{
     margin:0;
-    font:400 14px/1.55 Arial,Helvetica,sans-serif;
+    font:500 14px/1.58 var(--font-body);
     color:rgba(255,255,255,.84);
   }
 
@@ -907,9 +917,9 @@
 
   .section-card h3{
     margin:0 0 16px;
-    font:700 15px/1.2 Arial,Helvetica,sans-serif;
+    font:800 13px/1.2 var(--font-ui);
     text-transform:uppercase;
-    letter-spacing:.14em;
+    letter-spacing:.16em;
     color:#426b9b;
   }
 
@@ -928,7 +938,7 @@
     padding:14px 18px;
     background:linear-gradient(90deg, #f6faff, #edf4fb);
     border-bottom:1px solid #dce6f1;
-    font:700 12px/1 Arial,Helvetica,sans-serif;
+    font:800 11px/1.1 var(--font-ui);
     text-transform:uppercase;
     letter-spacing:.14em;
     color:#537295;
@@ -961,13 +971,13 @@
 
   .ui-side h3{
     margin:0 0 10px;
-    font-size:28px;
-    line-height:1.08;
+    font:800 27px/1.04 var(--font-display);
+    letter-spacing:-.035em;
   }
 
   .ui-side p{
     margin:0;
-    font:400 14px/1.7 Arial,Helvetica,sans-serif;
+    font:500 14px/1.62 var(--font-body);
     color:rgba(255,255,255,.82);
   }
 
@@ -982,8 +992,8 @@
     background:rgba(255,255,255,.08);
     border-radius:14px;
     padding:12px 14px;
-    font:600 12px/1.4 Arial,Helvetica,sans-serif;
-    letter-spacing:.08em;
+    font:700 11px/1.35 var(--font-ui);
+    letter-spacing:.1em;
     text-transform:uppercase;
   }
 
@@ -996,8 +1006,8 @@
 
   .ui-main h3{
     margin:0 0 16px;
-    font:700 14px/1.2 Arial,Helvetica,sans-serif;
-    letter-spacing:.14em;
+    font:800 13px/1.2 var(--font-ui);
+    letter-spacing:.16em;
     text-transform:uppercase;
     color:#4c6f95;
   }
@@ -1034,9 +1044,9 @@
   .fit-box h2{
     margin:0 0 12px;
     font-size:26px;
-    font-family:"Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
-    letter-spacing:-.03em;
-    font-weight:700;
+    font-family:var(--font-display);
+    letter-spacing:-.04em;
+    font-weight:800;
   }
 
   .compare-box{
@@ -1080,7 +1090,7 @@
     border-radius:999px;
     background:linear-gradient(180deg, #edf5ff, #e6f0ff);
     border:1px solid #d5e4fb;
-    font:800 10px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    font:800 10px/1.2 var(--font-ui);
     text-transform:uppercase;
     letter-spacing:.16em;
     color:#2a5f99;
@@ -1134,18 +1144,19 @@
   }
 
   .signal strong{
-    font:700 15px/1.25 Arial,Helvetica,sans-serif;
+    font:800 15px/1.2 var(--font-display);
+    letter-spacing:-.02em;
   }
 
   .signal span{
-    font:400 13px/1.4 Arial,Helvetica,sans-serif;
+    font:500 13px/1.48 var(--font-body);
     color:var(--ink-soft);
     max-width:420px;
     text-align:right;
   }
 
   .signal em{
-    font:700 10px/1 Arial,Helvetica,sans-serif;
+    font:800 10px/1 var(--font-ui);
     text-transform:uppercase;
     letter-spacing:.14em;
     color:#3271ba;
@@ -1201,13 +1212,14 @@
     max-width:none;
     font-size:60px;
     margin-bottom:16px;
+    font-weight:800;
   }
 
   .closing-card p{
     margin:0 auto;
     max-width:860px;
-    font-size:20px;
-    line-height:1.5;
+    font:500 20px/1.56 var(--font-body);
+    letter-spacing:-.015em;
     color:#546a87;
   }
 
@@ -1242,7 +1254,7 @@
   .closing-sub{
     display:inline-block;
     margin-top:6px;
-    font:800 11px/1.2 "Manrope",Arial,Helvetica,sans-serif;
+    font:800 11px/1.2 var(--font-ui);
     text-transform:uppercase;
     letter-spacing:.2em;
     color:#5e7ea5;
@@ -1263,8 +1275,8 @@
     background:linear-gradient(180deg, #f2f7ff, #e8f1fd);
     border:1px solid #d7e4f5;
     color:#3a5c86;
-    font:700 11px/1.2 "Manrope",Arial,Helvetica,sans-serif;
-    letter-spacing:.12em;
+    font:800 11px/1.2 var(--font-ui);
+    letter-spacing:.14em;
     text-transform:uppercase;
   }
 
@@ -1301,13 +1313,14 @@
 
   .shot-card h3{
     margin:0 0 10px;
-    font:700 15px/1.2 Arial,Helvetica,sans-serif;
+    font:800 15px/1.18 var(--font-display);
+    letter-spacing:-.02em;
     color:var(--ink);
   }
 
   .shot-card p{
     margin:10px 0 0;
-    font:400 13px/1.45 Arial,Helvetica,sans-serif;
+    font:500 13px/1.5 var(--font-body);
     color:var(--ink-soft);
   }
 
@@ -1333,8 +1346,8 @@
 
   .tech-kpi strong{
     display:block;
-    font:700 13px/1.2 Arial,Helvetica,sans-serif;
-    letter-spacing:.12em;
+    font:800 12px/1.2 var(--font-ui);
+    letter-spacing:.14em;
     text-transform:uppercase;
     color:#4d6b90;
     margin-bottom:6px;
@@ -1342,8 +1355,8 @@
 
   .tech-kpi span{
     display:block;
-    font:500 15px/1.3 "Helvetica Neue",Helvetica,Arial,"Manrope",sans-serif;
-    letter-spacing:-.02em;
+    font:600 15px/1.36 var(--font-body);
+    letter-spacing:-.015em;
     color:#6b7c92;
     text-wrap:balance;
   }
@@ -1362,15 +1375,15 @@
   }
 
   .footer span{
-    font:400 12px/1.2 Arial,Helvetica,sans-serif;
-    letter-spacing:.12em;
+    font:700 11px/1.2 var(--font-ui);
+    letter-spacing:.16em;
     text-transform:uppercase;
     color:#5c708c;
   }
 
   .footer strong{
-    font:700 13px/1 Arial,Helvetica,sans-serif;
-    letter-spacing:.12em;
+    font:800 12px/1 var(--font-display);
+    letter-spacing:.14em;
     color:#234367;
     opacity:0;
   }
@@ -1406,7 +1419,7 @@
     background:linear-gradient(180deg, #ffffff, #f0f5fb);
     border:1px solid #d3deea;
     box-shadow:0 8px 20px rgba(16,35,63,.08);
-    font:700 12px/1 Arial,Helvetica,sans-serif;
+    font:800 11px/1 var(--font-display);
     letter-spacing:.16em;
     color:#28476d;
     transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease;
@@ -1515,8 +1528,8 @@
     min-width:88px;
     text-align:center;
     color:#dce8f8;
-    font:700 12px/1.2 Arial,Helvetica,sans-serif;
-    letter-spacing:.16em;
+    font:800 11px/1.2 var(--font-ui);
+    letter-spacing:.18em;
     text-transform:uppercase;
     padding:0 6px;
   }
@@ -1565,8 +1578,8 @@
     .tab-btn{
       flex:1;
       padding:10px 12px;
-      font-size:11px;
-      letter-spacing:.08em;
+      font-size:10px;
+      letter-spacing:.1em;
     }
 
     .deck{
@@ -1613,15 +1626,15 @@
     }
 
     h1{
-      font-size:31px;
-      line-height:1.04;
+      font-size:32px;
+      line-height:1.03;
       max-width:none;
     }
 
     .lead{
       max-width:none;
       font-size:14px;
-      line-height:1.5;
+      line-height:1.56;
     }
 
     .two-col,
@@ -1679,7 +1692,7 @@
     }
 
     .closing-card h1{
-      font-size:48px;
+      font-size:46px;
     }
 
     .closing-card p{
@@ -1715,7 +1728,7 @@
       min-height:42px;
       padding:10px 10px;
       font-size:10px;
-      letter-spacing:.05em;
+      letter-spacing:.08em;
     }
 
     .deck{
@@ -1775,19 +1788,19 @@
     .eyebrow{
       margin-bottom:12px;
       font-size:10px;
-      letter-spacing:.13em;
+      letter-spacing:.16em;
       padding:7px 10px;
     }
 
     h1{
       margin-bottom:16px;
-      font-size:26px;
+      font-size:27px;
     }
 
     .lead{
       margin-bottom:16px;
       font-size:13px;
-      line-height:1.48;
+      line-height:1.54;
     }
 
     .metric,
@@ -1806,7 +1819,7 @@
 
     .metric h3,
     .flow-step h3{
-      font-size:15px;
+      font-size:14px;
     }
 
     .metric p,
@@ -1823,7 +1836,7 @@
     .list-panel h2,
     .flow-panel h2,
     .split-title{
-      font-size:22px;
+      font-size:21px;
     }
 
     .industry-title{
@@ -1836,8 +1849,8 @@
 
     .ui-top{
       padding:12px 14px;
-      font-size:11px;
-      letter-spacing:.1em;
+      font-size:10px;
+      letter-spacing:.12em;
     }
 
     .ui-side h3{
@@ -1861,12 +1874,12 @@
     }
 
     .closing-card h1{
-      font-size:38px;
+      font-size:36px;
       margin-bottom:12px;
     }
 
     .closing-card p{
-      font-size:15px;
+      font-size:14px;
     }
 
     .closing-line{
@@ -1900,8 +1913,8 @@
 
     .slideshow-status{
       min-width:72px;
-      font-size:11px;
-      letter-spacing:.12em;
+      font-size:10px;
+      letter-spacing:.14em;
       padding:0 2px;
     }
   }
