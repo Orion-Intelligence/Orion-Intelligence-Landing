@@ -74,8 +74,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
     { id: 'adversaries', label: t('nav_adversaries'), icon: Ghost },
     { id: 'sources', label: t('nav_sources'), icon: ListTree },
     { id: 'api-docs', label: t('nav_api_docs'), icon: Code2 },
-    { id: 'collaboration', label: 'Collaboration', icon: Radio },
     { id: 'pricing', label: 'Pricing', icon: Tag },
+    { id: 'collaboration', label: 'Collaboration', icon: Radio },
   ];
 
   const languages: { code: Language; label: string }[] = [
