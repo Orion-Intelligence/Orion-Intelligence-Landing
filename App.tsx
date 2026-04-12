@@ -177,7 +177,7 @@ const App: React.FC = () => {
 
   const navigateTo = useCallback((newView: ViewType) => {
     if (newView === 'collaboration') {
-      window.location.assign(`${getEnvironmentBasePath()}/collaboration.html`);
+      window.open(`${getEnvironmentBasePath()}/collaboration.html`, '_blank', 'noopener,noreferrer');
       return;
     }
 
