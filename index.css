@@ -31,19 +31,17 @@
     @apply transition-all duration-700;
     background-color: #ffffff;
     background-attachment: fixed;
-    background-image: 
-        radial-gradient(at 0% 0%, hsla(217,100%,98%,1) 0, transparent 40%), 
-        radial-gradient(at 100% 0%, hsla(210,100%,99%,1) 0, transparent 40%),
-        radial-gradient(at 50% 100%, hsla(220,100%,97%,1) 0, transparent 50%);
+    background-image:
+        linear-gradient(180deg, rgba(248, 250, 252, 0.96) 0%, rgba(255, 255, 255, 1) 44%, rgba(241, 245, 249, 0.74) 100%),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.05) 0%, transparent 36%, rgba(15, 23, 42, 0.03) 100%);
 }
 
 .dark .mesh-gradient {
     background-color: #0a0a0c;
     background-attachment: fixed;
-    background-image: 
-        radial-gradient(at 0% 0%, hsla(217,100%,12%,1) 0, transparent 40%), 
-        radial-gradient(at 100% 0%, hsla(210,100%,8%,1) 0, transparent 40%),
-        radial-gradient(at 50% 100%, hsla(220,100%,10%,1) 0, transparent 50%);
+    background-image:
+        linear-gradient(180deg, rgba(10, 10, 12, 1) 0%, rgba(13, 15, 19, 1) 48%, rgba(10, 10, 12, 1) 100%),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.08) 0%, transparent 34%, rgba(148, 163, 184, 0.04) 100%);
 }
 
 /* Enhanced Gradient for Sources and Adversaries - Lightened further as requested */
@@ -51,19 +49,17 @@
     @apply transition-all duration-700;
     background-color: #f8fafc; /* Even lighter than slate-100 */
     background-attachment: fixed;
-    background-image: 
-        radial-gradient(at 0% 0%, hsla(217, 100%, 99%, 1) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(210, 100%, 98%, 1) 0, transparent 50%),
-        radial-gradient(at 50% 100%, hsla(220, 100%, 97%, 1) 0, transparent 60%);
+    background-image:
+        linear-gradient(180deg, rgba(248, 250, 252, 1) 0%, rgba(255, 255, 255, 1) 54%, rgba(241, 245, 249, 0.86) 100%),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.04) 0%, transparent 42%, rgba(15, 23, 42, 0.025) 100%);
 }
 
 .dark .mesh-gradient-bright {
     background-color: #0e0e11; /* Slightly lighter than pure black for depth */
     background-attachment: fixed;
-    background-image: 
-        radial-gradient(at 0% 0%, hsla(217,100%,22%,1) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(210,100%,18%,1) 0, transparent 50%),
-        radial-gradient(at 50% 100%, hsla(220,100%,20%,1) 0, transparent 60%);
+    background-image:
+        linear-gradient(180deg, rgba(14, 14, 17, 1) 0%, rgba(17, 20, 26, 1) 52%, rgba(10, 10, 12, 1) 100%),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.07) 0%, transparent 42%, rgba(148, 163, 184, 0.04) 100%);
 }
 
 .grain {
@@ -86,6 +82,96 @@
     @apply bg-white/90 dark:bg-[#131315]/40 backdrop-blur-2xl border border-slate-200 dark:border-white/5 shadow-xl shadow-slate-200/40 dark:shadow-none;
 }
 
+.home-hero-bg {
+    background-color: #f8fafc;
+    background-image:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 250, 252, 0.74) 50%, rgba(255, 255, 255, 0) 100%),
+        linear-gradient(110deg, rgba(37, 99, 235, 0.08) 0%, transparent 32%, rgba(15, 23, 42, 0.04) 100%),
+        linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+    background-size: auto, auto, 72px 72px, 72px 72px;
+}
+
+.dark .home-hero-bg {
+    background-color: #0a0a0c;
+    background-image:
+        linear-gradient(180deg, rgba(15, 23, 42, 0.22) 0%, rgba(10, 10, 12, 0.72) 54%, rgba(10, 10, 12, 0) 100%),
+        linear-gradient(110deg, rgba(37, 99, 235, 0.12) 0%, transparent 34%, rgba(148, 163, 184, 0.045) 100%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.home-core-bg {
+    background-color: #08080a;
+    background-image:
+        linear-gradient(180deg, #08080a 0%, #120c0e 52%, #08080a 100%),
+        linear-gradient(115deg, rgba(127, 29, 29, 0.3) 0%, transparent 34%, transparent 68%, rgba(37, 99, 235, 0.09) 100%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
+    background-size: auto, auto, 96px 96px, 96px 96px;
+}
+
+.home-audit-bg {
+    background-color: #f8fafc;
+    background-image:
+        linear-gradient(180deg, rgba(241, 245, 249, 0.96) 0%, rgba(255, 255, 255, 0.92) 55%, rgba(248, 250, 252, 1) 100%),
+        linear-gradient(120deg, rgba(37, 99, 235, 0.1) 0%, transparent 36%, rgba(15, 23, 42, 0.035) 100%),
+        linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.032) 1px, transparent 1px);
+    background-size: auto, auto, 84px 84px, 84px 84px;
+}
+
+.dark .home-audit-bg {
+    background-color: #0b0d12;
+    background-image:
+        linear-gradient(180deg, rgba(11, 13, 18, 1) 0%, rgba(12, 18, 28, 1) 52%, rgba(10, 10, 12, 1) 100%),
+        linear-gradient(120deg, rgba(37, 99, 235, 0.16) 0%, transparent 36%, rgba(148, 163, 184, 0.04) 100%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+}
+
+.home-governance-bg {
+    background-color: #08080a;
+    background-image:
+        linear-gradient(180deg, #08080a 0%, #101014 48%, #08080a 100%),
+        linear-gradient(125deg, rgba(127, 29, 29, 0.26) 0%, transparent 38%, rgba(37, 99, 235, 0.1) 100%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 34px),
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: auto, auto, auto, 112px 112px;
+}
+
+.home-contact-bg {
+    background-color: #ffffff;
+    background-image:
+        linear-gradient(180deg, rgba(248, 250, 252, 1) 0%, rgba(255, 255, 255, 0.96) 55%, rgba(241, 245, 249, 0.86) 100%),
+        linear-gradient(105deg, rgba(37, 99, 235, 0.09) 0%, transparent 34%, rgba(15, 23, 42, 0.03) 100%),
+        linear-gradient(to right, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+    background-size: auto, auto, 88px 88px;
+}
+
+.dark .home-contact-bg {
+    background-color: #0a0a0c;
+    background-image:
+        linear-gradient(180deg, rgba(10, 10, 12, 1) 0%, rgba(14, 18, 25, 1) 54%, rgba(10, 10, 12, 1) 100%),
+        linear-gradient(105deg, rgba(37, 99, 235, 0.12) 0%, transparent 34%, rgba(148, 163, 184, 0.04) 100%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+}
+
+.home-footer-bg {
+    background-color: #ffffff;
+    background-image:
+        linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 0.94) 100%),
+        linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+    background-size: auto, 92px 92px;
+}
+
+.dark .home-footer-bg {
+    background-color: #0d0d0f;
+    background-image:
+        linear-gradient(180deg, rgba(13, 13, 15, 1) 0%, rgba(10, 10, 12, 1) 100%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.023) 1px, transparent 1px);
+}
+
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
@@ -102,11 +188,15 @@
 
 .discovery-gradient {
     @apply transition-all duration-700;
-    background: radial-gradient(circle at 50% 100%, #f1f5f9 0%, #ffffff 80%);
+    background:
+        linear-gradient(180deg, #f8fafc 0%, #ffffff 58%, #f1f5f9 100%),
+        linear-gradient(105deg, rgba(37, 99, 235, 0.08) 0%, transparent 36%, rgba(15, 23, 42, 0.03) 100%);
 }
 
 .dark .discovery-gradient {
-    background: radial-gradient(circle at 50% 100%, #111827 0%, #0a0a0c 80%);
+    background:
+        linear-gradient(180deg, #0a0a0c 0%, #111827 52%, #0a0a0c 100%),
+        linear-gradient(105deg, rgba(37, 99, 235, 0.12) 0%, transparent 36%, rgba(148, 163, 184, 0.04) 100%);
 }
 
 .social-link {
