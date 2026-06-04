@@ -88,11 +88,10 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-[60] border-b border-slate-200 dark:border-white/5 bg-white/70 dark:bg-black/40 backdrop-blur-xl transition-all duration-300">
-        <div className="max-w-screen-2xl mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between h-20">
+      <nav className="fixed top-0 w-full z-[60] border-b border-slate-200 dark:border-white/5 bg-white/60 dark:bg-black/30 backdrop-blur-xl transition-all duration-300">
+        <div className="relative h-20">
             <div 
-              className="flex items-center gap-4 group cursor-pointer" 
+              className="absolute left-4 sm:left-5 lg:left-6 top-1/2 z-10 -translate-y-1/2 flex items-center gap-4 group cursor-pointer" 
               onClick={() => handleNavigate('home')}
             >
               <div className="relative group-hover:scale-110 transition-transform duration-500">
@@ -103,6 +102,9 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                 Orion
               </span>
             </div>
+
+          <div className="max-w-screen-2xl mx-auto h-full px-6 lg:px-12">
+            <div className="flex items-center justify-end h-20">
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8 lg:space-x-10">
@@ -193,6 +195,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               </button>
             </div>
           </div>
+        </div>
         </div>
       </nav>
 

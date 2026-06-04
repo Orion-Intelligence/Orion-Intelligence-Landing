@@ -12,6 +12,17 @@ dist
 dist-ssr
 *.local
 
+# Local Codex workspace mounts
+.agents
+.codex
+
+# Generated review renders and duplicate slide notes
+orion-collaboration-render.png
+orion-collaboration-technical-render.png
+orion-home-finetune.png
+collaboration-slide-text-improved.md
+technical-pitch-slide-text.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Terminal, Code2, Database, Shield, Globe, Search, Command, ChevronRight, Copy, Check, Info, FileJson, Zap, Network, MessageSquare, Share2, Scan, FileText, Smartphone, LayoutGrid, ListFilter, Bug, ShieldAlert, Newspaper, Users, UserCheck } from 'lucide-react';
+import { Terminal, Database, Shield, Globe, Search, Command, ChevronRight, Copy, Check, Info, FileJson, Zap, Network, MessageSquare, Share2, Scan, FileText, Smartphone, LayoutGrid, ListFilter, Bug, ShieldAlert, Newspaper, Users, UserCheck } from 'lucide-react';
 
 interface Endpoint {
   id: string;
@@ -17,21 +17,66 @@ interface Endpoint {
 const endpoints: Endpoint[] = [
   // --- CORE SYSTEMS ---
   {
+    id: 'login',
+    category: 'Core',
+    name: 'Login and Session Cookie',
+    method: 'POST',
+    path: '/api/token',
+    description: 'Authenticates a user with OAuth2 form fields and returns the session payload. When 2FA is not required, the backend also sets the httpOnly access cookie. Protected routes accept Authorization: Bearer tokens or the access cookie.',
+    params: `Content-Type: application/x-www-form-urlencoded
+
+username=analyst@orionintelligence.org
+password=********`,
+    example: `{
+  "access_token": "eyJ...",
+  "token_type": "bearer",
+  "twofa_required": false,
+  "user": {
+    "email": "analyst@orionintelligence.org",
+    "role": "analyst"
+  }
+}`
+  },
+  {
+    id: 'auth_flow',
+    category: 'Core',
+    name: 'Auth Flow Helpers',
+    method: 'POST',
+    path: '/api/token/refresh | /api/token/2fa/verify | /api/logout',
+    description: 'Session helpers from auth_routes.py. Refresh keeps browser sessions alive, 2FA verification completes a pending login, and logout clears the session cookie.',
+    params: `POST /api/token/refresh
+POST /api/token/2fa/verify
+POST /api/logout`,
+    example: `{
+  "access_token": "eyJ...",
+  "token_type": "bearer",
+  "twofa_required": false
+}`
+  },
+  {
     id: 'insight',
     category: 'Core',
     name: 'System Insights',
     method: 'GET',
-    path: '/api/system/insight',
-    description: 'Retrieve system-wide analytics and high-level intelligence metrics across all monitored sources. Includes document volume, freshness indicators, and graph-style aggregations of top teams and locations.',
+    path: '/api/insight',
+    description: 'Returns system analytics, latest documents, country insights, and source-level intelligence metrics for the Orion workspace. This route is documented in backend/routes/docs/docs.py.',
     example: `{
   "insights": {
     "general": {
-      "document_count": { "key": "Document Count", "value": 14200000000, "change_weekly": "0%", "change_daily": "0%" },
-      "url_document_count": { "key": "URL/Document", "value": 451 }
+      "document_count": {
+        "key": "Document Count",
+        "value": 57,
+        "change_weekly": "0%",
+        "change_daily": "0%"
+      }
     }
   },
-  "latestDocument": { "leak_model": [...], "exploit_model": [], "generic_model": [...] },
-  "graph_insight": [true, [{ "aggregation_name": "Top Teams (Leak)", "index": "leak_model", "buckets": [{"key": "BROTHERHOOD", "count": 3}] }]]
+  "latestDocument": {
+    "leak_model": [],
+    "exploit_model": [],
+    "chat_model": []
+  },
+  "country_insight": []
 }`
   },
   {
@@ -39,17 +84,18 @@ const endpoints: Endpoint[] = [
     category: 'Core',
     name: 'Source Directory',
     method: 'GET',
-    path: '/api/system/directory',
-    description: 'Retrieve the complete list of monitored and crawled sources across Clearnet, Onion, and I2P. Supports deep filtering by network layer, index classification, and content type.',
+    path: '/api/directory',
+    description: 'Returns monitored sources across clearnet, onion, and i2p networks. Supports filters for network layer, index type, content type, text search, and date range.',
     params: `?page=1&network=onion&index=leak&content_type=hacking&daterange=2025-12-03,2025-12-18`,
     example: `{
   "total": 12345,
+  "page": 1,
   "results": [{
     "url": "http://exampleonionforumabcdef.onion/",
     "content_type": ["forums", "hacking"],
     "index_type": "general",
     "network_type": "onion",
-    "name": "Darknet Forum Alpha"
+    "name": "Example Darknet Forum"
   }]
 }`
   },
@@ -58,8 +104,8 @@ const endpoints: Endpoint[] = [
     category: 'Core',
     name: 'Dump Catalog',
     method: 'GET',
-    path: '/api/system/dumps',
-    description: 'Retrieve the complete catalog of breach dumps collected from Telegram channels and monitored websites. Useful for identifying fresh breach drops and unparsed dumps for manual analysis.',
+    path: '/api/dumps',
+    description: 'Returns breach dump records collected from Telegram channels and monitored websites. Supports source, group, parsed status, date range, and text search filters.',
     params: `?page=1&source=telegram&status=parsed&q=enterprise&daterange=2025-01-01,2025-01-15`,
     example: `{
   "total_count": 152,
@@ -67,10 +113,35 @@ const endpoints: Endpoint[] = [
   "mDumpCallbackLinks": [{
     "leak_url": "https://t.me/example_leaks/1234",
     "source": "telegram",
-    "group": "threat_group_alpha",
+    "group": "example_leak_group",
     "parsed_status": "parsed",
     "created_at": "2025-12-03T21:15:23Z"
   }]
+}`
+  },
+  {
+    id: 'route_coverage',
+    category: 'Core',
+    name: 'Audited Route Coverage',
+    method: 'GET',
+    path: '/api/*',
+    description: 'This documentation was updated from the Orion backend route decorators and docs helper files. Audited sources include admin_routes.py, ai_routes.py, api_micros.py, api_routes.py, auth_routes.py, case_routes.py, crawl_routes.py, geo_fencing_routes.py, public_api_routes.py, social_routes.py, tenant_routes.py, test_routes.py, docs/docs.py, and helper/route_test_helper.py.',
+    example: `{
+  "total_audited_routes": 235,
+  "files": {
+    "api_routes.py": 57,
+    "auth_routes.py": 12,
+    "ai_routes.py": 8,
+    "case_routes.py": 13,
+    "crawl_routes.py": 30,
+    "geo_fencing_routes.py": 16,
+    "public_api_routes.py": 9,
+    "social_routes.py": 13,
+    "tenant_routes.py": 30,
+    "admin_routes.py": 6,
+    "api_micros.py": 1,
+    "test_routes.py": 40
+  }
 }`
   },
 
@@ -78,34 +149,33 @@ const endpoints: Endpoint[] = [
   {
     id: 'consolidated',
     category: 'Search',
-    name: 'Consolidated (Grouped)',
+    name: 'Consolidated Search',
     method: 'POST',
     path: '/api/search/consolidated',
-    description: 'Search across all report types (breach/leak, exploit, strategic, chat, social) and return a section-grouped result set. Ideal for driving overview dashboards.',
+    description: 'Searches multiple report collections and returns grouped results across breach, strategic, exploit, social, chat, and related intelligence sources.',
     params: `{
   "q": "okta",
   "page": 1,
   "network": "all",
   "matchtype": "or",
   "entity_filter": {
-    "m_company_name": ["Okta"],
-    "m_country": ["US"]
+    "m_company_name": ["Okta"]
   }
 }`,
     example: `{
-  "breach": { "total": 2, "results": [...] },
-  "exploit": { "total": 1, "results": [...] },
-  "social": { "total": 1, "results": [...] }
+  "breach": { "total": 2, "results": [] },
+  "exploit": { "total": 1, "results": [] },
+  "social": { "total": 1, "results": [] }
 }`
   },
   {
     id: 'ranked',
     category: 'Search',
-    name: 'Unified Ranked Search',
+    name: 'Strategic Ranked Search',
     method: 'POST',
-    path: '/api/search/consolidated/ranked',
-    description: 'Search the entire database and return a single globally relevance-ranked list of reports without grouping. Optimized for high-speed clinical entity discovery.',
-    params: `{ "q": "cyber", "page": 1, "network": "onion" }`,
+    path: '/api/search/strategic',
+    description: 'Searches strategic intelligence reports and returns ranked results from the general intelligence indexes. Demo or free-token sessions are constrained by backend safe-search behavior.',
+    params: `{ "q": "cyber", "page": 1, "network": "onion", "category": "all" }`,
     example: `{
   "total": 25,
   "results": [{
@@ -117,226 +187,326 @@ const endpoints: Endpoint[] = [
 }`
   },
   {
-    id: 'breach_search',
+    id: 'vertical_search',
     category: 'Search',
-    name: 'Breach Search',
+    name: 'Vertical Report Search',
     method: 'POST',
-    path: '/api/search/breach',
-    description: 'Search breach/leak reports aggregated from ransomware blogs, extortion sites, and leak forums. Supports clinical filtering by industry, country, and team.',
-    params: `{
+    path: '/api/search/{strategic|breach|social|exploit|defacement}',
+    description: 'Runs a focused search against one report family. Available verticals are strategic, breach, social, exploit, and defacement. Detail routes follow /api/search/{type}/{doc_id}.',
+    params: `POST /api/search/breach
+
+{
   "q": "energy sector",
+  "page": 1,
   "network": "onion",
-  "entity_filter": { "m_industry": ["Electricity, Oil & Gas"], "m_country": ["Germany"] }
+  "entity_filter": {
+    "m_country": ["Germany"]
+  }
 }`,
     example: `{
   "Result": [{
-    "m_title": "Announcement",
-    "m_team": "BROTHERHOOD",
-    "m_industry": "Agricultural Sector",
+    "m_title": "Victim announcement",
+    "m_team": "Example Group",
     "m_country": ["Germany"]
   }],
   "Page_Count": 1
 }`
   },
   {
-    id: 'exploit_search',
+    id: 'consolidated_ioc',
     category: 'Search',
-    name: 'Exploit/CVE Search',
+    name: 'IOC Consolidated Search',
     method: 'POST',
-    path: '/api/search/exploit',
-    description: 'Search vulnerability intelligence using CVE identifiers, vendors, or affected products. Includes POC links and technical modules.',
+    path: '/api/search/consolidated/ioc',
+    description: 'Searches consolidated intelligence through IOC-oriented fields and returns matching records across supported Orion collections.',
     params: `{
-  "q": "CVE-2024-12345",
-  "entity_filter": { "m_vendor": ["ExampleCorp"], "m_product": ["ExampleServer"] }
+  "q": "orionintelligence.org",
+  "page": 1,
+  "network": "all",
+  "matchtype": "or"
 }`,
     example: `{
-  "total": 87,
   "results": [{
-    "m_title": "CVE-2024-12345 RCE in Server",
-    "m_exploit_type": ["remote_code_execution"],
-    "m_source": "rapid7"
-  }]
-}`
-  },
-  {
-    id: 'defacement_search',
-    category: 'Search',
-    name: 'Defacement Search',
-    method: 'POST',
-    path: '/api/search/defacement',
-    description: 'Search defacement reports by keyword, handle, or crew. Useful for tracking hacktivist activity and phishing campaign infrastructure.',
-    params: `{ "q": "Hacked by", "attacker": "mthcht", "network": "onion" }`,
-    example: `{
-  "results": [{
-    "m_title": "Hacked by mthcht",
-    "m_team": "Alpha Wolf",
-    "m_ioc_type": "phishing"
-  }]
-}`
-  },
-  {
-    id: 'telegram_search',
-    category: 'Search',
-    name: 'Telegram Search',
-    method: 'POST',
-    path: '/api/search/telegram',
-    description: 'Execute keyword and IOC-aware search over Telegram chat collections (channels, groups, and supergroups) ingested by Orion.',
-    params: `{ "q": "ransomware leak", "platform": "telegram", "daterange": "2025-12-01,2025-12-08" }`,
-    example: `{
-  "results": [{
-    "m_channel_name": "Ransomware News",
-    "m_content": "New victim announced...",
-    "m_message_sharable_link": "https://t.me/..."
-  }]
+    "m_title": "Infrastructure mention",
+    "m_url": "https://try.orionintelligence.org/reports/infrastructure-mention",
+    "m_iocs": ["orionintelligence.org"]
+  }],
+  "total": 1
 }`
   },
   {
     id: 'stealerlogs',
     category: 'Search',
-    name: 'Stealer Logs',
-    method: 'POST',
+    name: 'Public Email Exposure Check',
+    method: 'GET',
     path: '/api/search/stealerlogs',
-    description: 'Search normalized credential records from infostealer logs. Supports full wildcard/substring search over raw credentials and domains.',
-    params: `{ "q": "gmail.com", "type": "c", "fullsearch": true }`,
+    description: 'Public endpoint from public_api_routes.py. Checks whether an email address appears in monitored stealer-log data and returns a summarized exposure score for the homepage audit flow.',
+    params: `?q=analyst@orionintelligence.org`,
     example: `{
-  "Result": [{
-    "email": ["uzzalsen2530@gmail.com"],
-    "password": "...",
-    "domain": ["epicgames.com"]
+  "breach_found": true,
+  "total_exposures": 7,
+  "unique_channels": 3,
+  "unique_types": 4,
+  "primary_channel": "telegram",
+  "primary_type": "credential",
+  "risk_score": 82,
+  "severity": "high"
+}`
+  },
+  {
+    id: 'stix_export',
+    category: 'Search',
+    name: 'STIX Export and Conversion',
+    method: 'GET',
+    path: '/api/search/{type}/stix/{doc_id}',
+    description: 'Exports supported Orion documents as STIX 2.1. Supported document types include breach, strategic, defacement, exploit, social, chat, and news. Conversion helpers are available at /api/stix/convert/{kind} and /api/stix/convert/{kind}/batch.',
+    params: `GET /api/search/breach/stix/{doc_id}?lang=en
+
+POST /api/stix/convert/{kind}
+POST /api/stix/convert/{kind}/batch`,
+    example: `{
+  "type": "bundle",
+  "spec_version": "2.1",
+  "objects": [{
+    "type": "indicator",
+    "pattern": "[domain-name:value = 'orionintelligence.org']"
   }]
 }`
   },
 
   // --- DYNAMIC INTEL ---
   {
-    id: 'dynamic_email',
+    id: 'dynamic_user',
     category: 'Intelligence',
-    name: 'Email Exposure Probe',
+    name: 'Dynamic Entity Scans',
     method: 'POST',
-    path: '/api/dynamic/user/email',
-    description: 'Real-time lookup for user identifiers discovered in active dark-web data. Fetches results from external APIs (latency may increase).',
-    params: `{ "text": { "email": "investigator@domain.com", "username": "alias_77" } }`,
+    path: '/api/dynamic/{user|cracked|software|social|wanted|national-identity}',
+    description: 'Runs live checks for user exposure, cracked/software credentials, social identifiers, wanted-person records, and national identity lookups. The backend records search audit events and applies scan limits.',
+    params: `POST /api/dynamic/user
+
+{
+  "text": {
+    "email": "analyst@orionintelligence.org",
+    "username": "orion_analyst"
+  }
+}`,
     example: `{
   "result": [{
     "m_title": "Records Found",
-    "m_important_content": "Records were found in a data breach.",
-    "m_dumplink": ["Canva", "Breach Compilation"]
+    "m_important_content": "Records were found in a breach source.",
+    "m_dumplink": ["Credential breach source"]
   }]
 }`
   },
   {
-    id: 'dynamic_social',
+    id: 'ai_routes',
     category: 'Intelligence',
-    name: 'Social Identifier Probe',
+    name: 'AI and Nexus Chat',
     method: 'POST',
-    path: '/api/dynamic/social',
-    description: 'Perform a dynamic search for social media identifiers to uncover impersonated or exposed dark-net associated accounts.',
-    params: `{ "text": { "username": "bitcoin" } }`,
+    path: '/api/nexus/chat',
+    description: 'Provides AI-assisted report chat, workspace chat, text analysis, and optional AI parsing and summarization. Feature gates are enforced for AI parse and summarize routes.',
+    params: `POST /api/nexus/chat
+
+{
+  "message": "Summarize this report and list affected entities.",
+  "context": {
+    "doc_id": "report-id"
+  }
+}`,
     example: `{
-  "result": [{
-    "m_title": "User bitcoin found on twitter.com",
-    "m_url": "https://twitter.com/bitcoin",
-    "m_content_type": ["stolen"]
-  }]
+  "result": {
+    "response": "Summary and entity list..."
+  },
+  "status": "done"
 }`
   },
   {
-    id: 'dynamic_cracked',
+    id: 'social_routes',
     category: 'Intelligence',
-    name: 'Cracked App Audit',
+    name: 'Social Reconnaissance',
     method: 'POST',
-    path: '/api/dynamic/cracked',
-    description: 'Discover cracked or repackaged mobile application artifacts from high-risk repositories using Google Play Store URLs.',
-    params: `{ "text": { "playstore": "https://play.google.com/store/apps/details?id=com.vpn.id" } }`,
+    path: '/api/social/{recon|phone/recon|profile|online/images|recon/image|followers|following|posts|entity|metadata}',
+    description: 'Runs social profile, image, phone, follower, following, post, entity, and metadata collection workflows from social_routes.py. Session tab routes support persisted graph workspaces.',
+    params: `POST /api/social/recon
+
+{
+  "username": "example_alias",
+  "platform": "x"
+}`,
     example: `{
-  "result": [{
-    "m_app_name": "SuperVPN Pro v3.0.3.apk",
-    "m_package_id": "com.vpn.id",
-    "m_mod_features": "Premium Unlocked"
-  }]
+  "result": {
+    "profiles": [],
+    "confidence": "medium"
+  }
+}`
+  },
+  {
+    id: 'satellite_routes',
+    category: 'Intelligence',
+    name: 'Geo, Map, and Satellite Intelligence',
+    method: 'POST',
+    path: '/api/satellite/*',
+    description: 'Provides map entity streaming, threat lens search, geocoding, facilities lookup, Sentinel imagery, anomaly comparison, and live aircraft or ship tracking from geo_fencing_routes.py.',
+    params: `POST /api/satellite/geocode
+
+{
+  "query": "Lahore, Pakistan"
+}`,
+    example: `{
+  "lat": 31.5204,
+  "lon": 74.3587,
+  "label": "Lahore, Pakistan"
 }`
   },
 
   // --- ASSET DISCOVERY ---
   {
-    id: 'domain_scan',
+    id: 'urlscan',
     category: 'Asset',
-    name: 'Multi-mode Domain Scan',
+    name: 'Domain and Infrastructure Scans',
     method: 'POST',
-    path: '/api/discovery/scan',
-    description: 'Scan a target domain using Orion scanning engines: Basic (Headers), Advanced (Ports), SEO, or Repo (Exposed Files).',
-    params: `{ "domain": "bbc.com", "scanType": "advanced" }`,
+    path: '/api/urlscan/{domain|subdomains|dns|wayback|ip}',
+    description: 'Scans domains, subdomains, DNS records, Wayback data, and IP addresses for exposure and infrastructure context. These routes apply active-user checks and scan limits.',
+    params: `POST /api/urlscan/domain
+
+{
+  "domain": "orionintelligence.org",
+  "scanType": "advanced"
+}`,
     example: `{
   "result": {
-    "meta": { "Host": "bbc.com", "Scanned_on_date": "Dec 07, 2025" },
-    "grade": "D",
-    "threats": { "Headers": [...], "CORS": [...] }
+    "meta": {
+      "Host": "orionintelligence.org",
+      "Scanned_on_date": "2026-06-03"
+    },
+    "grade": "B",
+    "threats": {
+      "Headers": [],
+      "CORS": []
+    }
   }
+}`
+  },
+  {
+    id: 'netintel',
+    category: 'Asset',
+    name: 'Network Intelligence',
+    method: 'POST',
+    path: '/api/netintel/{resolve_ip|ipscanner|url_vulnerability_scan|iot_detect|camera_detect_ranges}',
+    description: 'Resolves IP metadata, performs deeper IP scans, checks URL vulnerabilities, and runs IoT or camera exposure detection. IoT and camera range detection routes live in geo_fencing_routes.py.',
+    params: `POST /api/netintel/resolve_ip
+
+{
+  "ip": "8.8.8.8"
+}`,
+    example: `{
+  "ip": "8.8.8.8",
+  "asn": "AS15169",
+  "country": "US",
+  "provider": "Google"
+}`
+  },
+  {
+    id: 'crawler_indexing',
+    category: 'Asset',
+    name: 'Crawler and Indexing Routes',
+    method: 'POST',
+    path: '/api/index/{leak|news|tracking|exploit|defacement|generic|chat|social|swarm|sanctions|entity|dump|stealerlog}',
+    description: 'Ingests crawler output and feeder data into Orion indexes, including leak, news, tracking, exploit, chat, social, dump, and stealer-log records. Feeder script management routes are under /api/profile/feeder/*.',
+    params: `POST /api/index/leak
+
+{
+  "m_title": "Victim announcement",
+  "m_url": "https://source.example/report",
+  "m_content": "Collected source content"
+}`,
+    example: `{
+  "status": "success",
+  "indexed": 1
 }`
   },
 
   // --- DOSSIERS & REPORTS ---
   {
-    id: 'stix_export',
+    id: 'cases',
     category: 'Dossier',
-    name: 'STIX 2.1 Export',
-    method: 'POST',
-    path: '/api/export/stix',
-    description: 'Convert any clinical Orion document into a STIX 2.1 standardized investigative bundle containing markings and SCO observables.',
-    params: `{ "doc_id": "hash_id", "lang": "en" }`,
+    name: 'Case Management',
+    method: 'GET',
+    path: '/api/profile/cases',
+    description: 'Creates and manages investigation cases, case sharing, assigned analysts, and artifact files. Artifact upload, view, download, and delete routes are scoped under /api/profile/cases/{case_id}/artifacts/{artifact_id}/file.',
+    params: `GET /api/profile/cases
+
+POST /api/profile/cases
+{
+  "title": "Executive exposure review",
+  "description": "Investigate leaked credentials and related infrastructure."
+}`,
     example: `{
-  "type": "bundle",
-  "spec_version": "2.1",
-  "objects": [{ "type": "indicator", "pattern": "[domain-name:value IN ('example.onion')]" }]
+  "cases": [{
+    "case_id": "CASE-00042",
+    "title": "Executive exposure review",
+    "status": "open",
+    "artifacts": []
+  }]
 }`
   },
   {
-    id: 'breach_report',
+    id: 'tenant_admin',
     category: 'Dossier',
-    name: 'Breach Dossier Detail',
+    name: 'Tenant and Admin Routes',
     method: 'GET',
-    path: '/api/report/breach/{doc_id}',
-    description: 'Retrieve detailed report for a specific breach, including full textual content, victim company metadata, and scraper identification.',
+    path: '/api/get/tenant | /api/update/tenants | /api/users | /admin/api/*',
+    description: 'Tenant routes manage organization settings, users, chat shares, tenant images, user images, audit logs, alerts, and role-aware workspace controls. Admin routes support system row-action checks, user status edits, public config updates, and system images.',
+    params: `POST /api/get/tenant
+POST /api/update/tenants
+POST /api/users
+POST /api/tenant/create/user
+POST /api/audit/logs
+GET /api/profile/alerts
+GET /admin/api/db_system_model/row-action
+POST /admin/api/db_user_account/edit/{id}`,
     example: `{
-  "m_title": "Columbus Healthcare",
-  "m_company_name": "Columbus Regional Healthcare",
-  "m_screenshot": "6999315431645..."
+  "tenant": {
+    "id": "tenant-id",
+    "name": "Example Enterprise"
+  },
+  "users": [],
+  "invitations": []
 }`
   },
   {
-    id: 'exploit_report',
+    id: 'public_api',
     category: 'Dossier',
-    name: 'Exploit Intelligence',
+    name: 'Public API Routes',
     method: 'GET',
-    path: '/api/report/exploit/{doc_id}',
-    description: 'Retrieve technical intelligence for a specific exploit or vulnerability, including code snippets and affected platforms.',
+    path: '/api/public/*',
+    description: 'Public routes expose selected safe surfaces such as public case-share access and email exposure checks. These routes avoid returning full protected workspace records.',
+    params: `GET /api/public/case-shares/{share_id}
+GET /api/search/stealerlogs?q=analyst@orionintelligence.org`,
     example: `{
-  "m_title": "Windows Registry Persistence",
-  "m_code_snippet": ["msf > use exploit/..."],
-  "m_platform": ["Windows"]
+  "share": {
+    "case_id": "CASE-00042",
+    "title": "Shared investigation"
+  },
+  "access": "public-share"
 }`
   },
   {
-    id: 'news_report',
+    id: 'test_helper',
     category: 'Dossier',
-    name: 'News Intel Report',
+    name: 'Test and Mock Routes',
     method: 'GET',
-    path: '/api/report/news/{doc_id}',
-    description: 'Retrieve normalized article text and threat-related insights from external news feeds and high-signal technical blogs.',
+    path: '/api/test/*',
+    description: 'test_routes.py and helper/route_test_helper.py provide mock and pending responses for scanner, social, geo, and workflow routes when TESTING_ENABLED=1. They are intended for development and route verification only.',
+    params: `TESTING_ENABLED=1
+
+GET /api/test/*
+POST /api/test/*`,
     example: `{
-  "m_title": "Turning Intel Into Action",
-  "m_organization": ["Filigran", "MITRE"],
-  "m_important_content": "Cybersecurity transformation through TID..."
+  "status": "pending",
+  "message": "Mock route response generated by route_test_helper.py",
+  "testing_enabled": true
 }`
-  },
-  {
-    id: 'screenshot',
-    category: 'Dossier',
-    name: 'Screenshot Access',
-    method: 'GET',
-    path: '/api/report/breach/screenshot/{filename}',
-    description: 'Access the raw WebP screenshot bytes associated with a specific breach or defacement report.',
-    example: `HTTP/1.1 200 OK\nContent-Type: image/webp\n[BINARY_DATA]`
   }
 ];
 
@@ -360,18 +530,32 @@ const ApiDocumentation: React.FC = () => {
     { name: 'Dossier', icon: FileText, label: 'Reports & Export' }
   ];
 
-  return (
-    <div className="flex flex-col md:flex-row md:h-[calc(100vh-80px)] md:overflow-hidden animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out">
-      {/* Sidebar Navigation */}
-      <aside className="w-full md:w-72 lg:w-80 border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-black/20 overflow-y-auto no-scrollbar flex flex-col shrink-0">
-        <div className="p-8 border-b border-slate-200 dark:border-white/5 bg-white/[0.01] animate-in fade-in slide-in-from-left-2 duration-700">
-          <div className="flex items-center gap-3 text-blue-600 dark:text-blue-500 mb-2">
-            <Code2 className="w-5 h-5" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Protocol V4.2.0</span>
-          </div>
-          <p className="text-[9px] text-slate-400 dark:text-white/30 uppercase tracking-widest font-black">Orion Intelligence Core</p>
-        </div>
+  const primaryPath = activeEndpoint.path.split('|')[0].trim();
+  const publicEndpointIds = ['login', 'stealerlogs', 'public_api'];
+  const isPublicEndpoint = publicEndpointIds.includes(activeEndpoint.id);
+  const isTestingEndpoint = activeEndpoint.id === 'test_helper';
+  const authMode = isTestingEndpoint ? 'Testing mode' : isPublicEndpoint ? 'Public endpoint' : 'Bearer token or access cookie';
+  const authText = isTestingEndpoint
+    ? 'Mock helper routes are available only when TESTING_ENABLED=1 is enabled in the backend environment.'
+    : isPublicEndpoint
+      ? 'This route is callable without a bearer token. Some public share routes may still require their share token query parameter.'
+      : 'Protected routes accept Authorization: Bearer $ORION_TOKEN or the httpOnly access_token cookie set by /api/token.';
+  const requestExample = activeEndpoint.params || `${activeEndpoint.method} ${primaryPath}\n\nNo request body is required for this endpoint.`;
+  const curlExample = activeEndpoint.id === 'login'
+    ? `curl -X POST https://try.orionintelligence.org/api/token \\
+  -H "Content-Type: application/x-www-form-urlencoded" \\
+  -d "username=analyst@orionintelligence.org&password=********"`
+    : activeEndpoint.id === 'stealerlogs'
+      ? `curl "https://try.orionintelligence.org/api/search/stealerlogs?q=analyst@orionintelligence.org"`
+      : isTestingEndpoint
+        ? `TESTING_ENABLED=1 curl -X ${activeEndpoint.method} http://localhost:8000${primaryPath}`
+        : `curl -X ${activeEndpoint.method} https://try.orionintelligence.org${primaryPath} \\
+  -H "Authorization: Bearer $ORION_TOKEN"${activeEndpoint.method === 'POST' ? ' \\\n  -H "Content-Type: application/json"' : ''}`;
 
+  return (
+    <div className="relative flex flex-col md:flex-row md:h-[calc(100vh-80px)] md:overflow-hidden animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out">
+      {/* Sidebar Navigation */}
+      <aside className="relative z-10 w-full md:w-72 lg:w-80 border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5 bg-slate-50/82 dark:bg-black/20 overflow-y-auto no-scrollbar flex flex-col shrink-0">
         <nav className="flex-1 p-6 space-y-10 md:pb-20">
           {categories.map((cat, catIdx) => (
             <div 
@@ -403,132 +587,134 @@ const ApiDocumentation: React.FC = () => {
         </nav>
 
         <div className="hidden md:block p-6 border-t border-slate-200 dark:border-white/5 bg-white/[0.01] animate-in fade-in duration-1000">
-           <div className="flex items-center gap-3 p-4 rounded-xl bg-blue-600/5 dark:bg-blue-500/5 border border-blue-600/10 dark:border-blue-500/10">
+           <div className="flex items-center gap-3 px-1 py-2">
               <div className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
-              <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest leading-none">GRID STATUS: PRODUCTION</span>
+              <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest leading-none">ROUTE STATUS: UPDATED</span>
            </div>
         </div>
       </aside>
 
       {/* Main Documentation Area */}
-      <main className="flex-1 overflow-y-auto bg-white dark:bg-[#0a0a0c] p-6 md:p-10 lg:p-20 no-scrollbar animate-in fade-in slide-in-from-right-1 duration-700">
-        <article className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="mb-12 lg:mb-16 space-y-6 lg:space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <div className="flex flex-wrap items-center gap-3 lg:gap-4">
-              <span className={`px-3 lg:px-4 py-1.5 rounded-lg text-[9px] lg:text-[10px] font-black uppercase tracking-widest border shadow-lg ${
-                activeEndpoint.method === 'GET' ? 'bg-blue-600/10 text-blue-600 border-blue-600/20' : 'bg-green-600/10 text-green-600 border-green-600/20'
+      <main className="relative z-10 flex-1 overflow-y-auto bg-white/90 dark:bg-[#0a0a0c]/95 px-5 py-5 md:px-6 md:py-7 lg:px-9 lg:py-8 no-scrollbar animate-in fade-in slide-in-from-right-1 duration-700">
+        <article className="max-w-none mx-auto animate-in fade-in slide-in-from-bottom-2 duration-500">
+          <header className="mb-8">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-5">
+              <span className={`font-mono text-xs font-black uppercase tracking-widest ${
+                activeEndpoint.method === 'GET' ? 'text-blue-600 dark:text-blue-400' : 'text-emerald-600 dark:text-emerald-400'
               }`}>
                 {activeEndpoint.method}
               </span>
-              <code className="text-[10px] lg:text-xs font-mono text-slate-700 dark:text-white/80 bg-slate-100 dark:bg-white/5 px-4 lg:px-5 py-2 rounded-xl border border-slate-200 dark:border-white/10 shadow-inner truncate max-w-full">
-                {activeEndpoint.path}
-              </code>
+              <button
+                onClick={() => handleCopy(activeEndpoint.path, 'endpoint')}
+                className="group min-w-0 flex items-center gap-2 text-left"
+                aria-label="Copy endpoint path"
+              >
+                <code className="text-sm font-mono text-slate-700 dark:text-white/80 truncate">{activeEndpoint.path}</code>
+                {copied === 'endpoint' ? <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> : <Copy className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 shrink-0" />}
+              </button>
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-white/30">
+                {activeEndpoint.category}
+              </span>
             </div>
-            <div className="space-y-4">
-              <h1 className="text-3xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">{activeEndpoint.name}</h1>
-              <p className="text-base lg:text-xl text-slate-500 dark:text-white/40 leading-relaxed font-medium max-w-4xl">
-                {activeEndpoint.description}
-              </p>
-            </div>
-          </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-            {/* Left Panel: Request Details */}
-            <div className="space-y-8 lg:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
-              <section className="space-y-4 lg:space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-xl">
-                    <Info className="w-4 h-4 text-blue-600 dark:text-blue-500" />
-                  </div>
-                  <h3 className="text-[10px] lg:text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-[0.25em]">Clinical Authorization</h3>
+            <h1 className="text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-4">{activeEndpoint.name}</h1>
+            <p className="text-base text-slate-500 dark:text-white/[0.48] leading-relaxed font-medium max-w-4xl">
+              {activeEndpoint.description}
+            </p>
+
+            <dl className="mt-6 grid gap-y-3 sm:grid-cols-2 lg:grid-cols-[0.95fr_1.05fr] gap-x-8 lg:gap-x-12 text-sm">
+              <div>
+                <dt className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-400 dark:text-white/28 mb-1">Authentication</dt>
+                <dd className="font-semibold text-slate-800 dark:text-white/75">{authMode}</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-400 dark:text-white/28 mb-1">Documentation Source</dt>
+                <dd className="font-semibold text-slate-800 dark:text-white/75">Backend route files</dd>
+              </div>
+            </dl>
+          </header>
+
+          <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-8 lg:gap-12 items-start">
+            <div className="space-y-8">
+              <section className="border-l border-slate-200 dark:border-white/[0.12] pl-4">
+                <div className="flex items-center gap-2.5 mb-3">
+                  <Info className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                  <h2 className="text-sm font-bold text-slate-900 dark:text-white">Authentication</h2>
                 </div>
-                <div className="p-6 lg:p-8 rounded-3xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 space-y-6 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <p className="text-sm text-slate-600 dark:text-white/40 leading-relaxed font-medium">
-                    Requests require an <code className="text-blue-600 dark:text-blue-400 bg-blue-600/10 dark:bg-blue-500/10 px-2 py-0.5 rounded">X-Orion-Key</code> header. Development keys are restricted to clinical use only.
-                  </p>
-                  <div className="space-y-3">
-                    <span className="text-[10px] font-bold text-slate-300 dark:text-white/20 uppercase tracking-widest block">Shell Interface</span>
-                    <div className="font-mono text-[10px] lg:text-[11px] text-blue-700 dark:text-blue-400/80 bg-slate-100 dark:bg-black/60 p-5 rounded-2xl border border-slate-200 dark:border-white/5 leading-relaxed overflow-x-auto no-scrollbar shadow-inner">
-                      curl -X {activeEndpoint.method} \<br />
-                      &nbsp;&nbsp;-H "X-Orion-Key: $ORION_API_KEY" \<br />
-                      &nbsp;&nbsp;{activeEndpoint.path}
-                    </div>
-                  </div>
-                </div>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-white/[0.46] font-medium">{authText}</p>
               </section>
 
-              {activeEndpoint.params && (
-                <section className="space-y-4 lg:space-y-6">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-xl">
-                      <Terminal className="w-4 h-4 text-blue-600 dark:text-blue-500" />
-                    </div>
-                    <h3 className="text-[10px] lg:text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-[0.25em]">Investigation Parameters</h3>
+              <section>
+                <div className="flex items-center justify-between gap-4 mb-3">
+                  <div>
+                    <h2 className="text-sm font-bold text-slate-900 dark:text-white">Request</h2>
+                    <p className="mt-1 text-xs font-medium text-slate-400 dark:text-white/30">Parameters, query string, or request body.</p>
                   </div>
-                  <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-br from-blue-600/20 dark:from-blue-500/20 to-transparent rounded-[2rem] blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <button 
-                      onClick={() => handleCopy(activeEndpoint.params!, 'params')}
-                      className="absolute top-4 lg:top-6 right-4 lg:right-6 p-2 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-500 dark:text-white/20 hover:text-slate-900 dark:hover:text-white transition-all z-10 border border-slate-300 dark:border-white/5"
-                    >
-                      {copied === 'params' ? <Check className="w-3 h-3 text-green-600 dark:text-green-500" /> : <Copy className="w-3 h-3" />}
-                    </button>
-                    <pre className="relative p-6 lg:p-10 rounded-[2rem] bg-slate-100 dark:bg-[#0c0c0e] border border-slate-200 dark:border-white/10 text-[10px] lg:text-[11px] font-mono text-blue-700 dark:text-blue-300/90 overflow-x-auto no-scrollbar leading-[1.8] shadow-2xl dark:shadow-none">
-                      {activeEndpoint.params}
-                    </pre>
-                  </div>
-                </section>
-              )}
-
-              {/* Extraction Feature Notice */}
-              <section className="p-6 lg:p-8 rounded-3xl bg-green-600/5 dark:bg-green-500/5 border border-green-600/10 dark:border-green-500/10 space-y-4">
-                <div className="flex items-center gap-3 text-green-600 dark:text-green-500">
-                  <Zap className="w-4 h-4" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">Heuristic Extraction Active</span>
+                  <button
+                    onClick={() => handleCopy(requestExample, 'request')}
+                    className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-blue-600 dark:hover:text-white transition-all"
+                    aria-label="Copy request example"
+                  >
+                    {copied === 'request' ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copied === 'request' ? 'Copied' : 'Copy'}
+                  </button>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-white/30 leading-relaxed font-medium">
-                  Responses may include automatically extracted Indicators of Compromise (IOCs). Only fields with active data are returned (e.g. `m_cve`, `m_ip`, `m_yara_rule`).
+                <pre className="p-4 md:p-5 rounded-xl border border-slate-200/70 dark:border-white/[0.08] bg-slate-50 dark:bg-[#0c0c0e] text-[11px] md:text-xs font-mono text-slate-700 dark:text-blue-200/85 leading-relaxed overflow-x-auto no-scrollbar whitespace-pre">
+                  {requestExample}
+                </pre>
+              </section>
+
+              <section>
+                <div className="flex items-center justify-between gap-4 mb-3">
+                  <div>
+                    <h2 className="text-sm font-bold text-slate-900 dark:text-white">cURL</h2>
+                    <p className="mt-1 text-xs font-medium text-slate-400 dark:text-white/30">Runnable example against the public Orion host.</p>
+                  </div>
+                  <button
+                    onClick={() => handleCopy(curlExample, 'curl')}
+                    className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-blue-600 dark:hover:text-white transition-all"
+                    aria-label="Copy curl example"
+                  >
+                    {copied === 'curl' ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copied === 'curl' ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
+                <pre className="p-4 md:p-5 rounded-xl border border-slate-800/80 dark:border-white/[0.1] bg-slate-950 text-slate-100 text-[11px] md:text-xs font-mono leading-relaxed overflow-x-auto no-scrollbar whitespace-pre">
+                  {curlExample}
+                </pre>
+              </section>
+            </div>
+
+            <div className="space-y-8">
+              <section>
+                <div className="flex items-center justify-between gap-4 mb-3">
+                  <div>
+                    <h2 className="text-sm font-bold text-slate-900 dark:text-white">Example response</h2>
+                    <p className="mt-1 text-xs font-medium text-slate-400 dark:text-white/30">Representative response shape from this endpoint.</p>
+                  </div>
+                  <button
+                    onClick={() => handleCopy(activeEndpoint.example, 'example')}
+                    className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-blue-600 dark:hover:text-white transition-all"
+                    aria-label="Copy response example"
+                  >
+                    {copied === 'example' ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copied === 'example' ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
+                <pre className="p-4 md:p-5 rounded-xl border border-slate-200/70 dark:border-white/[0.08] bg-slate-50 dark:bg-[#0c0c0e] text-[11px] md:text-xs font-mono text-slate-700 dark:text-white/[0.76] leading-relaxed overflow-x-auto no-scrollbar whitespace-pre">
+                  {activeEndpoint.example}
+                </pre>
+              </section>
+
+              <section className="border-l border-slate-200 dark:border-white/[0.12] pl-4">
+                <div className="flex items-center gap-2.5 mb-3">
+                  <Shield className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                  <h2 className="text-sm font-bold text-slate-900 dark:text-white">Implementation notes</h2>
+                </div>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-white/[0.46] font-medium">
+                  Route text is aligned with Orion backend route files, <code className="text-blue-600 dark:text-blue-300">docs/docs.py</code>, and <code className="text-blue-600 dark:text-blue-300">helper/route_test_helper.py</code>. Protected routes may also enforce role, license, scan-limit, tenant, or testing gates.
                 </p>
               </section>
-            </div>
-
-            {/* Right Panel: Example Response */}
-            <div className="space-y-6 lg:space-y-8 sticky top-0 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-xl">
-                  <FileJson className="w-4 h-4 text-green-600 dark:text-green-500" />
-                </div>
-                <h3 className="text-[10px] lg:text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-[0.25em]">Response Schema</h3>
-              </div>
-              
-              <div className="relative group">
-                <div className="absolute inset-0 bg-blue-600/5 dark:bg-blue-500/5 blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                <button 
-                  onClick={() => handleCopy(activeEndpoint.example, 'example')}
-                  className="absolute top-4 lg:top-6 right-4 lg:right-6 p-2 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-500 dark:text-white/20 hover:text-slate-900 dark:hover:text-white transition-all z-10 border border-slate-300 dark:border-white/5"
-                >
-                  {copied === 'example' ? <Check className="w-3 h-3 text-green-600 dark:text-green-500" /> : <Copy className="w-3 h-3" />}
-                </button>
-                <div className="relative p-[1px] bg-gradient-to-br from-slate-200 dark:from-white/10 via-slate-100 dark:via-white/5 to-transparent rounded-[2.5rem] shadow-2xl">
-                  <div className="p-6 lg:p-10 rounded-[2.45rem] bg-slate-50 dark:bg-[#0c0c0e] border border-slate-200 dark:border-white/5">
-                    <pre className="text-[10px] lg:text-[11px] font-mono text-slate-700 dark:text-white/70 overflow-x-auto no-scrollbar leading-loose">
-                      {activeEndpoint.example}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6 lg:p-8 rounded-3xl bg-blue-600/[0.03] dark:bg-blue-500/[0.03] border border-blue-600/10 dark:border-blue-500/10 flex items-start gap-6">
-                <Shield className="w-6 h-6 text-blue-600 dark:text-blue-500 shrink-0" />
-                <div className="space-y-2">
-                  <span className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">Clinical Governance</span>
-                  <p className="text-[10px] lg:text-[11px] text-slate-500 dark:text-white/40 leading-relaxed font-medium">
-                    Data returned by the API is cross-referenced with 14.2B records. TLP:AMBER protocols apply to all non-public clinical identifiers discovered.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </article>

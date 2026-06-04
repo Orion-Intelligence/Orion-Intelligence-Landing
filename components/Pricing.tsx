@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { 
-  Check, ArrowRight, Radio, 
+  Check, ArrowRight,
   Laptop, Cpu, Layers, Target, 
   Mail, MousePointer2, ShieldCheck, 
   XCircle, Shield, Users, Database, Clock
@@ -12,7 +12,7 @@ const Pricing: React.FC = () => {
 
   const handleCustomQuote = (tier: string) => {
     const subject = encodeURIComponent(`Licensing Inquiry: ${tier} [${billingCycle.toUpperCase()}]`);
-    const body = encodeURIComponent(`Ref: ORION_DEPLOYMENT_REQUEST\nTier: ${tier}\nCycle: ${billingCycle}\n\nRequesting technical briefing and quota allocation.`);
+    const body = encodeURIComponent(`Ref: ORION_DEPLOYMENT_REQUEST\nTier: ${tier}\nCycle: ${billingCycle}\n\nRequesting a pricing quote and deployment details.`);
     window.location.href = `mailto:support@orionintelligence.org?subject=${subject}&body=${body}`;
   };
 
@@ -22,18 +22,18 @@ const Pricing: React.FC = () => {
       name: "Essential",
       price: billingCycle === 'annual' ? "1,200" : "1,500",
       isQuote: false,
-      desc: "Ideal for small teams starting dedicated intelligence monitoring and investigative research.",
+      desc: "For small teams that need core search, breach monitoring, and basic exposure checks.",
       features: [
-        "3 Analyst + 10 Viewer seats",
-        "2 Tracked Companies",
-        "200k items/month ingestion",
+        "3 analyst seats + 10 viewers",
+        "2 monitored organizations",
+        "200k indexed records per month",
         "90-day data retention",
-        "Search + IOC Extraction",
-        "News & Basic Breach Intel",
-        "Basic Alerts & WebScan",
-        "API Access (Limited)"
+        "Unified search + IOC extraction",
+        "News and breach monitoring",
+        "Basic alerts and WebScan",
+        "Limited API access"
       ],
-      button: "Provision Node",
+      button: "Contact Us",
       type: "standard"
     },
     {
@@ -41,18 +41,17 @@ const Pricing: React.FC = () => {
       name: "Professional",
       price: "QUOTE",
       isQuote: true,
-      desc: "Advanced intelligence engine for active CTI and OSINT teams requiring deep dark-web visibility.",
+      desc: "For CTI and OSINT teams running active investigations across dark-web, Telegram, exploit, and defacement sources.",
       features: [
-        "8 Analyst + 30 Viewer seats",
-        "10 Tracked Companies",
-        "1M items/month ingestion",
+        "8 analyst seats + 30 viewers",
+        "10 monitored organizations",
+        "1M indexed records per month",
         "180-day data retention",
-        "Everything in Essential, plus:",
-        "Forum & Telegram Monitoring",
-        "Exploit / CVE Tracking",
-        "Defacement Tracking",
-        "STIX Export + Ranked Search",
-        "API Access (Standard)"
+        "Everything in Essential",
+        "Forum and Telegram monitoring",
+        "Exploit, CVE, and defacement tracking",
+        "STIX 2.1 export + ranked search",
+        "Standard API access"
       ],
       button: "Request Quote",
       type: "highlight",
@@ -63,33 +62,33 @@ const Pricing: React.FC = () => {
       name: "Business",
       price: "QUOTE",
       isQuote: true,
-      desc: "Org-wide monitoring and investigation suite for large enterprises with complex compliance needs.",
+      desc: "For enterprises that need governed investigations, stealer-log workflows, case operations, and audit-ready team controls.",
       features: [
-        "20 Analyst + Unlimited Viewers",
-        "50 Tracked Companies",
-        "5M items/month ingestion",
+        "20 analyst seats + unlimited viewers",
+        "50 monitored organizations",
+        "5M indexed records per month",
         "12-month data retention",
-        "Everything in Pro, plus:",
-        "Tracking Dashboard & BEC Hub",
-        "Case Management System",
-        "Full Stealer Log Workflows",
-        "Governance & Audit Logs",
-        "White-labeling (Standard)"
+        "Everything in Professional",
+        "Tracking dashboards and BEC hub",
+        "Case management workspace",
+        "Full stealer-log workflows",
+        "Governance and audit logs",
+        "White-labeling and tenant controls"
       ],
-      button: "Request Briefing",
+      button: "Request Quote",
       type: "sovereign"
     }
   ];
 
   const matrix = [
-    { feat: "Custom Python Collectors", desc: "User-defined extraction scripts on remote nodes.", orion: true, std: false },
-    { feat: "Automated Deep-Web Crawl", desc: "Multithreaded Onion/I2P indexing agents.", orion: true, std: "Partial" },
-    { feat: "Passive Harvest Engine", desc: "Harvester-mode browser integration.", orion: true, std: false },
-    { feat: "STIX 2.1 / TAXII Support", desc: "Standardized threat intel export.", orion: true, std: "Add-on" },
-    { feat: "Metadata Sanitization", desc: "Automatic stripping of PII identifiers.", orion: true, std: false },
-    { feat: "Hardware-Level Isolation", desc: "Isolated virtualization for case data.", orion: true, std: false },
-    { feat: "Real-time Telegram Scraping", desc: "Live ingestion from 240+ channels.", orion: true, std: "Add-on" },
-    { feat: "Automatic IOC Extraction", desc: "Heuristic-based extraction logic.", orion: true, std: "Partial" },
+    { feat: "Source Collection Coverage", desc: "Clearnet, Onion, I2P, forums, Telegram, and ransomware leak-site ingestion.", orion: true, std: "Partial" },
+    { feat: "Ransomware and Breach Tracking", desc: "Victim posts, dump records, leak metadata, screenshots, and source context.", orion: true, std: "Add-on" },
+    { feat: "Stealer-log Investigation", desc: "Credential exposure search, persona checks, and enterprise risk scoring.", orion: true, std: "Add-on" },
+    { feat: "Exploit and Defacement Intel", desc: "Exploit, CVE, hacktivist, and defacement report workflows.", orion: true, std: "Partial" },
+    { feat: "STIX 2.1 Export", desc: "Report-level STIX conversion for breach, exploit, social, chat, and news records.", orion: true, std: "Add-on" },
+    { feat: "Case Workspace", desc: "Case records, artifacts, sharing, analyst assignment, and investigation handoff.", orion: true, std: "Partial" },
+    { feat: "Governance and Audit Logs", desc: "Tenant controls, role-aware access, FIDO2 support, alerts, and audit history.", orion: true, std: "Add-on" },
+    { feat: "Dynamic Scans and IOC Extraction", desc: "Domain, IP, social, crypto, APK, and file-based IOC extraction workflows.", orion: true, std: "Partial" },
   ];
 
   return (
@@ -125,15 +124,11 @@ const Pricing: React.FC = () => {
       <header className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 pt-16 mb-16 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10">
           <div className="space-y-6 max-w-3xl">
-            <div className="inline-flex items-center gap-3 px-3 py-1 bg-blue-600/10 dark:bg-blue-500/10 border border-blue-600/20 dark:border-blue-500/20 rounded-full text-blue-600 dark:text-blue-500 text-[9px] font-black uppercase tracking-[0.3em]">
-              <Radio className="w-3 h-3 animate-pulse" />
-              QUOTA_ALLOCATION_GRID
-            </div>
             <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">
               Operational <span className="text-blue-600 dark:text-blue-500">Tiers</span>
             </h1>
             <p className="text-base md:text-xl text-slate-500 dark:text-white/40 font-medium leading-relaxed max-w-2xl">
-              Scale your investigative capacity. All tiers include clinical governance, multi-layer encryption, and TLP:AMBER protocol support.
+              Choose the right Orion plan for your team, data volume, and investigation workflow.
             </p>
           </div>
 
@@ -205,7 +200,7 @@ const Pricing: React.FC = () => {
                   </div>
 
                   <div className="space-y-6 pt-6 border-t border-slate-100 dark:border-white/5">
-                    <span className="text-[9px] font-black text-slate-400 dark:text-white/20 uppercase tracking-[0.3em]">Operational Quota</span>
+                    <span className="text-[9px] font-black text-slate-400 dark:text-white/20 uppercase tracking-[0.3em]">Included Access</span>
                     <ul className="space-y-4">
                       {plan.features.map((item, idx) => (
                         <li key={idx} className="flex items-start gap-3">
@@ -241,8 +236,8 @@ const Pricing: React.FC = () => {
       <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 mb-32 relative z-10">
         <div className="space-y-12">
            <div className="max-w-3xl space-y-4">
-              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight uppercase">Platform Audit</h2>
-              <p className="text-slate-500 dark:text-white/40 font-medium text-base">Comparing Orion's high-fidelity modules against standard industry intelligence offerings.</p>
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight uppercase">Platform Coverage</h2>
+              <p className="text-slate-500 dark:text-white/40 font-medium text-base">How Orion maps core investigation, collection, governance, and export workflows against common intelligence tools.</p>
            </div>
 
            <div className="bg-white/80 dark:bg-[#0d0d0f]/80 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-[2rem] overflow-hidden shadow-sm">
@@ -251,8 +246,8 @@ const Pricing: React.FC = () => {
                   <thead>
                     <tr className="bg-slate-50 dark:bg-white/[0.02] border-b border-slate-200 dark:border-white/10">
                        <th className="p-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] w-1/2">Intelligence Module</th>
-                       <th className="p-8 text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] text-center bg-blue-600/[0.02]">Orion V4.2</th>
-                       <th className="p-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-center">Industry Std</th>
+                       <th className="p-8 text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] text-center bg-blue-600/[0.02]">Orion Platform</th>
+                       <th className="p-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-center">Typical Tools</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-white/5">
@@ -303,7 +298,7 @@ const Pricing: React.FC = () => {
                   Secure Your <br className="hidden md:block" /> Intelligence Node
                 </h2>
                 <p className="text-base md:text-xl text-white/60 dark:text-slate-500 font-medium max-w-xl">
-                  Provision your tactical workspace and begin your investigation with global record access.
+                  Contact us to plan your tactical workspace and begin your investigation with global record access.
                 </p>
               </div>
 
@@ -320,7 +315,7 @@ const Pricing: React.FC = () => {
                   onClick={() => handleCustomQuote('Strategic Enterprise Hub')}
                   className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-blue-500 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-xl shadow-blue-500/20 border-t border-white/20"
                  >
-                   Request Briefing <Mail className="w-4 h-4" />
+                   Request Quote <Mail className="w-4 h-4" />
                  </button>
               </div>
            </div>
