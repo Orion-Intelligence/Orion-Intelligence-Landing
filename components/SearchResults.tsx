@@ -5,7 +5,7 @@ import {
   CheckCircle2, History, TrendingUp, BarChart3,
   Binary, Target, Network,
   AlertOctagon, Fingerprint, Key,
-  Radar, Activity, Lock, ExternalLink, X, AlertTriangle
+  Radar, Activity, Lock, X, AlertTriangle
 } from 'lucide-react';
 import { StealerLogResponse } from '../App';
 
@@ -151,14 +151,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
             </div>
           </div>
 
-          <div className="flex gap-3">
-            <button 
-              onClick={() => setShowApiPopup(true)}
-              className="px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-widest hover:opacity-90 transition-all flex items-center gap-2 shadow-xl active:scale-95"
-            >
-              Raw Log <ExternalLink className="w-3.5 h-3.5" />
-            </button>
-          </div>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -193,7 +185,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
                 </div>
                 <div className="flex flex-col items-end">
                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Main Vector</span>
-                   <span className="text-[10px] font-black text-blue-600 uppercase">{data.primary_type || 'Botnet_Exfil'}</span>
+                   <span className="text-sm md:text-base font-black text-blue-600 uppercase leading-none">{data.primary_type || 'Botnet_Exfil'}</span>
                 </div>
               </div>
 
@@ -232,6 +224,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
                   <p><span className="text-white/10">{'>>'}</span> PATTERN: <span className="text-white/70">{data.primary_type.toUpperCase()}</span>.</p>
                 </div>
               </div>
+
             </div>
           </div>
 

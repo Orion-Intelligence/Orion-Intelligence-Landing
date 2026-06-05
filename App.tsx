@@ -484,12 +484,6 @@ const App: React.FC = () => {
               <div className="pt-8 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-10 relative z-10">
                 <div className="flex flex-col md:flex-row items-center gap-8 text-[11px] font-bold uppercase tracking-[0.18em]">
                    <span className="text-slate-500 dark:text-white/20">{t('footer_copy')}</span>
-                   <div className="flex items-center gap-5">
-                     <div className="px-4 py-1.5 rounded-xl bg-blue-600/5 dark:bg-white/5 border-slate-200 dark:border-white/10 flex items-center gap-3 shadow-inner">
-                       <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></div>
-                       <span className="font-mono text-slate-900 dark:text-blue-400">14.2B_RECORDS_ACTIVE</span>
-                     </div>
-                   </div>
                 </div>
                 
                 <div className="flex gap-8 items-center">

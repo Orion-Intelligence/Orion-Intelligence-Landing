@@ -115,7 +115,7 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
         <div className="max-w-[1400px] mx-auto relative w-full flex-1 flex flex-col items-center justify-center text-center py-12 md:py-20">
           <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-slate-100/80 dark:bg-white/[0.035] border border-slate-200/80 dark:border-white/10 text-blue-600 dark:text-blue-400 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] mb-8 md:mb-10 animate-in fade-in slide-in-from-top-4 duration-1000 relative z-10">
             <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
-            GOVERNANCE STANDARD V4.2.0
+            ORION INTELLIGENCE PLATFORM
           </div>
 
           <h1 className="hero-heading whitespace-nowrap [font-size:clamp(0.9rem,4.2vw,4.5rem)] font-extrabold text-slate-900 dark:text-white mb-6 md:mb-10 pb-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-100 max-w-full relative z-10">
@@ -127,8 +127,8 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
           </p>
 
           <form onSubmit={onHeroSearch} className="relative group w-full max-w-3xl animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 z-20">
-            <div className="relative flex items-center shadow-2xl rounded-2xl">
-              <Mail className={`absolute left-5 w-4 h-4 transition-colors ${searchError ? 'text-red-500' : 'text-slate-400 dark:text-white/20'}`} />
+            <div className="relative flex items-center shadow-2xl rounded-full">
+              <Mail className={`absolute left-5 w-[18px] h-[18px] transition-colors ${searchError ? 'text-red-500' : 'text-blue-500/60 dark:text-blue-300/40'}`} />
               <input
                 type="text"
                 value={heroSearch}
@@ -137,16 +137,16 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
                   if (searchError) setSearchError(false);
                 }}
                 placeholder="Search email identifier..."
-                className={`w-full py-5 pl-14 pr-28 sm:pr-36 rounded-2xl text-[12px] font-bold transition-all tracking-wider outline-none border ring-1 focus:ring-1 ${
+                className={`w-full py-5 pl-14 pr-28 sm:pr-36 rounded-full text-[13px] font-bold transition-all tracking-wider outline-none border ring-1 focus:ring-1 ${
                   searchError
                     ? 'bg-red-50 dark:bg-red-950/20 text-red-900 dark:text-red-200 border-red-500/20 ring-red-500/20'
-                    : 'bg-white/88 dark:bg-white/[0.045] text-slate-900 dark:text-white border-slate-200/70 dark:border-white/10 ring-slate-200/60 dark:ring-white/10 focus:ring-blue-500/40'
+                    : 'bg-blue-50/70 dark:bg-blue-950/[0.12] text-slate-900 dark:text-white border-blue-200/70 dark:border-blue-400/10 ring-blue-100/70 dark:ring-blue-400/10 focus:ring-blue-500/40'
                 }`}
               />
               <button
                 type="submit"
                 disabled={isSearching}
-                className="absolute right-3 bg-slate-900 dark:bg-white text-white dark:text-black px-5 sm:px-7 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all hover:opacity-90 active:scale-95 flex items-center gap-2 disabled:opacity-50"
+                className="absolute right-3 bg-slate-900 dark:bg-white text-white dark:text-black px-5 sm:px-7 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all hover:opacity-90 active:scale-95 flex items-center gap-2 disabled:opacity-50"
               >
                 {isSearching ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <>Audit <Search className="w-3.5 h-3.5" /></>}
               </button>
