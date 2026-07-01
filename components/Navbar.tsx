@@ -190,6 +190,9 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               <button 
                 className="p-2.5 text-slate-900 dark:text-white hover:text-blue-600 transition-colors bg-slate-100/50 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10"
                 onClick={() => toggleMenu(true)}
+                aria-label="Open navigation menu"
+                aria-expanded={isMenuOpen}
+                aria-controls={isMenuOpen ? 'mobile-navigation' : undefined}
               >
                 <Menu className="w-6 h-6" />
               </button>
@@ -202,6 +205,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
         <div 
+          id="mobile-navigation"
           className={`lg:hidden fixed inset-0 z-[9999] h-[100dvh] w-screen flex flex-col overflow-hidden transition-all duration-500 ease-in-out ${
             isAnimating ? 'opacity-100' : 'opacity-0'
           }`}
@@ -222,6 +226,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               <button 
                 className="p-2 md:p-3 text-slate-900 dark:text-white hover:text-blue-600 transition-colors bg-slate-100/50 dark:bg-white/5 rounded-lg md:rounded-xl border border-slate-200 dark:border-white/10 active:scale-95 shadow-sm"
                 onClick={() => toggleMenu(false)}
+                aria-label="Close navigation menu"
               >
                 <X className="w-5 h-5 md:w-6 md:h-6" />
               </button>
@@ -252,6 +257,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               <button 
                 onClick={onToggleTheme}
                 className="w-10 md:w-14 flex items-center justify-center bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg md:rounded-xl text-slate-600 dark:text-white/40 active:scale-95 transition-all shadow-sm"
+                aria-label="Toggle theme"
               >
                 {theme === 'light' ? <Moon className="w-3.5 h-3.5 md:w-5 md:h-5" /> : <Sun className="w-3.5 h-3.5 md:w-5 md:h-5" />}
               </button>
