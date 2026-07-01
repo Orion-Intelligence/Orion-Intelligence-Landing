@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orion Intelligence | Unified OSINT & Investigative Intelligence</title>
     <meta name="description" content="Orion Intelligence is a clinical analytical ecosystem for global enterprise defense, providing unified ransomware tracking, automated scrapers, and standardized STIX 2.1 workflows.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Orion Intelligence">
+    <meta name="application-name" content="Orion Intelligence">
+    <meta name="theme-color" content="#0a0a0c">
+    <link rel="canonical" href="https://www.orionintelligence.org/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Orion Intelligence">
+    <meta property="og:title" content="Orion Intelligence | Unified OSINT & Investigative Intelligence">
+    <meta property="og:description" content="Orion Intelligence is a clinical analytical ecosystem for global enterprise defense, providing unified ransomware tracking, automated scrapers, and standardized STIX 2.1 workflows.">
+    <meta property="og:url" content="https://www.orionintelligence.org/">
+    <meta property="og:image" content="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Orion Intelligence | Unified OSINT & Investigative Intelligence">
+    <meta name="twitter:description" content="Orion Intelligence is a clinical analytical ecosystem for global enterprise defense, providing unified ransomware tracking, automated scrapers, and standardized STIX 2.1 workflows.">
+    <meta name="twitter:image" content="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png">
     <link rel="icon" type="image/png" href="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png">
     
     <!-- Performance Hints: Preconnect to critical domains -->
@@ -14,59 +29,14 @@
     <link rel="dns-prefetch" href="https://try.orionintelligence.org">
 
     <!-- Preload Critical Assets to reduce LCP/FCP delay -->
-    <link rel="preload" href="/index.css" as="style">
     <link rel="preload" href="https://try.orionintelligence.org/api/s/static/system/logo_url_default.png" as="image" fetchpriority="high">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    
-    <!-- Process Polyfill -->
-    <script>
-      window.process = { env: { API_KEY: "" } };
-    </script>
-<script type="importmap">
-{
-  "imports": {
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
-    "vite": "https://esm.sh/vite@^7.3.1",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "rxjs": "https://esm.sh/rxjs@^7.8.2?conditions=es2015",
-    "rxjs/operators": "https://esm.sh/rxjs@^7.8.2/operators?conditions=es2015",
-    "rxjs/ajax": "https://esm.sh/rxjs@^7.8.2/ajax?conditions=es2015",
-    "rxjs/webSocket": "https://esm.sh/rxjs@^7.8.2/webSocket?conditions=es2015",
-    "rxjs/testing": "https://esm.sh/rxjs@^7.8.2/testing?conditions=es2015",
-    "rxjs/fetch": "https://esm.sh/rxjs@^7.8.2/fetch?conditions=es2015",
-    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client?external=rxjs",
-    "react/jsx-runtime": "https://esm.sh/react@^19.2.3/jsx-runtime?external=rxjs"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#0a0a0c] text-[#fafafa] selection:bg-blue-500/30">
     <div id="root"></div>
 
-    <!-- Move Scripts to bottom to prevent render blocking -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-        tailwind.config = {
-          darkMode: 'class',
-          theme: {
-            extend: {
-              fontFamily: {
-                sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                mono: ['"JetBrains Mono"', 'monospace'],
-              },
-            }
-          }
-        }
-      });
-    </script>
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>

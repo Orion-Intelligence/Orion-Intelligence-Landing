@@ -277,7 +277,7 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    document.title = "Orion Intelligence";
+    document.title = "Orion Intelligence | Unified OSINT & Investigative Intelligence";
   }, []);
 
   const scrollToTop = () => {
