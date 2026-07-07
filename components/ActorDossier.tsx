@@ -30,6 +30,7 @@ const ActorDossier: React.FC<ActorDossierProps> = ({ actor, onBack }) => {
                `
              }}>
         </div>
+        <div className="absolute inset-0 opacity-70 dark:opacity-0 transition-opacity duration-700 light-galaxy-detail"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 space-y-8">
@@ -125,22 +126,22 @@ const ActorDossier: React.FC<ActorDossierProps> = ({ actor, onBack }) => {
 
           {/* Sidebar Panel */}
           <div className="lg:col-span-4 space-y-8 sticky top-24">
-            <div className="p-8 md:p-10 rounded-[2.5rem] bg-slate-900 dark:bg-black border border-slate-800 dark:border-white/10 space-y-8 shadow-2xl">
+            <div className="p-8 md:p-10 rounded-[2.5rem] bg-white/85 dark:bg-black border border-slate-200 dark:border-white/10 space-y-8 shadow-xl dark:shadow-2xl">
               <div className="space-y-3">
                 <span className="text-[10px] font-black text-red-600 dark:text-red-500 uppercase tracking-[0.3em]">High Priority Analysis</span>
-                <h4 className="text-xl md:text-2xl font-bold text-white tracking-tight uppercase">Operational Impact</h4>
+                <h4 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight uppercase">Operational Impact</h4>
               </div>
-              <p className="text-sm font-medium leading-relaxed text-white/50">
+              <p className="text-sm font-medium leading-relaxed text-slate-600 dark:text-white/50">
                 {actor.impact}
               </p>
-              <div className="pt-8 border-t border-white/5 space-y-6">
+              <div className="pt-8 border-t border-slate-200 dark:border-white/5 space-y-6">
                 <div className="space-y-3">
-                  <span className="text-[9px] font-black text-white/20 uppercase tracking-widest block">Notable Events</span>
-                  <p className="text-xs text-white/70 font-mono leading-relaxed">{actor.notable}</p>
+                  <span className="text-[9px] font-black text-slate-400 dark:text-white/20 uppercase tracking-widest block">Notable Events</span>
+                  <p className="text-xs text-slate-700 dark:text-white/70 font-mono leading-relaxed">{actor.notable}</p>
                 </div>
                 <div className="space-y-3">
-                  <span className="text-[9px] font-black text-white/20 uppercase tracking-widest block">Affected Sectors</span>
-                  <p className="text-xs text-white/70 font-mono leading-relaxed">{actor.victims}</p>
+                  <span className="text-[9px] font-black text-slate-400 dark:text-white/20 uppercase tracking-widest block">Affected Sectors</span>
+                  <p className="text-xs text-slate-700 dark:text-white/70 font-mono leading-relaxed">{actor.victims}</p>
                 </div>
               </div>
             </div>

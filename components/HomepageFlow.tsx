@@ -222,12 +222,12 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
                       ))}
                     </div>
                   </div>
-                  <div className="min-h-[320px] bg-slate-950 relative overflow-hidden p-6 md:p-8">
+                  <div className="min-h-[320px] bg-white dark:bg-slate-950 relative overflow-hidden p-6 md:p-8 border-t md:border-t-0 md:border-l border-slate-200/60 dark:border-0">
                     <div className="absolute inset-0 opacity-28" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.055) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
-                    <div className="relative h-full rounded-xl bg-black/20 p-5 flex flex-col justify-between">
+                    <div className="relative h-full rounded-xl bg-slate-50/80 dark:bg-black/20 p-5 flex flex-col justify-between border border-slate-200/70 dark:border-0 shadow-sm dark:shadow-none">
                       <div className="space-y-4">
-                        <div className="flex items-center justify-between gap-5 text-white">
-                          <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white/45">source coverage</span>
+                        <div className="flex items-center justify-between gap-5 text-slate-900 dark:text-white">
+                          <span className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400 dark:text-white/45">source coverage</span>
                           <span className="text-[10px] font-mono text-emerald-400">live</span>
                         </div>
                         {[
@@ -237,20 +237,20 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
                           ['Stealer logs', '14.2B records', '83%']
                         ].map(([label, detail, width]) => (
                           <div key={label} className="space-y-2">
-                            <div className="flex items-center justify-between gap-4 text-[11px] font-bold text-white/70">
+                            <div className="flex items-center justify-between gap-4 text-[11px] font-bold text-slate-700 dark:text-white/70">
                               <span>{label}</span>
-                              <span className="font-mono text-white/35">{detail}</span>
+                              <span className="font-mono text-slate-400 dark:text-white/35">{detail}</span>
                             </div>
-                            <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+                            <div className="h-1.5 rounded-full bg-slate-200 dark:bg-white/10 overflow-hidden">
                               <div className="h-full bg-blue-500" style={{ width }}></div>
                             </div>
                           </div>
                         ))}
                       </div>
-                      <div className="mt-8 grid grid-cols-3 gap-3 text-center text-[10px] font-black uppercase tracking-[0.12em] text-white/46">
-                        <span className="border-t border-white/[0.08] px-2 py-2">Pull</span>
-                        <span className="border-t border-white/[0.08] px-2 py-2">Clean</span>
-                        <span className="border-t border-white/[0.08] px-2 py-2">Search</span>
+                      <div className="mt-8 grid grid-cols-3 gap-3 text-center text-[10px] font-black uppercase tracking-[0.12em] text-slate-500 dark:text-white/46">
+                        <span className="border-t border-slate-200 dark:border-white/[0.08] px-2 py-2">Pull</span>
+                        <span className="border-t border-slate-200 dark:border-white/[0.08] px-2 py-2">Clean</span>
+                        <span className="border-t border-slate-200 dark:border-white/[0.08] px-2 py-2">Search</span>
                       </div>
                     </div>
                   </div>

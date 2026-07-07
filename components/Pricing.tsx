@@ -116,6 +116,7 @@ const Pricing: React.FC = () => {
                `
              }}>
         </div>
+        <div className="absolute inset-0 opacity-70 dark:opacity-0 transition-opacity duration-700 light-galaxy-detail"></div>
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 blur-[150px] rounded-full"></div>
         <div className="absolute bottom-0 left-0 w-[1000px] h-[1000px] bg-blue-900/5 blur-[180px] rounded-full"></div>
       </div>

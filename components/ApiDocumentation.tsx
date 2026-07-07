@@ -679,7 +679,7 @@ const ApiDocumentation: React.FC = () => {
                     {copied === 'curl' ? 'Copied' : 'Copy'}
                   </button>
                 </div>
-                <pre className="p-4 md:p-5 rounded-xl border border-slate-800/80 dark:border-white/[0.1] bg-slate-950 text-slate-100 text-[11px] md:text-xs font-mono leading-relaxed overflow-x-auto no-scrollbar whitespace-pre">
+                <pre className="p-4 md:p-5 rounded-xl border border-slate-200/70 dark:border-white/[0.1] bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-100 text-[11px] md:text-xs font-mono leading-relaxed overflow-x-auto no-scrollbar whitespace-pre shadow-sm dark:shadow-none">
                   {curlExample}
                 </pre>
               </section>

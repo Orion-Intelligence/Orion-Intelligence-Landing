@@ -32,6 +32,7 @@ const RemediationGuide: React.FC<RemediationGuideProps> = ({ query, onBack }) =>
                `
              }}>
         </div>
+        <div className="absolute inset-0 opacity-70 dark:opacity-0 transition-opacity duration-700 light-galaxy-detail"></div>
       </div>
 
       <div className="relative z-10 space-y-8 px-6 md:px-12 lg:px-20 max-w-[1200px] mx-auto">
@@ -119,22 +120,22 @@ const RemediationGuide: React.FC<RemediationGuideProps> = ({ query, onBack }) =>
 
           {/* Sidebar Advisory */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="p-8 rounded-[2rem] bg-slate-900 dark:bg-black border border-slate-200 dark:border-white/10 shadow-xl space-y-8">
+            <div className="p-8 rounded-[2rem] bg-white/85 dark:bg-black border border-slate-200 dark:border-white/10 shadow-xl space-y-8">
               <div className="space-y-4">
                 <div className="w-10 h-10 rounded-xl bg-red-600/10 border border-red-600/20 flex items-center justify-center">
                   <AlertTriangle className="w-5 h-5 text-red-500" />
                 </div>
-                <h4 className="text-xl font-black text-white uppercase tracking-widest">Critical Alert</h4>
+                <h4 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-widest">Critical Alert</h4>
               </div>
-              <p className="text-xs font-medium leading-relaxed text-white/60">
+              <p className="text-xs font-medium leading-relaxed text-slate-600 dark:text-white/60">
                 Data exposures in stealer logs are often used for targeted business email compromise (BEC) attacks. If this is a corporate email, inform your IT Security team immediately.
               </p>
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
-                <div className="flex items-center gap-2 text-[10px] font-black text-blue-400 uppercase tracking-[0.2em]">
+              <div className="p-4 rounded-xl bg-blue-50/80 dark:bg-white/5 border border-blue-100 dark:border-white/10 space-y-3">
+                <div className="flex items-center gap-2 text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.2em]">
                   <Info className="w-3.5 h-3.5" />
                   Clinical Advice
                 </div>
-                <p className="text-[10px] text-white/30 leading-relaxed font-medium">
+                <p className="text-[10px] text-slate-500 dark:text-white/30 leading-relaxed font-medium">
                   "Assume all accounts accessed from the infected host are compromised until proven otherwise."
                 </p>
               </div>

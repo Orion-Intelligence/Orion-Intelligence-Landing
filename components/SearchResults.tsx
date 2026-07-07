@@ -51,6 +51,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
              `
            }}>
       </div>
+      <div className="absolute inset-0 opacity-70 dark:opacity-0 transition-opacity duration-700 light-galaxy-detail"></div>
       <div className={`absolute top-0 right-0 w-[800px] h-[800px] ${type === 'breach' ? 'bg-red-500/10' : 'bg-blue-500/10'} blur-[150px] rounded-full`}></div>
       <div className={`absolute bottom-0 left-0 w-[1000px] h-[1000px] ${type === 'breach' ? 'bg-red-900/5' : 'bg-blue-900/5'} blur-[180px] rounded-full`}></div>
     </div>
@@ -212,16 +213,16 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
                 </div>
               </div>
 
-              <div className="p-6 rounded-2xl bg-black border border-white/5 font-mono text-[10px] text-white/40 leading-relaxed shadow-2xl">
-                <div className="flex gap-4 border-b border-white/5 pb-3 mb-4 text-[8px] font-black uppercase text-white/20">
+              <div className="p-6 rounded-2xl bg-white/80 dark:bg-black border border-slate-200 dark:border-white/5 font-mono text-[10px] text-slate-500 dark:text-white/40 leading-relaxed shadow-xl dark:shadow-2xl">
+                <div className="flex gap-4 border-b border-slate-200 dark:border-white/5 pb-3 mb-4 text-[8px] font-black uppercase text-slate-400 dark:text-white/20">
                    <span>Node_v4.2.0</span>
                    <span className="text-blue-500">Analysis_Nominal</span>
                 </div>
                 <div className="space-y-1.5">
-                  <p><span className="text-white/10">{'>>'}</span> TARGET_NODE: <span className="text-white/70">{query}</span></p>
-                  <p><span className="text-white/10">{'>>'}</span> SOURCE: <span className="text-white/70">{data.primary_channel}</span> <span className="text-blue-500">[{data.primary_channel_hits} HITS]</span></p>
-                  <p><span className="text-white/10">{'>>'}</span> RESULT: <span className="text-red-500">POSITIVE</span> IN <span className="text-white/70">{data.unique_channels}</span> CLUSTERS.</p>
-                  <p><span className="text-white/10">{'>>'}</span> PATTERN: <span className="text-white/70">{data.primary_type.toUpperCase()}</span>.</p>
+                  <p><span className="text-slate-300 dark:text-white/10">{'>>'}</span> TARGET_NODE: <span className="text-slate-800 dark:text-white/70">{query}</span></p>
+                  <p><span className="text-slate-300 dark:text-white/10">{'>>'}</span> SOURCE: <span className="text-slate-800 dark:text-white/70">{data.primary_channel}</span> <span className="text-blue-500">[{data.primary_channel_hits} HITS]</span></p>
+                  <p><span className="text-slate-300 dark:text-white/10">{'>>'}</span> RESULT: <span className="text-red-500">POSITIVE</span> IN <span className="text-slate-800 dark:text-white/70">{data.unique_channels}</span> CLUSTERS.</p>
+                  <p><span className="text-slate-300 dark:text-white/10">{'>>'}</span> PATTERN: <span className="text-slate-800 dark:text-white/70">{data.primary_type.toUpperCase()}</span>.</p>
                 </div>
               </div>
 

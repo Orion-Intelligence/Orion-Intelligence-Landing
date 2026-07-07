@@ -129,14 +129,14 @@ const IntelligenceProbe: React.FC = () => {
                 </div>
 
                 {/* Briefing Section */}
-                <div className="p-8 rounded-xl bg-slate-900 dark:bg-black border border-slate-800 dark:border-white/5 shadow-2xl">
+                <div className="p-8 rounded-xl bg-white/85 dark:bg-black border border-slate-200 dark:border-white/5 shadow-xl dark:shadow-2xl">
                   <div className="flex items-center gap-2 mb-4 text-blue-500">
                     <Activity className="w-4 h-4" />
                     <span className="text-[10px] font-black uppercase tracking-[0.2em]">Heuristic Briefing</span>
                   </div>
-                  <p className="text-xs md:text-sm text-slate-400 font-mono leading-relaxed">
+                  <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 font-mono leading-relaxed">
                     IDENTIFIER <span className="text-blue-400">{target}</span> CORRELATED ACROSS {auditData.unique_channels} BOTNET CHANNELS. 
-                    PRIMARY VECTOR: <span className="text-white">{auditData.primary_channel.toUpperCase()}</span>. 
+                    PRIMARY VECTOR: <span className="text-slate-900 dark:text-white">{auditData.primary_channel.toUpperCase()}</span>.
                     INVESTIGATION STATUS: {auditData.breach_found ? 'IMMEDIATE ACTION REQUIRED' : 'NO ACTIVE THREAT DETECTED'}.
                   </p>
                   <div className="mt-6 flex justify-end">

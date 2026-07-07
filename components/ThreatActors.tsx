@@ -115,6 +115,7 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
                `
              }}>
         </div>
+        <div className="absolute inset-0 opacity-70 dark:opacity-0 transition-opacity duration-700 light-galaxy-detail"></div>
       </div>
 
       <div className="relative z-10 space-y-8 px-2 md:px-3 lg:px-8 max-w-[1600px] mx-auto">
@@ -139,7 +140,7 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
           </div>
 
           <div className="flex gap-3">
-            <div className="px-6 py-3 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-xl">
+            <div className="px-6 py-3 rounded-lg bg-white dark:bg-white text-slate-900 dark:text-black text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-slate-200 dark:border-0 shadow-sm dark:shadow-xl">
               Node Count: {isLoading ? '...' : actors.length} <Activity className="w-3.5 h-3.5" />
             </div>
           </div>
