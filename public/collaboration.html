@@ -3867,6 +3867,874 @@
     }
   }
 
+  /* Obsidian intelligence redesign — visual treatment only. */
+  :root{
+    --font-ui:"Manrope","Segoe UI",Arial,sans-serif;
+    --font-display:"Manrope","Segoe UI",Arial,sans-serif;
+    --font-body:"Manrope","Segoe UI",Arial,sans-serif;
+    --ink:#f4f7fb;
+    --ink-soft:#9eacbd;
+    --paper:#08101a;
+    --panel:#0d1723;
+    --line:rgba(180,202,226,.14);
+    --navy:#07101a;
+    --blue:#74a7ff;
+    --cyan:#52e0c4;
+    --teal:#52e0c4;
+    --gold:#f0c56a;
+    --rose:#eb8fc2;
+    --mist:#101b29;
+    --shadow:0 32px 90px rgba(0,0,0,.46), 0 0 0 1px rgba(255,255,255,.035);
+    --slide-gap:54px;
+    --slide-height:clamp(820px, calc(100vh - 94px), 900px);
+  }
+
+  html{
+    background:#03070c;
+    scrollbar-color:#31465c #07101a;
+  }
+
+  body{
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 12% 2%, rgba(82,224,196,.105), transparent 25%),
+      radial-gradient(circle at 88% 12%, rgba(116,167,255,.11), transparent 24%),
+      radial-gradient(circle at 50% 100%, rgba(126,83,220,.07), transparent 34%),
+      linear-gradient(180deg, #03070c 0%, #07101a 52%, #04090f 100%);
+  }
+
+  ::selection{
+    color:#04100e;
+    background:#72ead2;
+  }
+
+  .page-loader{
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 28% 18%, rgba(82,224,196,.14), transparent 26%),
+      radial-gradient(circle at 78% 76%, rgba(116,167,255,.13), transparent 28%),
+      #040a11;
+  }
+
+  .loader-card{
+    color:var(--ink);
+    border:1px solid rgba(154,190,217,.16);
+    background:linear-gradient(145deg, rgba(18,31,45,.96), rgba(8,16,26,.98));
+    box-shadow:0 28px 80px rgba(0,0,0,.46), inset 0 1px 0 rgba(255,255,255,.06);
+  }
+
+  .loader-mark{
+    border:1px solid rgba(82,224,196,.22);
+    background:linear-gradient(145deg, rgba(82,224,196,.16), rgba(116,167,255,.15));
+    box-shadow:0 16px 34px rgba(0,0,0,.32), 0 0 34px rgba(82,224,196,.08);
+  }
+
+  .loader-title{color:#f7fbff}
+  .loader-copy{color:#91a3b6}
+
+  .loader-bar{
+    background:rgba(255,255,255,.06);
+  }
+
+  .loader-bar::before{
+    background:linear-gradient(90deg, #52e0c4, #74a7ff);
+  }
+
+  .tab-shell{
+    top:16px;
+    gap:4px;
+    padding:5px;
+    border:1px solid rgba(184,207,232,.13);
+    border-radius:14px;
+    background:rgba(7,16,26,.82);
+    box-shadow:0 18px 50px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.045);
+    backdrop-filter:blur(18px) saturate(125%);
+    -webkit-backdrop-filter:blur(18px) saturate(125%);
+  }
+
+  .tab-btn{
+    min-height:38px;
+    padding:10px 18px;
+    border-radius:10px;
+    color:#8fa1b5;
+    background:transparent;
+    letter-spacing:.11em;
+    transition:color .2s ease, background .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+
+  .tab-btn:hover{
+    color:#eef5fb;
+    background:rgba(255,255,255,.055);
+  }
+
+  .tab-btn.is-active{
+    color:#03120f;
+    background:linear-gradient(135deg, #73ead2, #52e0c4);
+    box-shadow:0 8px 22px rgba(82,224,196,.19), inset 0 1px 0 rgba(255,255,255,.46);
+  }
+
+  .deck{
+    perspective:1600px;
+    padding:max(76px, calc((100vh - var(--slide-height)) / 2 + 24px)) 0;
+  }
+
+  .slide,
+  #marketing-panel .marketing-slide,
+  #technical-panel .technical-slide{
+    width:min(1600px, calc(100vw - 64px));
+    color:var(--ink);
+    border:1px solid rgba(175,202,227,.12);
+    border-radius:18px;
+    background:
+      radial-gradient(circle at 8% 5%, rgba(82,224,196,.075), transparent 23%),
+      radial-gradient(circle at 94% 2%, rgba(116,167,255,.075), transparent 25%),
+      linear-gradient(145deg, #0b1521 0%, #08111c 58%, #09131f 100%);
+    box-shadow:var(--shadow);
+    transform:scale(.982) rotateX(.12deg);
+    opacity:.62;
+  }
+
+  .slide.is-active,
+  #marketing-panel .marketing-slide.is-active,
+  #technical-panel .technical-slide.is-active{
+    opacity:1;
+    transform:scale(1) rotateX(0);
+    box-shadow:0 38px 110px rgba(0,0,0,.52), 0 0 0 1px rgba(82,224,196,.055);
+  }
+
+  .slide::before,
+  #marketing-panel .marketing-slide::before,
+  #technical-panel .technical-slide::before{
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,.014) 1px, transparent 1px),
+      radial-gradient(circle at 12% 12%, rgba(82,224,196,.08), transparent 18%),
+      radial-gradient(circle at 90% 8%, rgba(116,167,255,.065), transparent 20%);
+    background-size:64px 64px, 64px 64px, auto, auto;
+    mask-image:linear-gradient(180deg, rgba(0,0,0,.72), transparent 88%);
+    opacity:.8;
+  }
+
+  .slide::after{
+    border-radius:18px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.055), inset 0 -1px 0 rgba(255,255,255,.018);
+  }
+
+  .topbar,
+  #marketing-panel .marketing-slide .topbar,
+  #technical-panel .technical-slide .topbar{
+    height:64px;
+    padding:0 30px;
+    color:#f5f9fc;
+    border-bottom:1px solid rgba(180,207,231,.105);
+    border-radius:18px 18px 0 0;
+    background:rgba(5,13,22,.42);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+  }
+
+  .brand-mark,
+  #marketing-panel .marketing-slide .brand-mark{
+    width:35px;
+    height:35px;
+    padding:5px;
+    border:1px solid rgba(82,224,196,.16);
+    border-radius:9px;
+    background:linear-gradient(145deg, rgba(82,224,196,.12), rgba(116,167,255,.11));
+    box-shadow:0 10px 24px rgba(0,0,0,.22);
+  }
+
+  .brand-copy strong{
+    color:#f5f9fc;
+    font-size:12px;
+    letter-spacing:.21em;
+  }
+
+  .brand-copy span{
+    color:#8196aa;
+    opacity:1;
+  }
+
+  .tag{
+    color:#a9bbcc;
+    border-color:rgba(169,197,221,.13);
+    background:rgba(255,255,255,.035);
+    box-shadow:none;
+  }
+
+  .body,
+  #marketing-panel .marketing-slide .body,
+  #technical-panel .technical-slide .body{
+    padding:34px 40px 44px;
+  }
+
+  h1,
+  #marketing-panel .marketing-slide h1,
+  #technical-panel .technical-slide h1{
+    max-width:1000px;
+    color:#f5f8fc;
+    font-family:var(--font-display);
+    font-weight:700;
+    letter-spacing:-.048em;
+    white-space:normal;
+    text-wrap:balance;
+  }
+
+  #marketing-panel .marketing-slide h1{
+    font-size:42px;
+    line-height:1.035;
+  }
+
+  #marketing-panel .marketing-hero h1{
+    max-width:790px;
+    font-size:50px;
+    line-height:.99;
+  }
+
+  .lead,
+  #marketing-panel .marketing-slide .lead,
+  #technical-panel .technical-slide .lead{
+    color:#9eacbd;
+    font-weight:500;
+    text-wrap:pretty;
+  }
+
+  #marketing-panel .marketing-slide .lead{
+    font-size:15.5px;
+    line-height:1.58;
+  }
+
+  .eyebrow,
+  #marketing-panel .marketing-slide .eyebrow,
+  #technical-panel .technical-slide .eyebrow{
+    width:max-content;
+    display:inline-flex;
+    margin-bottom:14px;
+    padding:0;
+    color:#52e0c4;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    font-size:9px;
+    letter-spacing:.22em;
+  }
+
+  .eyebrow::before,
+  #marketing-panel .marketing-slide .eyebrow::before{
+    width:18px;
+    height:1px;
+    border-radius:999px;
+    background:#52e0c4;
+    box-shadow:0 0 12px rgba(82,224,196,.42);
+  }
+
+  .panel,
+  #marketing-panel .marketing-slide .panel,
+  #technical-panel .technical-slide .panel,
+  .section-card{
+    color:var(--ink);
+    border:1px solid rgba(176,203,227,.115);
+    border-radius:15px;
+    background:linear-gradient(145deg, rgba(18,31,45,.76), rgba(10,20,31,.72));
+    box-shadow:0 18px 42px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.025);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+
+  .panel::before{
+    background:linear-gradient(90deg, transparent, rgba(82,224,196,.13), transparent);
+  }
+
+  #marketing-panel .marketing-hero .hero-panel{
+    padding:22px 12px 0 24px;
+    border:0;
+    background:transparent;
+    box-shadow:none;
+    backdrop-filter:none;
+  }
+
+  .metric,
+  #marketing-panel .marketing-slide .metric{
+    min-height:102px;
+    color:var(--ink);
+    border:1px solid rgba(176,203,227,.12);
+    border-radius:13px;
+    background:linear-gradient(145deg, rgba(17,31,45,.82), rgba(10,21,32,.72));
+    box-shadow:none;
+  }
+
+  .metric::before,
+  #marketing-panel .marketing-slide .metric::before{
+    width:2px;
+    background:linear-gradient(180deg, #52e0c4, #74a7ff);
+    box-shadow:0 0 14px rgba(82,224,196,.26);
+  }
+
+  .metric.violet::before{background:linear-gradient(180deg, #ad8dff, #74a7ff)}
+  .metric.teal::before{background:linear-gradient(180deg, #72ead2, #36bea4)}
+  .metric.gold::before{background:linear-gradient(180deg, #f3d58d, #dba444)}
+
+  .metric h3,
+  #marketing-panel .marketing-slide .metric h3{
+    color:#eff5fa;
+    font-size:14px;
+  }
+
+  .metric p,
+  #marketing-panel .marketing-slide .metric p{
+    color:#91a2b5;
+  }
+
+  .accent-card,
+  #marketing-panel .marketing-hero .accent-card{
+    color:#f6fbff;
+    border:1px solid rgba(82,224,196,.17);
+    border-radius:16px;
+    background:
+      radial-gradient(circle at 90% 8%, rgba(116,167,255,.2), transparent 28%),
+      radial-gradient(circle at 12% 92%, rgba(82,224,196,.13), transparent 26%),
+      linear-gradient(145deg, #102336, #0a1927 64%, #0b2430);
+    box-shadow:0 22px 54px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  .accent-card h2{color:#f6fbff}
+  .accent-card p{color:#a6b6c7}
+
+  .pill{
+    color:#e9f2f8;
+    border-color:rgba(173,207,229,.11);
+    background:rgba(255,255,255,.035);
+  }
+
+  .pill span:last-child{color:#67e6cc}
+
+  .clean-list li,
+  #marketing-panel .marketing-slide .clean-list li{
+    color:#9baabd;
+    border:1px solid rgba(176,203,227,.105);
+    border-radius:12px;
+    background:rgba(255,255,255,.022);
+    box-shadow:none;
+  }
+
+  .clean-list strong{color:#edf4f9}
+
+  .value-box,
+  #marketing-panel .marketing-slide .value-box,
+  #marketing-panel .marketing-slide .value-box.client{
+    color:var(--ink);
+    border:1px solid rgba(176,203,227,.12);
+    border-radius:15px;
+    background:linear-gradient(145deg, rgba(16,29,42,.86), rgba(9,19,30,.82));
+    box-shadow:0 18px 42px rgba(0,0,0,.17), inset 0 1px 0 rgba(255,255,255,.025);
+  }
+
+  .value-box h2{color:#f2f7fb}
+
+  .value-label,
+  .value-box.client .value-label{
+    color:#52e0c4;
+    border-color:rgba(82,224,196,.16);
+    background:rgba(82,224,196,.07);
+  }
+
+  .value-label::before,
+  .value-box.client .value-label::before{background:#52e0c4}
+
+  .signal,
+  #marketing-panel .marketing-slide .signal{
+    color:var(--ink);
+    border-color:rgba(176,203,227,.1);
+    background:rgba(255,255,255,.024);
+    box-shadow:none;
+  }
+
+  .signal strong{color:#eaf2f8}
+  .signal span{color:#91a2b5}
+  .signal em{color:#6be6ce;background:rgba(82,224,196,.07);border-color:rgba(82,224,196,.14)}
+
+  @media (min-width:1025px){
+    #marketing-panel .marketing-packages .body{padding:30px 36px 36px}
+    #marketing-panel .marketing-packages .value-box{padding:18px}
+    #marketing-panel .marketing-packages .signal-board{gap:8px}
+    #marketing-panel .marketing-packages .signal{min-height:58px;padding:11px 14px}
+  }
+
+  .revenue-card{
+    color:var(--ink);
+    border-color:rgba(176,203,227,.11);
+    background:linear-gradient(145deg, rgba(17,30,44,.82), rgba(9,19,29,.76));
+    box-shadow:none;
+  }
+
+  .revenue-card.primary{
+    color:#f4fbf9;
+    border-color:rgba(82,224,196,.2);
+    background:
+      radial-gradient(circle at 88% 8%, rgba(116,167,255,.16), transparent 28%),
+      linear-gradient(145deg, rgba(26,71,72,.82), rgba(10,31,39,.9));
+  }
+
+  .revenue-card h2{color:#f0f5f9}
+  .revenue-card p{color:#94a5b7}
+  .revenue-card span{color:#65dfc8}
+
+  .workflow-card{
+    color:var(--ink);
+    border-color:rgba(176,203,227,.11);
+    background:linear-gradient(160deg, rgba(17,31,44,.82), rgba(9,19,30,.74));
+    box-shadow:none;
+  }
+
+  .workflow-card span{color:#061510;background:linear-gradient(135deg,#73ead2,#52e0c4)}
+  .workflow-card h2{color:#edf4f9}
+  .workflow-card p{color:#92a3b6}
+
+  .workflow-promise{
+    color:#bfeee5;
+    border-color:rgba(82,224,196,.16);
+    background:rgba(82,224,196,.055);
+  }
+
+  .pilot-focus,
+  .pilot-output-card{
+    color:var(--ink);
+    border-color:rgba(176,203,227,.11);
+    background:linear-gradient(145deg, rgba(17,30,44,.86), rgba(9,19,29,.8));
+    box-shadow:none;
+  }
+
+  .pilot-focus h2,
+  .pilot-output-card h2{color:#eef5fa}
+  .pilot-focus p,
+  .pilot-output-card p,
+  .pilot-focus li{color:#94a5b7}
+
+  #marketing-panel .marketing-thanks .closing,
+  #technical-panel .technical-thanks .closing{
+    background:
+      radial-gradient(circle at 18% 10%, rgba(82,224,196,.095), transparent 28%),
+      radial-gradient(circle at 82% 88%, rgba(116,167,255,.09), transparent 30%),
+      transparent;
+  }
+
+  #marketing-panel .marketing-thanks .closing-card,
+  #technical-panel .technical-thanks .closing-card{
+    color:#f5f9fc;
+    border:1px solid rgba(82,224,196,.16);
+    border-radius:18px;
+    background:
+      radial-gradient(circle at 80% 12%, rgba(116,167,255,.17), transparent 28%),
+      radial-gradient(circle at 10% 88%, rgba(82,224,196,.12), transparent 26%),
+      linear-gradient(145deg, #102232 0%, #081620 62%, #0a1c28 100%);
+    box-shadow:0 34px 90px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  #marketing-panel .marketing-thanks .closing-card h1,
+  #technical-panel .technical-thanks .closing-card h1{color:#f7fbff}
+
+  #marketing-panel .marketing-thanks .closing-card .lead,
+  #technical-panel .technical-thanks .closing-card .lead,
+  #marketing-panel .marketing-thanks .closing-card p,
+  #technical-panel .technical-thanks .closing-card p{color:#9eafc0}
+
+  .closing-mark,
+  #marketing-panel .marketing-thanks .closing-mark{
+    border:1px solid rgba(82,224,196,.15);
+    background:rgba(82,224,196,.07);
+    box-shadow:0 18px 38px rgba(0,0,0,.26);
+  }
+
+  .closing-sub,
+  #marketing-panel .marketing-thanks .closing-sub{color:#5fe2c8}
+
+  .closing-line,
+  #marketing-panel .marketing-thanks .closing-line{
+    background:linear-gradient(90deg, transparent, rgba(82,224,196,.34), transparent);
+  }
+
+  .closing-chip,
+  #marketing-panel .marketing-thanks .closing-chip{
+    color:#c9d6e2;
+    border-color:rgba(176,203,227,.13);
+    background:rgba(255,255,255,.035);
+  }
+
+  #technical-panel .intro-flow-card,
+  #technical-panel .intro-outcome,
+  #technical-panel .intro-capability,
+  #technical-panel .capability-card{
+    color:var(--ink);
+    border-color:rgba(176,203,227,.11);
+    background:linear-gradient(145deg, rgba(17,30,44,.8), rgba(9,19,29,.72));
+    box-shadow:none;
+  }
+
+  #technical-panel .intro-flow-card strong,
+  #technical-panel .intro-outcome strong,
+  #technical-panel .capability-card strong{color:#edf5fa}
+
+  #technical-panel .intro-flow-card > span:last-child,
+  #technical-panel .intro-outcome span,
+  #technical-panel .capability-card span{color:#92a3b5}
+
+  #technical-panel .intro-flow-card .step{
+    color:#061510;
+    background:linear-gradient(135deg,#73ead2,#52e0c4);
+  }
+
+  #technical-panel .intro-capability{color:#a9bac9}
+
+  #technical-panel .tech-feature-list li{
+    color:#a0afbf;
+    border-color:rgba(176,203,227,.1);
+    background:rgba(255,255,255,.024);
+  }
+
+  #technical-panel .tech-feature-list li::before{
+    color:#52e0c4;
+    background:rgba(82,224,196,.08);
+  }
+
+  #technical-panel .product-shot{
+    border:1px solid rgba(177,205,228,.15);
+    background:#07101a;
+    box-shadow:0 26px 64px rgba(0,0,0,.34), 0 0 0 1px rgba(255,255,255,.02);
+  }
+
+  #technical-panel .product-shot::before{
+    background:linear-gradient(90deg, #52e0c4, #74a7ff);
+  }
+
+  #technical-panel .product-shot figcaption{
+    color:#91a4b7;
+    border-color:rgba(176,203,227,.1);
+    background:#09131e;
+  }
+
+  /* Current Orion captures share a 16:9 source. Keep their complete horizontal
+     context and trim only the documentation caption baked into the lower edge. */
+  #technical-panel .product-shot.current-capture{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    height:auto;
+    margin:0;
+    aspect-ratio:1.9 / 1;
+  }
+
+  #technical-panel .product-shot.current-capture img{
+    width:calc(100% + 4px);
+    height:auto;
+    max-width:none;
+    object-fit:contain;
+    object-position:top left;
+    transform:translate(-2px,-2px);
+    transform-origin:top left;
+  }
+
+  @media (min-width:1025px){
+    #technical-panel .tech-stage:not(.intro-only){
+      grid-template-columns:minmax(0,.64fr) minmax(0,1.36fr);
+      gap:32px;
+      align-items:center;
+    }
+
+    #technical-panel .tech-stage.reverse{
+      grid-template-columns:minmax(0,1.36fr) minmax(0,.64fr);
+    }
+
+    #technical-panel .tech-stage.case-stage{
+      grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);
+    }
+
+    #technical-panel .technical-slide:not(.technical-intro):not(.technical-thanks) .body{
+      height:calc(100% - 64px);
+      display:flex;
+      align-items:center;
+      padding:34px 40px 76px;
+    }
+
+    #technical-panel .technical-slide:not(.technical-intro):not(.technical-thanks) .tech-stage{
+      width:100%;
+    }
+  }
+
+  @media (min-width:1180px){
+    #technical-panel .technical-slide:not(.technical-intro):not(.technical-thanks) h1{
+      font-size:clamp(40px, 2.4vw, 44px);
+    }
+
+    #technical-panel .technical-slide:not(.technical-intro):not(.technical-thanks) .lead{
+      font-size:clamp(14.5px, 1vw, 16px);
+    }
+
+    #technical-panel .tech-feature-list li{
+      padding:11px 13px 11px 36px;
+      font-size:clamp(12.5px, .8vw, 13.5px);
+      line-height:1.4;
+    }
+  }
+
+  @media (min-width:1025px) and (max-width:1179px){
+    #technical-panel .tech-stage:not(.intro-only){
+      grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+      gap:26px;
+    }
+
+    #technical-panel .tech-stage.reverse{
+      grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);
+    }
+
+    #technical-panel .tech-stage.case-stage{
+      grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+    }
+
+    #technical-panel .technical-slide:not(.technical-intro):not(.technical-thanks) h1{
+      font-size:35px;
+    }
+
+    #marketing-panel .marketing-slide{
+      height:auto;
+      min-height:var(--slide-height);
+      scroll-margin-top:76px;
+    }
+
+    #marketing-panel .marketing-slide .body{
+      padding-bottom:76px;
+    }
+  }
+
+  @media (min-width:1025px) and (max-height:900px){
+    .slide{scroll-margin-top:76px}
+  }
+
+  #technical-panel .tech-stage > *{
+    min-width:0;
+  }
+
+  .footer{
+    color:#72879b;
+    border-top-color:rgba(176,203,227,.1);
+  }
+
+  .footer strong{
+    color:#52e0c4;
+  }
+
+  .between-slide{
+    width:min(1600px, calc(100vw - 64px));
+  }
+
+  .between-slide::before{
+    background:linear-gradient(90deg, transparent, rgba(82,224,196,.13) 20%, rgba(116,167,255,.11) 80%, transparent);
+  }
+
+  .between-slide span{
+    color:#83d9c9;
+    border-color:rgba(82,224,196,.15);
+    background:#09131d;
+    box-shadow:0 12px 28px rgba(0,0,0,.28), 0 0 18px rgba(82,224,196,.04);
+  }
+
+  .slideshow-nav{
+    border:1px solid rgba(184,207,232,.12);
+    border-radius:14px;
+    background:rgba(7,16,26,.86);
+    box-shadow:0 20px 54px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.035);
+    backdrop-filter:blur(18px) saturate(125%);
+    -webkit-backdrop-filter:blur(18px) saturate(125%);
+  }
+
+  .slideshow-nav button{
+    color:#dce8f1;
+    background:rgba(255,255,255,.045);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+    transition:color .2s ease, background .2s ease, transform .2s ease;
+  }
+
+  .slideshow-nav button:hover{
+    color:#05130f;
+    background:#52e0c4;
+    transform:translateY(-1px);
+  }
+
+  .slideshow-status{color:#b9c9d8}
+  .slideshow-divider{background:rgba(176,203,227,.11)}
+
+  @media (hover:hover) and (pointer:fine){
+    .metric,
+    .clean-list li,
+    .signal,
+    .revenue-card,
+    .workflow-card,
+    .pilot-output-card,
+    #technical-panel .intro-flow-card,
+    #technical-panel .intro-outcome,
+    #technical-panel .capability-card{
+      transition:transform .24s cubic-bezier(.22,1,.36,1), border-color .24s ease, background .24s ease, box-shadow .24s ease;
+    }
+
+    .metric:hover,
+    .clean-list li:hover,
+    .signal:hover,
+    .revenue-card:hover,
+    .workflow-card:hover,
+    .pilot-output-card:hover,
+    #technical-panel .intro-flow-card:hover,
+    #technical-panel .intro-outcome:hover,
+    #technical-panel .capability-card:hover{
+      transform:translateY(-3px);
+      border-color:rgba(82,224,196,.24);
+      background:linear-gradient(145deg, rgba(23,40,55,.92), rgba(11,24,35,.9));
+      box-shadow:0 18px 38px rgba(0,0,0,.2), 0 0 0 1px rgba(82,224,196,.025);
+    }
+  }
+
+  :where(button):focus-visible{
+    outline:2px solid #52e0c4;
+    outline-offset:3px;
+  }
+
+  @media (max-width:1024px){
+    .slide{scroll-margin-top:76px}
+
+    .deck{padding-bottom:88px}
+
+    .tab-shell{
+      top:10px;
+      border-radius:13px;
+    }
+
+    .slide,
+    #marketing-panel .marketing-slide,
+    #technical-panel .technical-slide,
+    .between-slide{
+      width:calc(100vw - 24px);
+    }
+
+    .slide,
+    #marketing-panel .marketing-slide,
+    #technical-panel .technical-slide{
+      border-radius:16px;
+      transform:none;
+      opacity:1;
+    }
+
+    .slide::after{border-radius:16px}
+
+    .topbar,
+    #marketing-panel .marketing-slide .topbar,
+    #technical-panel .technical-slide .topbar{
+      height:auto;
+      min-height:64px;
+      padding:14px 18px;
+      border-radius:16px 16px 0 0;
+    }
+
+    .body,
+    #marketing-panel .marketing-slide .body,
+    #technical-panel .technical-slide .body{
+      padding:24px 22px 22px;
+    }
+
+    #marketing-panel .marketing-slide h1,
+    #marketing-panel .marketing-hero h1,
+    #technical-panel .technical-slide h1{
+      font-size:34px;
+      line-height:1.04;
+    }
+
+    .metric,
+    #marketing-panel .marketing-slide .metric{min-height:0}
+
+    #technical-panel .tech-stage.reverse .tech-copy{order:1}
+    #technical-panel .tech-stage.reverse .current-capture{order:2}
+
+    .slideshow-nav{
+      right:auto;
+      border-radius:13px;
+    }
+  }
+
+  @media (max-width:640px){
+    .deck{padding-bottom:82px}
+
+    .tab-shell{
+      top:7px;
+      width:calc(100vw - 24px);
+      min-height:56px;
+      padding:6px;
+    }
+
+    .tab-btn{
+      min-height:44px;
+      padding:9px 10px;
+    }
+
+    .slide,
+    #marketing-panel .marketing-slide,
+    #technical-panel .technical-slide,
+    .between-slide{
+      width:calc(100vw - 24px);
+    }
+
+    .slide,
+    #marketing-panel .marketing-slide,
+    #technical-panel .technical-slide{
+      border-radius:14px;
+    }
+
+    .slide::after{border-radius:14px}
+
+    .topbar,
+    #marketing-panel .marketing-slide .topbar,
+    #technical-panel .technical-slide .topbar{
+      min-height:68px;
+      padding:13px 14px;
+      border-radius:14px 14px 0 0;
+    }
+
+    .body,
+    #marketing-panel .marketing-slide .body,
+    #technical-panel .technical-slide .body{
+      padding:20px 15px 18px;
+    }
+
+    #marketing-panel .marketing-slide h1,
+    #marketing-panel .marketing-hero h1,
+    #technical-panel .technical-slide h1{
+      font-size:28px;
+      line-height:1.05;
+    }
+
+    #marketing-panel .marketing-slide .lead,
+    #technical-panel .technical-slide .lead{
+      font-size:13px;
+      line-height:1.56;
+    }
+
+    .slideshow-nav{
+      width:calc(100vw - 24px);
+      bottom:7px;
+      border-radius:13px;
+    }
+
+    .slideshow-nav button{
+      width:44px;
+      height:44px;
+    }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
+  }
+
   @media print{
     body{background:#fff}
     .page-loader{display:none}
@@ -4285,30 +5153,30 @@
         <img class="brand-mark" src="collaboration-assets/orion-logo.png" alt="Orion logo">
         <div class="brand-copy"><strong>ORION</strong><span>Technical</span></div>
       </div>
-      <div class="tag">Feature Showcase</div>
+      <div class="tag">Core Platform Tour</div>
     </div>
     <div class="body">
       <div class="tech-stage intro-only">
         <div class="tech-copy">
-          <div class="eyebrow">Orion product surface</div>
-          <h1>Show Orion through one investigation workflow</h1>
-          <p class="lead">Use the technical section to show how Orion moves from discovery to validated evidence, connected intelligence, reporting, and recurring operational handoff.</p>
+          <div class="eyebrow">Orion investigation lifecycle</div>
+          <h1>From one signal to a complete intelligence operation</h1>
+          <p class="lead">Orion brings indexed intelligence, live enrichment, network and geo analysis, relationship graphs, evidence, monitoring, and case operations into one connected analyst workflow.</p>
           <div class="intro-flow">
-            <article class="intro-flow-card"><span class="step">01</span><strong>Search</strong><span>Start with broad external intelligence and narrow quickly to relevant records.</span></article>
-            <article class="intro-flow-card"><span class="step">02</span><strong>Validate</strong><span>Confirm exposed identities, files, domains, IPs, and source-backed context.</span></article>
-            <article class="intro-flow-card"><span class="step">03</span><strong>Connect</strong><span>Use pivots, graph views, and evidence summaries to explain relationships.</span></article>
-            <article class="intro-flow-card"><span class="step">04</span><strong>Deliver</strong><span>Move findings into reports, cases, monitoring, and team workflows.</span></article>
+            <article class="intro-flow-card"><span class="step">01</span><strong>Discover</strong><span>Find external signals across indexed intelligence, breach data, and stealer logs.</span></article>
+            <article class="intro-flow-card"><span class="step">02</span><strong>Enrich</strong><span>Extract IOCs, inspect infrastructure, scan targets, and add geographic context.</span></article>
+            <article class="intro-flow-card"><span class="step">03</span><strong>Connect</strong><span>Map cyber entities and social identities across explainable relationship graphs.</span></article>
+            <article class="intro-flow-card"><span class="step">04</span><strong>Operationalize</strong><span>Monitor important IOCs and move verified evidence into governed case work.</span></article>
           </div>
           <div class="intro-capability-strip">
-            <div class="intro-capability">Workspace</div>
-            <div class="intro-capability">Evidence</div>
-            <div class="intro-capability">Graphs</div>
-            <div class="intro-capability">Reports</div>
+            <div class="intro-capability">IOC Operations</div>
+            <div class="intro-capability">Network Recon</div>
+            <div class="intro-capability">Geo Intelligence</div>
+            <div class="intro-capability">Relationship Graphs</div>
           </div>
           <div class="intro-outcome-row">
-            <article class="intro-outcome"><strong>Feature focus</strong><span>Show what Orion does through product surfaces and analyst workflows.</span></article>
-            <article class="intro-outcome"><strong>Evidence-led</strong><span>Use each screenshot to prove source context, validation, and handoff value.</span></article>
-            <article class="intro-outcome"><strong>Partner-ready</strong><span>Keep the story close to services partners can package and sell.</span></article>
+            <article class="intro-outcome"><strong>One workspace</strong><span>Move between search, scans, graphs, monitoring, and cases without fragmenting context.</span></article>
+            <article class="intro-outcome"><strong>Evidence-led</strong><span>Keep every decision close to source context, scan output, and verifiable artifacts.</span></article>
+            <article class="intro-outcome"><strong>Operational</strong><span>Turn findings into monitored indicators, accountable actions, and client-ready outcomes.</span></article>
           </div>
         </div>
       </div>
@@ -4326,9 +5194,9 @@
     </div>
     <div class="body">
       <div class="tech-stage reverse">
-        <figure class="product-shot tall crop-stealer">
-          <img src="collaboration-assets/stealer-log-credentials-20260604-234729.png" alt="Orion stealer log credential exposure results">
-          <figcaption>Stealer logs</figcaption>
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/stealer-logs-current-20260826.webp" alt="Current Orion Stealer Logs credential exposure workspace" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current Stealer Logs workspace</figcaption>
         </figure>
         <div class="tech-copy">
           <div class="eyebrow">Credential exposure</div>
@@ -4365,9 +5233,9 @@
             <li>Promote exposure findings into report-ready evidence for remediation.</li>
           </ul>
         </div>
-        <figure class="product-shot tall crop-breach">
-          <img src="collaboration-assets/breach-evidence-20260604-234812.png" alt="Orion breach and leak evidence result cards">
-          <figcaption>Breach evidence</figcaption>
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/breach-tracking-current-20260826.webp" alt="Current Orion breach and exposure tracking workspace" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current breach tracking workspace</figcaption>
         </figure>
       </div>
     </div>
@@ -4384,14 +5252,14 @@
     </div>
     <div class="body">
       <div class="tech-stage reverse">
-        <figure class="product-shot tall">
-          <img src="collaboration-assets/file-scanner-report-20260604-234918.png" alt="Orion file scanner metadata analysis report">
-          <figcaption>IOC extraction</figcaption>
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/file-scanner-current-20260826.webp" alt="Current Orion file scanner analysis and metadata report" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current file and IOC analysis</figcaption>
         </figure>
         <div class="tech-copy">
           <div class="eyebrow">IOC extraction</div>
-          <h1>Turn files and screenshots into actionable indicators</h1>
-          <p class="lead">The feature story is simple: upload evidence, extract indicators, review what was found, and reuse it for pivots, alerts, validation, or reporting.</p>
+          <h1>Turn analyst evidence into actionable indicators</h1>
+          <p class="lead">Upload a file, extract intelligence and metadata, review the parser output, and reuse the result for pivots, validation, monitoring, or reporting.</p>
           <ul class="tech-feature-list">
             <li>Extract domains, IPs, URLs, CVEs, hashes, and relevant text metadata.</li>
             <li>Present parser output in a clean report surface analysts can inspect.</li>
@@ -4409,23 +5277,23 @@
         <img class="brand-mark" src="collaboration-assets/orion-logo.png" alt="Orion logo">
         <div class="brand-copy"><strong>ORION</strong><span>Technical</span></div>
       </div>
-      <div class="tag">Network Validation</div>
+      <div class="tag">Managed IOCs</div>
     </div>
     <div class="body">
       <div class="tech-stage">
         <div class="tech-copy">
-          <div class="eyebrow">Infrastructure exposure</div>
-          <h1>Validate domains, IPs, services, and scoped external risk</h1>
-          <p class="lead">Orion connects network context with bounded review workflows, so analysts can validate exposure without switching into a separate tool.</p>
+          <div class="eyebrow">Persistent monitoring</div>
+          <h1>Move validated indicators into continuous watch</h1>
+          <p class="lead">Orion turns one-time findings into a maintained tenant IOC set that supports recurring searches, monitoring, and alert workflows.</p>
           <ul class="tech-feature-list">
-            <li>Review IP, organization, hosting, open-port, and service context.</li>
-            <li>Use location and radius controls for approved geo-scoped discovery.</li>
-            <li>Keep network findings close to evidence review and reporting.</li>
+            <li>Organize monitored values across domains, emails, IPs, URLs, CVEs, YARA rules, and other IOC categories.</li>
+            <li>Add indicators directly or import them in bulk through the governed CSV workflow.</li>
+            <li>Keep the monitoring surface tenant-scoped so each client controls the values that matter to them.</li>
           </ul>
         </div>
-        <figure class="product-shot tall center">
-          <img src="collaboration-assets/network-validation-20260605-000153.png" alt="Orion network validation IP and service details">
-          <figcaption>Network validation</figcaption>
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/managed-iocs-current-20260826.webp" alt="Current Orion tenant IOC management workspace" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current managed IOC workspace</figcaption>
         </figure>
       </div>
     </div>
@@ -4438,27 +5306,114 @@
         <img class="brand-mark" src="collaboration-assets/orion-logo.png" alt="Orion logo">
         <div class="brand-copy"><strong>ORION</strong><span>Technical</span></div>
       </div>
-      <div class="tag">Graph Intelligence</div>
+      <div class="tag">Network Recon</div>
+    </div>
+    <div class="body">
+      <div class="tech-stage">
+        <div class="tech-copy">
+          <div class="eyebrow">Infrastructure context</div>
+          <h1>Resolve targets and inspect exposed services in one pass</h1>
+          <p class="lead">Orion brings host recon and IP scanning into the investigation workspace so analysts can move from a domain or address to usable infrastructure context.</p>
+          <ul class="tech-feature-list">
+            <li>Review organization, country, hosting, port, protocol, service, and risk-flag context.</li>
+            <li>Move between Host Recon, IP Scan, and Vulnerability Scan without losing the target.</li>
+            <li>Export or promote validated network findings into evidence and downstream case work.</li>
+          </ul>
+        </div>
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/network-ip-scan-current-20260826.webp" alt="Current Orion Network Intel IP scan workspace" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current IP and service intelligence</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical</span><strong>06</strong></div>
+  </section>
+
+  <section class="slide technical-slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="collaboration-assets/orion-logo.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical</span></div>
+      </div>
+      <div class="tag">Vulnerability Scanning</div>
     </div>
     <div class="body">
       <div class="tech-stage reverse">
-        <figure class="product-shot tall center">
-          <img src="collaboration-assets/cti-graph-20260326.png" alt="Orion CTI Graph relationship view">
-          <figcaption>Graph pivots</figcaption>
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/network-vulnerability-current-20260826.webp" alt="Current Orion vulnerability scan results with severity and finding controls" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current depth-aware vulnerability scan</figcaption>
         </figure>
         <div class="tech-copy">
-          <div class="eyebrow">Relationship pivots</div>
-          <h1>Move from isolated records to connected intelligence</h1>
-          <p class="lead">The graph view shows how Orion can organize entities, documents, properties, and relationships into a more explainable investigation path.</p>
+          <div class="eyebrow">Depth-aware validation</div>
+          <h1>Scale from rapid triage to deeper target validation</h1>
+          <p class="lead">Orion resolves the target, exposes discovered subdomains, and lets the analyst choose the appropriate scan depth before reviewing evidence-rich findings.</p>
           <ul class="tech-feature-list">
-            <li>Create investigation sessions that keep graph work organized.</li>
-            <li>Search, highlight, filter, and switch between visual and list views.</li>
-            <li>Use graph pivots to explain exposure patterns and entity relationships.</li>
+            <li>Select scan depth per target so quick signal checks and deeper validation can coexist in one review.</li>
+            <li>Inspect severity summaries, scanned URLs, request metadata, response details, and individual findings.</li>
+            <li>Track progress, cancel active work when needed, and download the resulting report for handoff.</li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="footer"><span>Orion Technical</span><strong>06</strong></div>
+    <div class="footer"><span>Orion Technical</span><strong>07</strong></div>
+  </section>
+
+  <section class="slide technical-slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="collaboration-assets/orion-logo.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical</span></div>
+      </div>
+      <div class="tag">Geo Fencing</div>
+    </div>
+    <div class="body">
+      <div class="tech-stage geo-stage">
+        <div class="tech-copy">
+          <div class="eyebrow">Location-aware intelligence</div>
+          <h1>Put infrastructure, facilities, and threat context on the map</h1>
+          <p class="lead">Orion’s geo workspace combines bounded location search with indexed facilities, infrastructure pivots, tracking layers, and satellite-aware review.</p>
+          <ul class="tech-feature-list">
+            <li>Search locations or coordinates, select a map scope, and discover nearby facilities by category.</li>
+            <li>Pivot into geo-scoped IP exposure using controlled radius and result-limit settings.</li>
+            <li>Layer facilities, aircraft, ships, satellite imagery, and Threat Lens context into one operational view.</li>
+          </ul>
+        </div>
+        <figure class="product-shot current-capture geo-capture">
+          <img src="collaboration-assets/geo-facilities-current-20260826.webp" alt="Current Orion Geo Fencing map with indexed facilities" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current geo-fenced facilities workspace</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical</span><strong>08</strong></div>
+  </section>
+
+  <section class="slide technical-slide">
+    <div class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="collaboration-assets/orion-logo.png" alt="Orion logo">
+        <div class="brand-copy"><strong>ORION</strong><span>Technical</span></div>
+      </div>
+      <div class="tag">Graph Intelligence</div>
+    </div>
+    <div class="body">
+      <div class="tech-stage reverse">
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/cti-graph-current-20260826.webp" alt="Current Orion CTI Graph relationship workspace" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current CTI relationship graph</figcaption>
+        </figure>
+        <div class="tech-copy">
+          <div class="eyebrow">Relationship pivots</div>
+          <h1>Move from isolated records to connected intelligence</h1>
+          <p class="lead">CTI Graph organizes clusters, documents, properties, entities, and directional relationships into an explainable investigation model.</p>
+          <ul class="tech-feature-list">
+            <li>Create and manage investigation sessions without rebuilding graph context.</li>
+            <li>Search, highlight, filter, expand, collapse, and switch between graph and list views.</li>
+            <li>Combine fields with the advanced AND/OR builder, then export graph data or a report.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Orion Technical</span><strong>09</strong></div>
   </section>
 
   <section class="slide technical-slide">
@@ -4474,20 +5429,20 @@
         <div class="tech-copy">
           <div class="eyebrow">Human-risk surface</div>
           <h1>Map account, identity, and impersonation exposure</h1>
-          <p class="lead">Social Intelligence should be shown as a controlled exposure workflow: profiles, platforms, relationships, and evidence views in one place.</p>
+          <p class="lead">Social Intel moves from a username, image, or profile into a controlled view of platforms, related accounts, exposure signals, and relationship evidence.</p>
           <ul class="tech-feature-list">
-            <li>Discover username, image, profile, and platform matches where authorized.</li>
-            <li>Review social findings as graph or list views depending on the analysis task.</li>
-            <li>Use findings for brand protection, VIP monitoring, and impersonation review.</li>
+            <li>Discover username, image, profile, and platform matches in authorized investigations.</li>
+            <li>Switch between graph and list views, manage scan sessions, and fetch deeper profile context.</li>
+            <li>Correlate aliases, followers, connections, metadata, and exposure signals for brand or VIP review.</li>
           </ul>
         </div>
-        <figure class="product-shot tall center">
-          <img src="collaboration-assets/social-intel-list-view-20260326.png" alt="Orion Social Intel list view">
-          <figcaption>Social exposure</figcaption>
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/social-intel-current-20260826.webp" alt="Current Orion Social Intel profile and exposure workspace" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current Social Intel workspace</figcaption>
         </figure>
       </div>
     </div>
-    <div class="footer"><span>Orion Technical</span><strong>07</strong></div>
+    <div class="footer"><span>Orion Technical</span><strong>10</strong></div>
   </section>
 
   <section class="slide technical-slide">
@@ -4500,23 +5455,23 @@
     </div>
     <div class="body">
       <div class="tech-stage reverse">
-        <figure class="product-shot tall">
-          <img src="collaboration-assets/evidence-handoff-20260604-235919.png" alt="Orion evidence handoff result table">
-          <figcaption>Evidence summary</figcaption>
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/evidence-integrity-current-20260826.webp" alt="Current Orion case artifact and file integrity workspace" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current evidence and integrity review</figcaption>
         </figure>
         <div class="tech-copy">
-          <div class="eyebrow">Reports and context</div>
-          <h1>Package findings into evidence-backed outputs</h1>
-          <p class="lead">Orion should feel useful after the analyst finds something: summaries, metadata, screenshots, and source context support remediation and client-ready reporting.</p>
+          <div class="eyebrow">Verifiable evidence</div>
+          <h1>Preserve findings as governed, integrity-checked artifacts</h1>
+          <p class="lead">Orion keeps the handoff useful after discovery by attaching files, linked reports, notes, source context, and integrity verification to the investigation record.</p>
           <ul class="tech-feature-list">
-            <li>Keep report context tied to source evidence and freshness signals.</li>
-            <li>Use summaries to move from raw findings to clear analyst notes.</li>
-            <li>Prepare findings for remediation, escalation, monitoring, or case work.</li>
+            <li>Attach uploaded files, URL captures, raw alerts, screenshots, and linked Orion reports.</li>
+            <li>Verify file integrity and retain analyst context alongside each artifact.</li>
+            <li>Prepare evidence for remediation, escalation, sharing, or accountable case work.</li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="footer"><span>Orion Technical</span><strong>08</strong></div>
+    <div class="footer"><span>Orion Technical</span><strong>11</strong></div>
   </section>
 
   <section class="slide technical-slide">
@@ -4525,28 +5480,28 @@
         <img class="brand-mark" src="collaboration-assets/orion-logo.png" alt="Orion logo">
         <div class="brand-copy"><strong>ORION</strong><span>Technical</span></div>
       </div>
-      <div class="tag">Controlled Operations</div>
+      <div class="tag">Case Operations</div>
     </div>
     <div class="body">
-      <div class="tech-stage">
+      <div class="tech-stage case-stage">
         <div class="tech-copy">
-          <div class="eyebrow">Recurring delivery</div>
-          <h1>Support monitoring, cases, and sensitive intake workflows</h1>
-          <p class="lead">The close should show Orion as an operational system, not a one-off search page. Findings can become watched items, cases, support requests, or controlled internal workflows.</p>
+          <div class="eyebrow">Accountable response</div>
+          <h1>Turn intelligence into owned, auditable action</h1>
+          <p class="lead">Case Management keeps the primary entity, analysts, severity, priority, evidence, tasks, status, and closure context together from triage through resolution.</p>
           <div class="capability-band">
-            <article class="capability-card"><strong>Managed IOCs</strong><span>Track values that matter after the first investigation.</span></article>
-            <article class="capability-card"><strong>Cases</strong><span>Keep evidence, severity, priority, tags, and follow-up together.</span></article>
-            <article class="capability-card"><strong>Access Control</strong><span>Tenant and role context keep sensitive modules bounded.</span></article>
-            <article class="capability-card"><strong>Intake</strong><span>Support and reporting paths keep sensitive submissions structured.</span></article>
+            <article class="capability-card"><strong>Case context</strong><span>Keep entities, severity, priority, analysts, and investigation state together.</span></article>
+            <article class="capability-card"><strong>Artifacts</strong><span>Link reports and files while preserving provenance and integrity status.</span></article>
+            <article class="capability-card"><strong>Workflow</strong><span>Coordinate tasks, related cases, notes, tracking, and closure decisions.</span></article>
+            <article class="capability-card"><strong>Controlled sharing</strong><span>Export or share scoped case material without exposing the wider workspace.</span></article>
           </div>
         </div>
-        <figure class="product-shot tall case-management">
-          <img src="collaboration-assets/case-management-details-20260604-235838.png" alt="Orion Case Management detail view">
-          <figcaption>Case management</figcaption>
+        <figure class="product-shot current-capture">
+          <img src="collaboration-assets/case-management-current-20260826.webp" alt="Current Orion Case Management detail workspace" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Current Case Management workspace</figcaption>
         </figure>
       </div>
     </div>
-    <div class="footer"><span>Orion Technical</span><strong>09</strong></div>
+    <div class="footer"><span>Orion Technical</span><strong>12</strong></div>
   </section>
 
   <section class="slide technical-slide technical-thanks">
@@ -4555,27 +5510,27 @@
         <img class="brand-mark" src="collaboration-assets/orion-logo.png" alt="Orion logo">
         <div class="brand-copy"><strong>ORION</strong><span>Technical</span></div>
       </div>
-      <div class="tag">Thank You</div>
+      <div class="tag">Operational Platform</div>
     </div>
     <div class="closing">
       <div class="closing-card">
         <div class="closing-mark">
           <img src="collaboration-assets/orion-logo.png" alt="Orion logo">
         </div>
-        <div class="closing-sub">Partner Growth Proposal</div>
-        <h1>Your brand. Orion engine. Recurring cyber revenue.</h1>
-        <p class="lead">Orion helps cybersecurity firms launch, sell, and scale branded threat intelligence services through white-label delivery, API access, and vendor partnership models.</p>
+        <div class="closing-sub">Orion Intelligence</div>
+        <h1>One platform from signal to decision.</h1>
+        <p class="lead">Orion connects external intelligence, live enrichment, network and geo analysis, relationship graphs, monitored indicators, verifiable evidence, and case operations.</p>
         <div class="closing-line"></div>
         <div class="closing-points">
-          <div class="closing-chip">White-label product</div>
-          <div class="closing-chip">API-powered intelligence</div>
-          <div class="closing-chip">Partner-owned clients</div>
-          <div class="closing-chip">Recurring monitoring revenue</div>
+          <div class="closing-chip">IOC & Exposure</div>
+          <div class="closing-chip">Network & Geo</div>
+          <div class="closing-chip">CTI & Social Graphs</div>
+          <div class="closing-chip">Evidence & Cases</div>
         </div>
-        <p class="closing-next">Next step: select the first partner track, package the pilot, and turn validated findings into a sellable branded service.</p>
+        <p class="closing-next">Next step: choose the priority workflows, scope the first deployment, and connect Orion to the team’s existing operating model.</p>
       </div>
     </div>
-    <div class="footer"><span>Orion Technical</span><strong>10</strong></div>
+    <div class="footer"><span>Orion Technical</span><strong>13</strong></div>
   </section>
 </main>
 </section>
@@ -4587,228 +5542,6 @@
   <div class="slideshow-divider" aria-hidden="true"></div>
   <button type="button" id="fullscreenToggle" class="fullscreen-btn" aria-label="Toggle fullscreen">&#9974;</button>
 </div>
-<script>
-  (function () {
-    const ACTIVE_TAB_KEY = 'orion_preview_active_tab';
-    const panels = Array.from(document.querySelectorAll('.tab-panel'));
-    const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
-    const status = document.getElementById('slideStatus');
-    const prev = document.getElementById('prevSlide');
-    const next = document.getElementById('nextSlide');
-    const fullscreenToggle = document.getElementById('fullscreenToggle');
-    const slideshowNav = document.querySelector('.slideshow-nav');
-    const pageLoader = document.getElementById('pageLoader');
-    let ticking = false;
-    let navLocked = false;
-    let navUnlockTimer = null;
-
-    document.querySelectorAll('img[src*="orion-search.readthedocs.io/en/latest/_images/"]').forEach((img) => {
-      const primarySrc = img.getAttribute('src');
-      if (!primarySrc) return;
-      const fallbackSrc = primarySrc.replace('/en/latest/_images/', '/en/latest/app_docs/_images/');
-      if (fallbackSrc === primarySrc) return;
-      img.addEventListener('error', () => {
-        if (img.dataset.fallbackApplied === '1') return;
-        img.dataset.fallbackApplied = '1';
-        img.src = fallbackSrc;
-      }, { once: true });
-    });
-
-    panels.forEach((panel) => {
-      const slides = Array.from(panel.querySelectorAll('.slide'));
-      slides.forEach((slide, index) => {
-        slide.id = panel.id + '-slide-' + (index + 1);
-
-        if (index < slides.length - 1) {
-          const footerNumber = slide.querySelector('.footer strong');
-          const marker = document.createElement('div');
-          marker.className = 'between-slide';
-          marker.setAttribute('aria-hidden', 'true');
-          marker.innerHTML = '<span>' + (footerNumber ? footerNumber.textContent : String(index + 1).padStart(2, '0')) + '</span>';
-          slide.insertAdjacentElement('afterend', marker);
-        }
-      });
-    });
-
-    const getActivePanel = () => document.querySelector('.tab-panel.is-active');
-    const getSlides = () => Array.from(getActivePanel().querySelectorAll('.slide'));
-    const getSeparators = () => Array.from(getActivePanel().querySelectorAll('.between-slide'));
-    const setFullscreenState = () => {
-      const isFullscreen = !!document.fullscreenElement;
-      document.body.classList.toggle('is-fullscreen', isFullscreen);
-      fullscreenToggle.setAttribute('aria-label', isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen');
-      fullscreenToggle.textContent = isFullscreen ? '×' : '⛶';
-    };
-
-    const scrollToSlide = (index) => {
-      if (navLocked) return;
-
-      const slides = getSlides();
-      const clamped = Math.max(0, Math.min(index, slides.length - 1));
-      const active = slides.findIndex((slide) => slide.classList.contains('is-active'));
-      if (clamped === active) return;
-      navLocked = true;
-      prev.disabled = true;
-      next.disabled = true;
-      clearTimeout(navUnlockTimer);
-      slides[clamped].scrollIntoView({ behavior: 'smooth', block: 'center' });
-      navUnlockTimer = window.setTimeout(() => {
-        navLocked = false;
-        updateStatus();
-      }, 520);
-    };
-
-    const updateStatus = () => {
-      const slides = getSlides();
-      const separators = getSeparators();
-      let activeIndex = 0;
-      let closest = Infinity;
-
-      slides.forEach((slide, index) => {
-        const rect = slide.getBoundingClientRect();
-        const distance = Math.abs((rect.top + rect.height / 2) - (window.innerHeight / 2));
-        if (distance < closest) {
-          closest = distance;
-          activeIndex = index;
-        }
-      });
-
-      slides.forEach((slide, index) => {
-        slide.classList.toggle('is-active', index === activeIndex);
-      });
-
-      separators.forEach((separator, index) => {
-        const nearFocusedPair = index === activeIndex || index === activeIndex - 1;
-        separator.classList.toggle('is-near', nearFocusedPair);
-      });
-
-      status.textContent = String(activeIndex + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
-      prev.disabled = navLocked || activeIndex === 0;
-      next.disabled = navLocked || activeIndex === slides.length - 1;
-      prev.style.opacity = activeIndex === 0 || navLocked ? '.45' : '1';
-      next.style.opacity = activeIndex === slides.length - 1 || navLocked ? '.45' : '1';
-    };
-
-    const activateTab = (panelId) => {
-      clearTimeout(navUnlockTimer);
-      navLocked = false;
-
-      try {
-        window.localStorage.setItem(ACTIVE_TAB_KEY, panelId);
-      } catch (error) {
-      }
-
-      panels.forEach((panel) => {
-        panel.classList.toggle('is-active', panel.id === panelId);
-      });
-
-      tabButtons.forEach((button) => {
-        const isActive = button.dataset.tab === panelId;
-        button.classList.toggle('is-active', isActive);
-        button.setAttribute('aria-selected', isActive ? 'true' : 'false');
-      });
-
-      document.querySelectorAll('.slide').forEach((slide) => slide.classList.remove('is-active'));
-      document.querySelectorAll('.between-slide').forEach((separator) => separator.classList.remove('is-near'));
-
-      const firstSlide = getSlides()[0];
-      if (firstSlide) {
-        firstSlide.scrollIntoView({ behavior: 'auto', block: 'center' });
-      }
-      updateStatus();
-    };
-
-    tabButtons.forEach((button) => {
-      button.addEventListener('click', () => activateTab(button.dataset.tab));
-    });
-
-    fullscreenToggle.addEventListener('click', async () => {
-      try {
-        if (document.fullscreenElement) {
-          await document.exitFullscreen();
-        } else {
-          await document.documentElement.requestFullscreen();
-        }
-      } catch (error) {
-      }
-    });
-
-    prev.addEventListener('click', () => {
-      const slides = getSlides();
-      const current = slides.findIndex((slide) => slide.classList.contains('is-active'));
-      scrollToSlide((current === -1 ? 0 : current) - 1);
-    });
-
-    next.addEventListener('click', () => {
-      const slides = getSlides();
-      const current = slides.findIndex((slide) => slide.classList.contains('is-active'));
-      scrollToSlide((current === -1 ? 0 : current) + 1);
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (
-        event.key !== 'ArrowDown' &&
-        event.key !== 'PageDown' &&
-        event.key !== 'ArrowUp' &&
-        event.key !== 'PageUp' &&
-        event.key !== 'ArrowLeft' &&
-        event.key !== 'ArrowRight'
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-      const slides = getSlides();
-      const current = slides.findIndex((slide) => slide.classList.contains('is-active'));
-      const index = current === -1 ? 0 : current;
-
-      if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === 'ArrowRight') {
-        scrollToSlide(index + 1);
-      } else {
-        scrollToSlide(index - 1);
-      }
-    });
-
-    window.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        updateStatus();
-        ticking = false;
-      });
-    }, { passive: true });
-    document.addEventListener('fullscreenchange', setFullscreenState);
-    window.addEventListener('load', async () => {
-      slideshowNav.classList.add('is-hidden');
-      try {
-        if (document.fonts && document.fonts.ready) {
-          await Promise.race([
-            document.fonts.ready,
-            new Promise((resolve) => setTimeout(resolve, 1200))
-          ]);
-        }
-      } catch (error) {
-      }
-      let initialTab = 'marketing-panel';
-      try {
-        const hashTab = window.location.hash ? window.location.hash.slice(1) : '';
-        const savedTab = window.localStorage.getItem(ACTIVE_TAB_KEY);
-        if (hashTab && panels.some((panel) => panel.id === hashTab)) {
-          initialTab = hashTab;
-        } else if (savedTab && panels.some((panel) => panel.id === savedTab)) {
-          initialTab = savedTab;
-        }
-      } catch (error) {
-      }
-      activateTab(initialTab);
-      requestAnimationFrame(() => {
-        slideshowNav.classList.remove('is-hidden');
-        pageLoader.classList.add('is-hidden');
-        document.body.classList.remove('is-loading');
-      });
-    });
-    setFullscreenState();
-  }());
-</script>
+<script src="/collaboration.js" defer></script>
 </body>
 </html>
