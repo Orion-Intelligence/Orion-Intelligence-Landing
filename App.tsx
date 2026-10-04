@@ -273,14 +273,17 @@ const App: React.FC = () => {
       .match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
   };
 
+  const validateIdentifier = (value: string) =>
+    value.includes('@') ? Boolean(validateEmail(value)) : /^[A-Za-z0-9._-]{3,64}$/.test(value);
+
   const handleHeroSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setSearchError(null);
     const query = heroSearch.replace(/\s+/g, '');
     if (!query) return;
 
-    if (!validateEmail(query)) {
-      setSearchError('Please enter a valid email address.');
+    if (!validateIdentifier(query)) {
+      setSearchError('Please enter a valid email or username.');
       return;
     }
 
@@ -299,8 +302,10 @@ const App: React.FC = () => {
         const body = await response.json().catch(() => null);
         if (response.status === 429 || /search limit reached/i.test(body?.detail ?? '')) {
           setSearchError('Daily quota limit reached.');
+        } else if (response.status === 400 || response.status === 422) {
+          setSearchError('Please enter a valid email or username.');
         } else {
-          setSearchError('Please enter a valid email address.');
+          setSearchError('Search is unavailable right now. Please try again.');
         }
         return;
       }
@@ -319,7 +324,7 @@ const App: React.FC = () => {
       navigateTo('search-results');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
-      setSearchError('Please enter a valid email address.');
+      setSearchError('Could not reach the search service. Check your connection and try again.');
     } finally {
       setIsSearching(false);
     }

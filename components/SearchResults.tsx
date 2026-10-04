@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import {
-  ArrowLeft, Mail, CheckCircle2, History, Radar, Activity, X, AlertTriangle, Globe, ChevronRight, Send, Loader2, CalendarClock, Radio
+  ArrowLeft, Mail, User, CheckCircle2, History, Radar, Activity, X, AlertTriangle, Globe, ChevronRight, Send, Loader2, CalendarClock, Radio
 } from 'lucide-react';
 import { StealerLogResponse, StealerLogRecord } from '../App';
 
@@ -124,6 +124,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
   const [sendError, setSendError] = useState<string | null>(null);
 
   const records = data.records ?? [];
+  const isEmailQuery = query.includes('@');
   const siteStats = new Map<string, { count: number; latest: number }>();
   records.forEach((record) => breachedSitesOf(record).forEach((site) => {
     const current = siteStats.get(site) ?? { count: 0, latest: 0 };
@@ -272,7 +273,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
               </div>
               <div className="flex items-center gap-3 py-4 bg-transparent max-w-xl">
                 <div className="p-2.5 rounded-lg bg-blue-600/5 text-blue-600">
-                  <Mail className="w-4.5 h-4.5" />
+                  {isEmailQuery ? <Mail className="w-4.5 h-4.5" /> : <User className="w-4.5 h-4.5" />}
                 </div>
                 <div className="flex flex-col">
                   <code className="text-lg md:text-xl font-mono text-slate-900 dark:text-white font-bold tracking-tight">{query}</code>
@@ -282,7 +283,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
             </div>
           </div>
 
-          {records.length > 0 && (
+          {records.length > 0 && isEmailQuery && (
             <div className="flex flex-col items-stretch md:items-end gap-2 md:pb-4">
               <button
                 type="button"
