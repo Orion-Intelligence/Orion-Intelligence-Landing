@@ -273,14 +273,20 @@ const App: React.FC = () => {
       .match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
   };
 
+  // Accept any email (including company domains) or any username-like handle.
+  // Only block input that could break the backend search query (spaces, query operators).
+  const validateIdentifier = (value: string) =>
+    value.length >= 1 && value.length <= 254 && !/[\s*:&|]/.test(value) &&
+    (value.includes('@') ? Boolean(validateEmail(value)) : true);
+
   const handleHeroSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setSearchError(null);
     const query = heroSearch.replace(/\s+/g, '');
     if (!query) return;
 
-    if (!validateEmail(query)) {
-      setSearchError('Please enter a valid email address.');
+    if (!validateIdentifier(query)) {
+      setSearchError('Please enter a valid email or username.');
       return;
     }
 
@@ -300,7 +306,7 @@ const App: React.FC = () => {
         if (response.status === 429 || /search limit reached/i.test(body?.detail ?? '')) {
           setSearchError('Daily quota limit reached.');
         } else if (response.status === 400 || response.status === 422) {
-          setSearchError('Please enter a valid email address.');
+          setSearchError('Please enter a valid email or username.');
         } else {
           setSearchError('Search is unavailable right now. Please try again.');
         }

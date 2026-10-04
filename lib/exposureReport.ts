@@ -432,7 +432,7 @@ export const renderReportEmailHtml = (report: ExposureReport) => {
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Your requested exposure report is attached as a PDF.</div>
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#EEF2F7;">
 <tr><td align="center" style="padding:40px 14px;">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;">
 <tr><td style="background:#0B1220;background-image:linear-gradient(135deg,#0B1220 0%,#12234A 62%,#1D3F8F 100%);border-radius:18px 18px 0 0;padding:30px 36px 36px;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr>
 <td style="font-family:${font};font-size:14px;font-weight:800;letter-spacing:.32em;color:#FFFFFF;">ORION</td>

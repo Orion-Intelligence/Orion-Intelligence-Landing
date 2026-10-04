@@ -136,7 +136,7 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
                   setHeroSearch(e.target.value);
                   if (searchError) setSearchError(null);
                 }}
-                placeholder="Search email address..."
+                placeholder="Search email or username..."
                 className={`w-full py-5 pl-14 pr-28 sm:pr-36 rounded-full text-[13px] font-bold transition-all tracking-wider outline-none border ring-1 focus:ring-1 ${
                   searchError
                     ? 'bg-red-50 dark:bg-red-950/20 text-red-900 dark:text-red-200 border-red-500/20 ring-red-500/20'
