@@ -273,17 +273,14 @@ const App: React.FC = () => {
       .match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
   };
 
-  const validateIdentifier = (value: string) =>
-    value.includes('@') ? Boolean(validateEmail(value)) : /^[A-Za-z0-9._-]{3,64}$/.test(value);
-
   const handleHeroSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setSearchError(null);
     const query = heroSearch.replace(/\s+/g, '');
     if (!query) return;
 
-    if (!validateIdentifier(query)) {
-      setSearchError('Please enter a valid email or username.');
+    if (!validateEmail(query)) {
+      setSearchError('Please enter a valid email address.');
       return;
     }
 
@@ -303,7 +300,7 @@ const App: React.FC = () => {
         if (response.status === 429 || /search limit reached/i.test(body?.detail ?? '')) {
           setSearchError('Daily quota limit reached.');
         } else if (response.status === 400 || response.status === 422) {
-          setSearchError('Please enter a valid email or username.');
+          setSearchError('Please enter a valid email address.');
         } else {
           setSearchError('Search is unavailable right now. Please try again.');
         }
@@ -332,10 +329,10 @@ const App: React.FC = () => {
 
   const handleSendReport = async (email: string): Promise<string | null> => {
     try {
-      const response = await fetch('https://try.orionintelligence.org/api/search/stealerlogs/report', {
+      const response = await fetch('/api/send-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email, report: searchResult?.data })
       });
       if (response.ok) return null;
       const body = await response.json().catch(() => null);

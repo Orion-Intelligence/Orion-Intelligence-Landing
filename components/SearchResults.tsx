@@ -283,7 +283,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
             </div>
           </div>
 
-          {records.length > 0 && isEmailQuery && (
+          {isEmailQuery && (records.length > 0 || data.breach_found) && (
             <div className="flex flex-col items-stretch md:items-end gap-2 md:pb-4">
               <button
                 type="button"
@@ -298,7 +298,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
               <p className="text-[11px] text-slate-500 dark:text-white/40 md:text-right">
                 {sendState === 'sent'
                   ? <>Sent to <span className="font-mono">{query}</span>. Check the inbox shortly.</>
-                  : <>All {records.length} {records.length === 1 ? 'record' : 'records'} to this inbox · passwords never included</>}
+                  : <>Full PDF report to this inbox · passwords never included</>}
               </p>
               {sendError && (
                 <p className="flex items-center gap-1.5 text-[11px] font-bold text-red-500 md:justify-end">
@@ -309,9 +309,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
           )}
         </div>
 
-        {records.length > 0 && (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
+          {(records.length > 0 ? [
             { label: 'Breached Sites', val: breachedSites.length, color: 'text-red-500', icon: Globe, meta: 'Sites' },
             { label: 'Associated Emails', val: associatedEmails.length, color: 'text-slate-900 dark:text-white', icon: Mail, meta: 'Emails' },
             { label: 'Sources', val: sources.length, color: 'text-slate-900 dark:text-white', icon: Radio, meta: 'Channels' },
@@ -322,7 +321,12 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
               icon: CalendarClock,
               meta: latestSeen ? String(new Date(latestSeen).getFullYear()) : ''
             }
-          ].map((stat, i) => (
+          ] : [
+            { label: 'Exposures', val: data.total_exposures, color: 'text-red-500', icon: Globe, meta: 'Records' },
+            { label: 'Sources', val: data.unique_channels, color: 'text-slate-900 dark:text-white', icon: Radio, meta: 'Channels' },
+            { label: 'Top Source', val: data.primary_channel || '—', color: 'text-slate-900 dark:text-white', icon: Radio, meta: data.primary_channel_hits ? `${data.primary_channel_hits} hits` : '' },
+            { label: 'Severity', val: data.severity || '—', color: data.risk_score > 60 ? 'text-red-500' : 'text-slate-900 dark:text-white', icon: CalendarClock, meta: `${data.risk_score}% risk` }
+          ]).map((stat, i) => (
             <div key={i} className={`${cardStyle} p-6 space-y-3`}>
               <div className="flex items-center gap-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
                 <stat.icon className="w-3.5 h-3.5 text-blue-500/50" />
@@ -335,7 +339,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
             </div>
           ))}
         </div>
-        )}
 
         {records.length > 0 && (
           <section className={`${cardStyle} overflow-hidden`}>

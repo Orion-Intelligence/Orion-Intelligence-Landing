@@ -7,7 +7,6 @@ import {
   Fingerprint,
   Globe,
   Loader2,
-  AtSign,
   Mail,
   MessageSquare,
   MonitorCheck,
@@ -129,7 +128,7 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
 
           <form onSubmit={onHeroSearch} className="relative group w-full max-w-3xl animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 z-20">
             <div className="relative flex items-center shadow-2xl rounded-full">
-              <AtSign className={`absolute left-5 w-[18px] h-[18px] transition-colors ${searchError ? 'text-red-500' : 'text-blue-500/60 dark:text-blue-300/40'}`} />
+              <Mail className={`absolute left-5 w-[18px] h-[18px] transition-colors ${searchError ? 'text-red-500' : 'text-blue-500/60 dark:text-blue-300/40'}`} />
               <input
                 type="text"
                 value={heroSearch}
@@ -137,7 +136,7 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
                   setHeroSearch(e.target.value);
                   if (searchError) setSearchError(null);
                 }}
-                placeholder="Search email or username..."
+                placeholder="Search email address..."
                 className={`w-full py-5 pl-14 pr-28 sm:pr-36 rounded-full text-[13px] font-bold transition-all tracking-wider outline-none border ring-1 focus:ring-1 ${
                   searchError
                     ? 'bg-red-50 dark:bg-red-950/20 text-red-900 dark:text-red-200 border-red-500/20 ring-red-500/20'

@@ -20,6 +20,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/:path*", "destination": "/" }
+    { "source": "/((?!api/).*)", "destination": "/" }
   ]
 }
