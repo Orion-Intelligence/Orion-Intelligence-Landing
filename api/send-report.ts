@@ -6,7 +6,7 @@ import {
   renderReportPdf,
   reportFileName,
   sanitizeReportInput
-} from '../lib/exposureReport';
+} from '../lib/exposureReport.js';
 
 const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const DAY_MS = 24 * 60 * 60 * 1000;
