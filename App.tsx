@@ -74,7 +74,38 @@ export interface StealerLogResponse {
   data_freshness?: string;
   compromised_entities?: string[];
   global_percentile?: number;
+  records?: StealerLogRecord[];
 }
+
+export type StealerLogRecord = Record<string, unknown>;
+
+const SEARCH_CACHE_KEY = 'orion.searchCache';
+const SEARCH_CACHE_LIMIT = 100;
+const SEARCH_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+
+type CachedSearch = { query: string; data: StealerLogResponse; savedAt: number };
+
+const readSearchCache = (): CachedSearch[] => {
+  try {
+    const entries = JSON.parse(localStorage.getItem(SEARCH_CACHE_KEY) || '[]');
+    const now = Date.now();
+    return Array.isArray(entries) ? entries.filter((entry) => entry?.query && entry?.data && now - entry.savedAt < SEARCH_CACHE_TTL_MS) : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveSearchCache = (query: string, data: StealerLogResponse) => {
+  const entries = [{ query, data, savedAt: Date.now() }, ...readSearchCache().filter((entry) => entry.query !== query)].slice(0, SEARCH_CACHE_LIMIT);
+  for (let count = entries.length; count > 0; count = Math.floor(count / 2)) {
+    try {
+      localStorage.setItem(SEARCH_CACHE_KEY, JSON.stringify(entries.slice(0, count)));
+      return;
+    } catch {
+      // Storage full: retry with fewer of the most recent entries.
+    }
+  }
+};
 
 type ViewType = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | '404';
 
@@ -214,7 +245,7 @@ const App: React.FC = () => {
   const [footerLogoError, setFooterLogoError] = useState(false);
   const [heroSearch, setHeroSearch] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [searchError, setSearchError] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
   const [searchResult, setSearchResult] = useState<{ query: string, data: StealerLogResponse } | null>(null);
   const { t } = useLanguage();
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -244,18 +275,35 @@ const App: React.FC = () => {
 
   const handleHeroSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSearchError(false);
-    if (!heroSearch) return;
+    setSearchError(null);
+    const query = heroSearch.replace(/\s+/g, '');
+    if (!query) return;
 
-    if (!validateEmail(heroSearch)) {
-      setSearchError(true);
+    if (!validateEmail(query)) {
+      setSearchError('Please enter a valid email address.');
+      return;
+    }
+
+    const cached = readSearchCache().find((entry) => entry.query === query.toLowerCase());
+    if (cached) {
+      setSearchResult({ query, data: cached.data });
+      navigateTo('search-results');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
     setIsSearching(true);
     try {
-      const response = await fetch(`https://try.orionintelligence.org/api/search/stealerlogs?q=${encodeURIComponent(heroSearch)}`);
-      if (!response.ok) throw new Error("Search node failure");
+      const response = await fetch(`https://try.orionintelligence.org/api/search/stealerlogs?q=${encodeURIComponent(query)}`);
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        if (response.status === 429 || /search limit reached/i.test(body?.detail ?? '')) {
+          setSearchError('Daily quota limit reached.');
+        } else {
+          setSearchError('Please enter a valid email address.');
+        }
+        return;
+      }
       const data: StealerLogResponse = await response.json();
       
       const enrichedData: StealerLogResponse = {
@@ -266,13 +314,31 @@ const App: React.FC = () => {
         global_percentile: data.global_percentile ?? Math.floor(data.risk_score * 0.95)
       };
 
-      setSearchResult({ query: heroSearch, data: enrichedData });
+      saveSearchCache(query.toLowerCase(), enrichedData);
+      setSearchResult({ query, data: enrichedData });
       navigateTo('search-results');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
-      setSearchError(true);
+      setSearchError('Please enter a valid email address.');
     } finally {
       setIsSearching(false);
+    }
+  };
+
+  const handleSendReport = async (email: string): Promise<string | null> => {
+    try {
+      const response = await fetch('https://try.orionintelligence.org/api/search/stealerlogs/report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      if (response.ok) return null;
+      const body = await response.json().catch(() => null);
+      if (response.status === 429) return 'Daily email limit reached.';
+      if (response.status === 404) return 'No exposures found for this email.';
+      return typeof body?.detail === 'string' ? body.detail : 'Could not send the report. Please try again.';
+    } catch {
+      return 'Could not send the report. Please try again.';
     }
   };
 
@@ -344,6 +410,7 @@ const App: React.FC = () => {
                 onBack={() => navigateTo('home')}
                 onNavigateToRemediation={() => navigateTo('remediation-guide')}
                 onNavigateToPricing={() => navigateTo('pricing')}
+                onSendReport={handleSendReport}
               />
             </div>
           ) : (view === 'remediation-guide' && searchResult) ? (

@@ -1,13 +1,9 @@
 
 import React, { useState } from 'react';
-import { 
-  ArrowLeft, Mail, Database, ShieldCheck,
-  CheckCircle2, History, TrendingUp, BarChart3,
-  Binary, Target, Network,
-  AlertOctagon, Fingerprint, Key,
-  Radar, Activity, Lock, X, AlertTriangle
+import {
+  ArrowLeft, Mail, CheckCircle2, History, Radar, Activity, X, AlertTriangle, Globe, ChevronRight, Send, Loader2, CalendarClock, Radio
 } from 'lucide-react';
-import { StealerLogResponse } from '../App';
+import { StealerLogResponse, StealerLogRecord } from '../App';
 
 interface SearchResultsProps {
   query: string;
@@ -15,10 +11,144 @@ interface SearchResultsProps {
   onBack: () => void;
   onNavigateToRemediation: () => void;
   onNavigateToPricing: () => void;
+  onSendReport: (email: string) => Promise<string | null>;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNavigateToRemediation, onNavigateToPricing }) => {
+const DETAIL_EXCLUDED_KEYS = new Set([
+  '_id', 'raw', 'type', 'file_type', 'fileType', 'date', 'channel', 'm_channel', 'm_sub_host',
+  'source_channel', 'm_source_channel', 'ip', 'password', 'hash', 'index', 'mapping', 'delimiter',
+  'domain', 'source_domain', 'service_domain', 'domains', 'email', 'dismissed', 'dismiss_id'
+]);
+
+const toList = (value: unknown): string[] =>
+  (Array.isArray(value) ? value : [value])
+    .filter((v) => v !== null && v !== undefined && v !== '')
+    .map((v) => (typeof v === 'object' ? JSON.stringify(v) : String(v).trim()))
+    .filter(Boolean);
+
+const unique = (values: string[]) => Array.from(new Set(values));
+
+const prettyLabel = (key: string) => {
+  const cleaned = key.replace(/^m_/, '').replace(/[_-]+/g, ' ').replace(/[^a-zA-Z0-9 ]/g, ' ').trim();
+  if (!cleaned) return key;
+  if (cleaned.length < 4) return cleaned.toUpperCase();
+  return cleaned.toLowerCase().replace(/\w\S*/g, (w) => w[0].toUpperCase() + w.slice(1));
+};
+
+const urlHost = (value: string) => {
+  try {
+    return new URL(value.includes('://') ? value : `https://${value}`).hostname.replace(/^www\./, '');
+  } catch {
+    return '';
+  }
+};
+
+const breachedSitesOf = (record: StealerLogRecord) =>
+  unique([
+    ...toList(record.source_domain),
+    ...toList(record.service_domain),
+    ...toList(record.domains),
+    ...toList(record.url).map(urlHost)
+  ].filter(Boolean).map((v) => v.toLowerCase().replace(/^www\./, '')));
+
+const recordDomains = (record: StealerLogRecord) => {
+  if (record.type === 'bin') return toList(record.Type);
+  const domains = unique([
+    ...toList(record.service_domain),
+    ...toList(record.domain),
+    ...toList(record.source_domain),
+    ...toList(record.domains)
+  ]);
+  if (domains.length) return domains;
+  const ips = toList(record.ip);
+  return ips.length ? ips : toList(record.channel);
+};
+
+const recordIdentity = (record: StealerLogRecord) => {
+  if (record.type === 'bin') return toList(record.bin)[0] || '';
+  return toList(record.email)[0]
+    ?? toList(record.username)[0]
+    ?? toList(record.phone)[0]
+    ?? toList(record.identifier)[0]
+    ?? unique([...toList(record.ipv4), ...toList(record.ip)])[0]
+    ?? '';
+};
+
+const recordDetails = (record: StealerLogRecord) => {
+  const groups: { key: string; label: string; values: string[] }[] = [];
+  const emails = unique(toList(record.email));
+  if (emails.length) groups.push({ key: 'email', label: 'Email', values: emails });
+  const sourceDomains = unique([...toList(record.source_domain), ...toList(record.service_domain), ...toList(record.domains)]);
+  const domains = unique([...toList(record.domain), ...sourceDomains]);
+  if (domains.length) groups.push({ key: 'domain', label: sourceDomains.length ? 'Domain / Source Domain' : 'Domain', values: domains });
+  const ips = unique(toList(record.ip));
+  if (ips.length) groups.push({ key: 'ip', label: 'IP', values: ips });
+  const rest = Object.keys(record)
+    .filter((key) => !DETAIL_EXCLUDED_KEYS.has(key) && !/pass|pwd|secret|token|cvv|cvc/i.test(key))
+    .map((key) => ({ key, label: prettyLabel(key), values: toList(record[key]) }))
+    .filter((g) => g.values.length > 0)
+    .filter((g) => !/hash|index/i.test(g.key) && !/hash|index/i.test(g.label))
+    .sort((a, b) => a.label.localeCompare(b.label));
+  return [...groups, ...rest];
+};
+
+const formatDate = (value: unknown) => {
+  const raw = toList(value)[0];
+  if (!raw) return '—';
+  const date = new Date(raw);
+  return Number.isNaN(date.getTime()) ? raw : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
+const TYPE_BADGE: Record<string, string> = {
+  combo: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
+  sql: 'bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20',
+  cookie: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
+  card: 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20',
+  bin: 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20'
+};
+
+const typeBadge = (type: unknown) =>
+  TYPE_BADGE[String(type ?? '').toLowerCase()] ?? 'bg-slate-500/10 text-slate-600 dark:text-white/60 border-slate-500/20';
+
+const timeOf = (value: unknown) => {
+  const time = new Date(toList(value)[0] ?? '').getTime();
+  return Number.isNaN(time) ? 0 : time;
+};
+
+const PRIORITY_RECORD_LIMIT = 10;
+
+const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNavigateToRemediation, onNavigateToPricing, onSendReport }) => {
   const [showApiPopup, setShowApiPopup] = useState(false);
+  const [expandedRecord, setExpandedRecord] = useState<number | null>(null);
+  const [sendState, setSendState] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [sendError, setSendError] = useState<string | null>(null);
+
+  const records = data.records ?? [];
+  const siteStats = new Map<string, { count: number; latest: number }>();
+  records.forEach((record) => breachedSitesOf(record).forEach((site) => {
+    const current = siteStats.get(site) ?? { count: 0, latest: 0 };
+    siteStats.set(site, { count: current.count + 1, latest: Math.max(current.latest, timeOf(record.date)) });
+  }));
+  const breachedSites = Array.from(siteStats.entries()).sort((a, b) => b[1].count - a[1].count || a[0].localeCompare(b[0]));
+  const maxSiteCount = Math.max(1, ...breachedSites.map(([, stat]) => stat.count));
+  const emailCounts = new Map<string, number>();
+  records.forEach((record) => unique(toList(record.email).map((email) => email.toLowerCase())).forEach((email) => emailCounts.set(email, (emailCounts.get(email) ?? 0) + 1)));
+  const associatedEmails = Array.from(emailCounts.entries()).sort((a, b) => Number(b[0] === query.toLowerCase()) - Number(a[0] === query.toLowerCase()) || b[1] - a[1]);
+  const sources = unique(records.flatMap((record) => toList(record.channel)));
+  const latestSeen = Math.max(0, ...records.map((record) => timeOf(record.date)));
+  const visibleRecords = [...records].sort((a, b) => timeOf(b.date) - timeOf(a.date)).slice(0, PRIORITY_RECORD_LIMIT);
+
+  const handleSendReport = async () => {
+    setSendState('sending');
+    setSendError(null);
+    const error = await onSendReport(query);
+    if (error) {
+      setSendError(error);
+      setSendState('idle');
+    } else {
+      setSendState('sent');
+    }
+  };
 
   const getRiskBg = (score: number) => {
     if (score > 80) return 'bg-red-500';
@@ -152,129 +282,220 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
             </div>
           </div>
 
+          {records.length > 0 && (
+            <div className="flex flex-col items-stretch md:items-end gap-2 md:pb-4">
+              <button
+                type="button"
+                onClick={handleSendReport}
+                disabled={sendState !== 'idle'}
+                className="px-5 py-3 rounded-xl bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all hover:bg-blue-500 active:scale-95 disabled:opacity-80 disabled:cursor-default disabled:hover:bg-blue-600"
+              >
+                {sendState === 'sending' && <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Sending…</>}
+                {sendState === 'sent' && <><CheckCircle2 className="w-3.5 h-3.5" /> Report Sent</>}
+                {sendState === 'idle' && <><Send className="w-3.5 h-3.5" /> Email Full Report</>}
+              </button>
+              <p className="text-[11px] text-slate-500 dark:text-white/40 md:text-right">
+                {sendState === 'sent'
+                  ? <>Sent to <span className="font-mono">{query}</span>. Check the inbox shortly.</>
+                  : <>All {records.length} {records.length === 1 ? 'record' : 'records'} to this inbox · passwords never included</>}
+              </p>
+              {sendError && (
+                <p className="flex items-center gap-1.5 text-[11px] font-bold text-red-500 md:justify-end">
+                  <AlertTriangle className="w-3.5 h-3.5 shrink-0" /> {sendError}
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
+        {records.length > 0 && (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: 'Risk Index', val: `${data.risk_score}%`, color: data.risk_score > 60 ? 'text-red-500' : 'text-blue-500', icon: TrendingUp, meta: data.severity },
-            { label: 'Intel Confidence', val: `${data.intel_confidence || 98}%`, color: 'text-slate-900 dark:text-white', icon: CheckCircle2, meta: 'Verified' },
-            { label: 'Global Rank', val: data.global_percentile || 91, color: 'text-slate-900 dark:text-white', icon: BarChart3, meta: 'Percentile' },
-            { label: 'Exposures', val: data.total_exposures, color: 'text-slate-900 dark:text-white', icon: Database, meta: 'Records' }
+            { label: 'Breached Sites', val: breachedSites.length, color: 'text-red-500', icon: Globe, meta: 'Sites' },
+            { label: 'Associated Emails', val: associatedEmails.length, color: 'text-slate-900 dark:text-white', icon: Mail, meta: 'Emails' },
+            { label: 'Sources', val: sources.length, color: 'text-slate-900 dark:text-white', icon: Radio, meta: 'Channels' },
+            {
+              label: 'Last Seen',
+              val: latestSeen ? new Date(latestSeen).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—',
+              color: 'text-slate-900 dark:text-white',
+              icon: CalendarClock,
+              meta: latestSeen ? String(new Date(latestSeen).getFullYear()) : ''
+            }
           ].map((stat, i) => (
             <div key={i} className={`${cardStyle} p-6 space-y-3`}>
               <div className="flex items-center gap-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
                 <stat.icon className="w-3.5 h-3.5 text-blue-500/50" />
                 {stat.label}
               </div>
-              <div className="flex items-end gap-2">
-                <span className={`text-3xl font-black tracking-tighter ${stat.color}`}>{stat.val}</span>
+              <div className="flex flex-wrap items-end gap-x-2">
+                <span className={`text-3xl font-black tracking-tighter whitespace-nowrap ${stat.color}`}>{stat.val}</span>
                 <span className="text-[9px] font-black text-slate-400 uppercase mb-1">{stat.meta}</span>
               </div>
             </div>
           ))}
         </div>
+        )}
 
-        <div className="grid lg:grid-cols-12 gap-6 items-start">
-          <div className="lg:col-span-8 space-y-6">
-            <div className={`${cardStyle} p-10 space-y-8 bg-slate-50/50 dark:bg-black/40`}>
-              <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/5 pb-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-lg bg-blue-600/5 text-blue-600">
-                    <Binary className="w-5 h-5" />
+        {records.length > 0 && (
+          <section className={`${cardStyle} overflow-hidden`}>
+            <div className="p-6 md:p-10 space-y-8">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-900 dark:text-white">Records</span>
+                  <span className="text-[10px] font-mono text-slate-400">
+                    {visibleRecords.length < records.length ? `Showing ${visibleRecords.length} of ${records.length} · ` : ''}most recent first
+                  </span>
+                </div>
+                <div className="rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden">
+                  <div className="hidden md:grid grid-cols-[44px_1.3fr_1.2fr_1fr_110px_32px] gap-3 items-center px-4 py-3 bg-slate-50 dark:bg-white/[0.03] border-b border-slate-200 dark:border-white/10 text-[9px] font-black uppercase tracking-widest text-slate-400">
+                    <div>#</div>
+                    <div>Domain / Host</div>
+                    <div>Credential Identifier</div>
+                    <div>Source</div>
+                    <div>Date</div>
+                    <div></div>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-widest">Heuristic Briefing</h3>
-                </div>
-                <div className="flex flex-col items-end">
-                   <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Main Vector</span>
-                   <span className="text-sm md:text-base font-black text-blue-600 uppercase leading-none">{data.primary_type || 'Botnet_Exfil'}</span>
+                  {visibleRecords.map((record, i) => {
+                    const domains = recordDomains(record);
+                    const identity = recordIdentity(record);
+                    const isOpen = expandedRecord === i;
+                    return (
+                      <div key={i} className="border-b last:border-b-0 border-slate-200 dark:border-white/5">
+                        <button
+                          type="button"
+                          onClick={() => setExpandedRecord(isOpen ? null : i)}
+                          aria-expanded={isOpen}
+                          className={`w-full text-left transition-colors hover:bg-slate-50 dark:hover:bg-white/[0.03] ${isOpen ? 'bg-slate-50 dark:bg-white/[0.03]' : ''}`}
+                        >
+                          <div className="hidden md:grid grid-cols-[44px_1.3fr_1.2fr_1fr_110px_32px] gap-3 items-center px-4 py-3.5 text-[12px]">
+                            <span className="font-mono text-[11px] text-slate-400">{String(i + 1).padStart(2, '0')}</span>
+                            <span className="flex min-w-0 items-center gap-1.5 overflow-hidden" title={domains.join(', ')}>
+                              {domains.length ? (
+                                <>
+                                  {domains.slice(0, 2).map((domain) => (
+                                    <span key={domain} className="shrink-0 rounded-md border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/[0.04] px-2 py-0.5 font-mono text-[11px] text-slate-700 dark:text-white/70">{domain}</span>
+                                  ))}
+                                  {domains.length > 2 && <span className="shrink-0 font-mono text-[11px] text-slate-400">+{domains.length - 2}</span>}
+                                </>
+                              ) : (
+                                <span className="text-slate-400">Not available</span>
+                              )}
+                            </span>
+                            <span className="truncate font-mono text-slate-900 dark:text-white" title={identity}>{identity || 'Not available'}</span>
+                            <span className="flex min-w-0 items-center gap-2">
+                              <span className="truncate text-slate-600 dark:text-white/60" title={toList(record.channel).join(', ')}>{toList(record.channel)[0] || '—'}</span>
+                              {record.type ? <span className={`shrink-0 rounded-md border px-1.5 py-0.5 text-[8px] font-black uppercase tracking-widest ${typeBadge(record.type)}`}>{String(record.type)}</span> : null}
+                            </span>
+                            <span className="text-[11px] text-slate-500 dark:text-white/40">{formatDate(record.date)}</span>
+                            <ChevronRight className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? 'rotate-90' : ''}`} />
+                          </div>
+                          <div className="md:hidden px-4 py-4 space-y-2">
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="font-mono text-[12px] font-bold text-slate-900 dark:text-white truncate">{identity || 'Not available'}</span>
+                              <ChevronRight className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${isOpen ? 'rotate-90' : ''}`} />
+                            </div>
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              {domains.slice(0, 3).map((domain) => (
+                                <span key={domain} className="rounded-md border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/[0.04] px-2 py-0.5 font-mono text-[11px] text-slate-700 dark:text-white/70 break-all">{domain}</span>
+                              ))}
+                            </div>
+                            <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-white/40">
+                              {record.type ? <span className={`rounded-md border px-1.5 py-0.5 text-[8px] font-black uppercase tracking-widest ${typeBadge(record.type)}`}>{String(record.type)}</span> : null}
+                              <span className="truncate">{toList(record.channel)[0] || '—'}</span>
+                              <span>·</span>
+                              <span className="shrink-0">{formatDate(record.date)}</span>
+                            </div>
+                          </div>
+                        </button>
+                        {isOpen && (
+                          <div className="px-4 pb-5 pt-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 animate-in fade-in duration-200">
+                            {recordDetails(record).map((group) => (
+                              <div key={group.key} className="rounded-xl border border-slate-200 dark:border-white/10 bg-white/60 dark:bg-black/30 p-3 space-y-1.5">
+                                <span className="text-[9px] font-black uppercase tracking-widest text-slate-400">{group.label}</span>
+                                <div className="space-y-0.5">
+                                  {group.values.map((value, j) => (
+                                    <div key={j} className="font-mono text-[11px] text-slate-800 dark:text-white/80 break-all">{value}</div>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-6 rounded-2xl bg-white/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 space-y-4 shadow-sm">
-                  <div className="flex items-center gap-3 text-red-500">
-                     <Target className="w-4 h-4" />
-                     <span className="text-[10px] font-bold uppercase tracking-widest">High Impact Source</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-black text-slate-900 dark:text-white font-mono">{data.primary_channel}</span>
-                    <span className="text-[10px] font-mono text-red-600">{data.primary_channel_hits} HITS</span>
-                  </div>
-                </div>
-                <div className="p-6 rounded-2xl bg-white/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 space-y-4 shadow-sm">
-                  <div className="flex items-center gap-3 text-blue-600">
-                     <Network className="w-4 h-4" />
-                     <span className="text-[10px] font-bold uppercase tracking-widest">Network Consistency</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-black text-slate-900 dark:text-white font-mono">Verified_Hash</span>
-                    <span className="text-[10px] font-mono text-blue-600 uppercase">Consistent</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white/80 dark:bg-black border border-slate-200 dark:border-white/5 font-mono text-[10px] text-slate-500 dark:text-white/40 leading-relaxed shadow-xl dark:shadow-2xl">
-                <div className="flex gap-4 border-b border-slate-200 dark:border-white/5 pb-3 mb-4 text-[8px] font-black uppercase text-slate-400 dark:text-white/20">
-                   <span>Node_v4.2.0</span>
-                   <span className="text-blue-500">Analysis_Nominal</span>
-                </div>
-                <div className="space-y-1.5">
-                  <p><span className="text-slate-300 dark:text-white/10">{'>>'}</span> TARGET_NODE: <span className="text-slate-800 dark:text-white/70">{query}</span></p>
-                  <p><span className="text-slate-300 dark:text-white/10">{'>>'}</span> SOURCE: <span className="text-slate-800 dark:text-white/70">{data.primary_channel}</span> <span className="text-blue-500">[{data.primary_channel_hits} HITS]</span></p>
-                  <p><span className="text-slate-300 dark:text-white/10">{'>>'}</span> RESULT: <span className="text-red-500">POSITIVE</span> IN <span className="text-slate-800 dark:text-white/70">{data.unique_channels}</span> CLUSTERS.</p>
-                  <p><span className="text-slate-300 dark:text-white/10">{'>>'}</span> PATTERN: <span className="text-slate-800 dark:text-white/70">{data.primary_type.toUpperCase()}</span>.</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 space-y-6">
-            <div className="p-8 rounded-3xl bg-blue-600 space-y-6 text-white relative overflow-hidden shadow-2xl">
-              <div className="space-y-4 relative z-10">
-                <div className="w-10 h-10 rounded-lg bg-white/20 border border-white/30 flex items-center justify-center backdrop-blur-md">
-                   <AlertOctagon className="w-5 h-5" />
-                </div>
-                <h4 className="text-xl font-black uppercase tracking-widest">Mitigation</h4>
-              </div>
-              <p className="text-xs font-medium leading-relaxed opacity-80 relative z-10">
-                Exposure confirmed. Neutralize associated session tokens and rotate all compromised credentials immediately.
-              </p>
-              <div className="pt-2 relative z-10">
-                 <button 
-                  onClick={onNavigateToRemediation}
-                  className="w-full py-3 bg-white text-blue-600 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-slate-50 transition-all active:scale-95 shadow-xl"
-                >
-                  Remediation Guide <ShieldCheck className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-
-            <div className={`${cardStyle} p-8 space-y-8`}>
-              <div className="space-y-1">
-                <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest block">Operational Protocol</span>
-                <p className="text-[8px] text-slate-400 uppercase font-black tracking-widest">Mandatory steps</p>
-              </div>
-              <div className="space-y-6">
-                {[
-                  { icon: Key, label: 'Password Cycle', desc: 'Force update of all credentials.' },
-                  { icon: Lock, label: 'Session Purge', desc: 'Terminate all active SSO tokens.' },
-                  { icon: Fingerprint, label: 'MFA Hardware', desc: 'Mandate FIDO2 hardware keys.' }
-                ].map((step, i) => (
-                  <div key={i} className="flex gap-4 items-start group cursor-default">
-                    <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm">
-                      <step.icon className="w-4.5 h-4.5 opacity-30 group-hover:opacity-100 transition-opacity" />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="rounded-2xl bg-white/50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 overflow-hidden">
+                  <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-white/5">
+                    <div className="flex items-center gap-2.5 text-red-500">
+                      <Globe className="w-4 h-4" />
+                      <span className="text-[10px] font-black uppercase tracking-widest">Where it was breached</span>
                     </div>
-                    <div className="space-y-0.5">
-                      <h5 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-wider">{step.label}</h5>
-                      <p className="text-[9px] text-slate-500 dark:text-white/40 font-medium leading-tight">{step.desc}</p>
-                    </div>
+                    <span className="text-[10px] font-mono text-slate-400">{breachedSites.length}</span>
                   </div>
-                ))}
+                  {breachedSites.length ? (
+                    <ul className="max-h-72 overflow-y-auto divide-y divide-slate-200 dark:divide-white/5">
+                      {breachedSites.map(([site, stat]) => (
+                        <li key={site} className="px-5 py-3 flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center text-xs font-black uppercase shrink-0">{site[0]}</div>
+                          <div className="min-w-0 flex-1 space-y-1.5">
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="font-mono text-[12px] text-slate-800 dark:text-white/80 break-all">{site}</span>
+                              <span className="text-[10px] font-mono text-slate-400 shrink-0">{stat.count} {stat.count === 1 ? 'hit' : 'hits'}</span>
+                            </div>
+                            <div className="h-1 rounded-full bg-slate-200 dark:bg-white/5 overflow-hidden">
+                              <div className="h-full rounded-full bg-red-500/70" style={{ width: `${(stat.count / maxSiteCount) * 100}%` }}></div>
+                            </div>
+                          </div>
+                          <span className="hidden sm:block text-[10px] text-slate-400 shrink-0 w-20 text-right">{stat.latest ? formatDate(new Date(stat.latest).toISOString()) : '—'}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="px-5 py-6 text-[12px] text-slate-400 dark:text-white/30">No site recorded for these entries.</p>
+                  )}
+                </div>
+
+                <div className="rounded-2xl bg-white/50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 overflow-hidden">
+                  <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-white/5">
+                    <div className="flex items-center gap-2.5 text-blue-600">
+                      <Mail className="w-4 h-4" />
+                      <span className="text-[10px] font-black uppercase tracking-widest">Associated emails</span>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400">{associatedEmails.length}</span>
+                  </div>
+                  {associatedEmails.length ? (
+                    <ul className="max-h-72 overflow-y-auto divide-y divide-slate-200 dark:divide-white/5">
+                      {associatedEmails.map(([email, count]) => {
+                        const isQuery = email === query.toLowerCase();
+                        return (
+                          <li key={email} className="px-5 py-3 flex items-center gap-3">
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isQuery ? 'bg-blue-600 text-white' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'}`}>
+                              <Mail className="w-3.5 h-3.5" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className={`font-mono text-[12px] break-all ${isQuery ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-800 dark:text-white/80'}`}>{email}</div>
+                              <div className="flex items-center gap-2 mt-0.5">
+                                {isQuery && <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded bg-blue-600/10 text-blue-600 dark:text-blue-400">Searched</span>}
+                                <span className="text-[10px] font-mono text-slate-400">{count} {count === 1 ? 'record' : 'records'}</span>
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    <p className="px-5 py-6 text-[12px] text-slate-400 dark:text-white/30">No email recorded for these entries.</p>
+                  )}
+                </div>
               </div>
+
             </div>
-          </div>
-        </div>
+          </section>
+        )}
       </div>
       {showApiPopup && <ApiAccessPopup onClose={() => setShowApiPopup(false)} onContact={onNavigateToPricing} />}
     </div>

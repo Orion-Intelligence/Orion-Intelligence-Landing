@@ -26,8 +26,8 @@ interface HomepageFlowProps {
   t: (key: TranslationKey) => string;
   heroSearch: string;
   setHeroSearch: React.Dispatch<React.SetStateAction<string>>;
-  searchError: boolean;
-  setSearchError: React.Dispatch<React.SetStateAction<boolean>>;
+  searchError: string | null;
+  setSearchError: React.Dispatch<React.SetStateAction<string | null>>;
   isSearching: boolean;
   onHeroSearch: (e: React.FormEvent) => void;
   onNavigate: (view: HomeView) => void;
@@ -134,7 +134,7 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
                 value={heroSearch}
                 onChange={(e) => {
                   setHeroSearch(e.target.value);
-                  if (searchError) setSearchError(false);
+                  if (searchError) setSearchError(null);
                 }}
                 placeholder="Search email identifier..."
                 className={`w-full py-5 pl-14 pr-28 sm:pr-36 rounded-full text-[13px] font-bold transition-all tracking-wider outline-none border ring-1 focus:ring-1 ${
@@ -154,7 +154,7 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
             {searchError && (
               <div className="mt-4 flex justify-end pr-2">
                 <div className="flex items-center gap-2 text-red-500 animate-in fade-in slide-in-from-top-1">
-                  <span className="text-[10px] font-black uppercase tracking-widest">Please enter a valid email address.</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest">{searchError}</span>
                   <ShieldAlert className="w-4 h-4" />
                 </div>
               </div>
