@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Command, Ghost, Lock, Code2, ListTree, Menu, X, Sun, Moon, Shield, Radio, Activity, Globe, Tag } from 'lucide-react';
+import { Command, Ghost, Lock, Code2, ListTree, Menu, X, Sun, Moon, Shield, Radio, Activity, Globe, Tag, Sparkles, ExternalLink } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import { Language } from '../translations';
+
+// The AI analyst product has its own site; the nav and footer send people there.
+export const DEEPINTEL_URL = 'https://deepintel.si/';
 
 interface NavbarProps {
   onNavigate: (view: 'home' | 'adversaries' | 'api-docs' | 'sources' | 'pricing' | 'collaboration') => void;
@@ -69,13 +72,15 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
     };
   }, [isMenuOpen]);
 
-  const menuItems = [
+  // entries with an href leave the site (DeepIntel has its own home) instead of switching views
+  const menuItems: { id: string; label: string; icon: React.ElementType; href?: string }[] = [
     { id: 'home', label: t('nav_intelligence_os'), icon: Activity },
     { id: 'adversaries', label: t('nav_adversaries'), icon: Ghost },
     { id: 'sources', label: t('nav_sources'), icon: ListTree },
     { id: 'api-docs', label: t('nav_api_docs'), icon: Code2 },
     { id: 'pricing', label: 'Pricing', icon: Tag },
     { id: 'collaboration', label: 'Collaboration', icon: Radio },
+    { id: 'deepintel', label: 'DeepIntel', icon: Sparkles, href: DEEPINTEL_URL },
   ];
 
   const languages: { code: Language; label: string }[] = [
@@ -108,16 +113,30 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8 lg:space-x-10">
-              {menuItems.map((item) => (
-                <button 
+              {menuItems.map((item) =>
+                item.href ? (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-500 dark:text-white/40 hover:text-blue-600 dark:hover:text-white transition-all text-[10px] font-black uppercase tracking-widest flex items-center gap-2"
+                  >
+                    <item.icon className="w-3 h-3 opacity-40" />
+                    {item.label}
+                    <ExternalLink className="w-2.5 h-2.5 opacity-30" />
+                  </a>
+                ) : (
+                <button
                   key={item.id}
-                  onClick={() => handleNavigate(item.id as any)} 
+                  onClick={() => handleNavigate(item.id as any)}
                   className={`${(currentView === item.id || (item.id === 'adversaries' && currentView === 'actor-dossier')) ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-white/40'} hover:text-blue-600 dark:hover:text-white transition-all text-[10px] font-black uppercase tracking-widest flex items-center gap-2`}
                 >
                   {item.icon && <item.icon className={`w-3 h-3 ${(currentView === item.id || (item.id === 'adversaries' && currentView === 'actor-dossier')) ? 'opacity-100' : 'opacity-40'}`} />}
                   {item.label}
                 </button>
-              ))}
+                ),
+              )}
               
               <div className="h-4 w-px bg-slate-200 dark:bg-white/10"></div>
               
@@ -268,10 +287,34 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
               <div className="py-2 md:py-6 px-5 md:px-10 space-y-0.5 md:space-y-2">
                 <div className="text-[7px] md:text-[10px] font-black text-blue-600/50 dark:text-blue-500/40 uppercase tracking-[0.3em] py-4 md:py-6 px-3 md:px-5">System Matrix</div>
                 
-                {menuItems.map((item, index) => (
-                  <button 
+                {menuItems.map((item, index) =>
+                  item.href ? (
+                    <a
+                      key={item.id}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => toggleMenu(false)}
+                      style={{ transitionDelay: `${index * 25}ms` }}
+                      className={`group relative w-full text-left py-2 md:py-3.5 px-3 md:px-5 rounded-lg md:rounded-2xl transition-all duration-200 flex items-center gap-3 md:gap-5 text-slate-600 dark:text-white/30 hover:bg-slate-50 dark:hover:bg-white/[0.02] ${
+                        isAnimating ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
+                      }`}
+                    >
+                      <div className="p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 bg-slate-100/50 dark:bg-white/5 text-slate-500 dark:text-white/10">
+                        <item.icon className="w-3.5 h-3.5 md:w-5 md:h-5" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[12px] md:text-base font-black uppercase tracking-widest leading-none mb-1 flex items-center gap-2">
+                          {item.label}
+                          <ExternalLink className="w-3 h-3 opacity-40" />
+                        </span>
+                        <span className="text-[6px] md:text-[8px] font-mono uppercase opacity-30 tracking-[0.2em]">deepintel.si</span>
+                      </div>
+                    </a>
+                  ) : (
+                  <button
                     key={item.id}
-                    onClick={() => handleNavigate(item.id as any)} 
+                    onClick={() => handleNavigate(item.id as any)}
                     style={{ transitionDelay: `${index * 25}ms` }}
                     className={`group relative w-full text-left py-2 md:py-3.5 px-3 md:px-5 rounded-lg md:rounded-2xl transition-all duration-200 flex items-center gap-3 md:gap-5 ${
                       isAnimating ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
@@ -291,7 +334,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
                       <span className="text-[6px] md:text-[8px] font-mono uppercase opacity-30 tracking-[0.2em]">module_{item.id}</span>
                     </div>
                   </button>
-                ))}
+                  ),
+                )}
 
                 <div className="pt-6 md:pt-10 px-3 md:px-5 space-y-3 md:space-y-5">
                   <div className="text-[7px] md:text-[10px] font-black text-slate-400 dark:text-white/10 uppercase tracking-[0.3em]">Language Hub</div>

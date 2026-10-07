@@ -43,7 +43,7 @@ import {
   Quote,
   ShieldEllipsis
 } from 'lucide-react';
-import Navbar from './components/Navbar';
+import Navbar, { DEEPINTEL_URL } from './components/Navbar';
 import HomepageFlow from './components/HomepageFlow';
 import IntelligenceProbe from './components/IntelligenceProbe';
 import IntelligenceFeed from './components/IntelligenceFeed';
@@ -267,17 +267,10 @@ const App: React.FC = () => {
 
   const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
-  const validateEmail = (email: string) => {
-    return String(email)
-      .toLowerCase()
-      .match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
-  };
-
-  // Accept any email (including company domains) or any username-like handle.
-  // Only block input that could break the backend search query (spaces, query operators).
+  // Accept any identifier (email, username, domain, phone, etc.).
+  // Only block input that could break the backend search query.
   const validateIdentifier = (value: string) =>
-    value.length >= 1 && value.length <= 254 && !/[\s*:&|]/.test(value) &&
-    (value.includes('@') ? Boolean(validateEmail(value)) : true);
+    value.length >= 1 && value.length <= 254 && !/[\s*:&|]/.test(value);
 
   const handleHeroSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -286,7 +279,7 @@ const App: React.FC = () => {
     if (!query) return;
 
     if (!validateIdentifier(query)) {
-      setSearchError('Please enter a valid email or username.');
+      setSearchError('Please enter something to search.');
       return;
     }
 
@@ -306,7 +299,7 @@ const App: React.FC = () => {
         if (response.status === 429 || /search limit reached/i.test(body?.detail ?? '')) {
           setSearchError('Daily quota limit reached.');
         } else if (response.status === 400 || response.status === 422) {
-          setSearchError('Please enter a valid email or username.');
+          setSearchError('Please enter something to search.');
         } else {
           setSearchError('Search is unavailable right now. Please try again.');
         }
@@ -333,22 +326,6 @@ const App: React.FC = () => {
     }
   };
 
-  const handleSendReport = async (email: string): Promise<string | null> => {
-    try {
-      const response = await fetch('/api/send-report', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, report: searchResult?.data })
-      });
-      if (response.ok) return null;
-      const body = await response.json().catch(() => null);
-      if (response.status === 429) return 'Daily email limit reached.';
-      if (response.status === 404) return 'No exposures found for this email.';
-      return typeof body?.detail === 'string' ? body.detail : 'Could not send the report. Please try again.';
-    } catch {
-      return 'Could not send the report. Please try again.';
-    }
-  };
 
   useEffect(() => {
     document.title = "Orion Intelligence | Unified OSINT & Investigative Intelligence";
@@ -418,7 +395,6 @@ const App: React.FC = () => {
                 onBack={() => navigateTo('home')}
                 onNavigateToRemediation={() => navigateTo('remediation-guide')}
                 onNavigateToPricing={() => navigateTo('pricing')}
-                onSendReport={handleSendReport}
               />
             </div>
           ) : (view === 'remediation-guide' && searchResult) ? (
@@ -513,6 +489,7 @@ const App: React.FC = () => {
                     </h3>
                     <ul className="space-y-6 text-[11.5px] text-slate-500 dark:text-white/40 uppercase tracking-[0.12em] font-bold">
                       <li><a href="https://try.orionintelligence.org/" className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">Open Platform <ExternalLink className="w-3 h-3 opacity-20" /></a></li>
+                      <li><a href={DEEPINTEL_URL} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">DeepIntel.si <ExternalLink className="w-3 h-3 opacity-20" /></a></li>
                       <li><a href="https://github.com/Orion-Intelligence/Orion-Intelligence" className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">GitHub <Share2 className="w-3 h-3 opacity-20" /></a></li>
                       <li><button onClick={() => navigateTo('api-docs')} className="hover:text-blue-600 dark:hover:text-white transition-all">API Docs</button></li>
                     </ul>

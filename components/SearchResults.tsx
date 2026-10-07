@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import {
-  ArrowLeft, Mail, User, CheckCircle2, History, Radar, Activity, X, AlertTriangle, Globe, ChevronRight, Send, Loader2, CalendarClock, Radio
+  ArrowLeft, Mail, User, History, Radar, Activity, X, AlertTriangle, Globe, ChevronRight, CalendarClock, Radio
 } from 'lucide-react';
 import { StealerLogResponse, StealerLogRecord } from '../App';
 
@@ -11,7 +11,6 @@ interface SearchResultsProps {
   onBack: () => void;
   onNavigateToRemediation: () => void;
   onNavigateToPricing: () => void;
-  onSendReport: (email: string) => Promise<string | null>;
 }
 
 const DETAIL_EXCLUDED_KEYS = new Set([
@@ -117,11 +116,9 @@ const timeOf = (value: unknown) => {
 
 const PRIORITY_RECORD_LIMIT = 10;
 
-const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNavigateToRemediation, onNavigateToPricing, onSendReport }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNavigateToRemediation, onNavigateToPricing }) => {
   const [showApiPopup, setShowApiPopup] = useState(false);
   const [expandedRecord, setExpandedRecord] = useState<number | null>(null);
-  const [sendState, setSendState] = useState<'idle' | 'sending' | 'sent'>('idle');
-  const [sendError, setSendError] = useState<string | null>(null);
 
   const records = data.records ?? [];
   const isEmailQuery = query.includes('@');
@@ -139,17 +136,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
   const latestSeen = Math.max(0, ...records.map((record) => timeOf(record.date)));
   const visibleRecords = [...records].sort((a, b) => timeOf(b.date) - timeOf(a.date)).slice(0, PRIORITY_RECORD_LIMIT);
 
-  const handleSendReport = async () => {
-    setSendState('sending');
-    setSendError(null);
-    const error = await onSendReport(query);
-    if (error) {
-      setSendError(error);
-      setSendState('idle');
-    } else {
-      setSendState('sent');
-    }
-  };
 
   const getRiskBg = (score: number) => {
     if (score > 80) return 'bg-red-500';
@@ -283,30 +269,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
             </div>
           </div>
 
-          {isEmailQuery && (records.length > 0 || data.breach_found) && (
-            <div className="flex flex-col items-stretch md:items-end gap-2 md:pb-4">
-              <button
-                type="button"
-                onClick={handleSendReport}
-                disabled={sendState !== 'idle'}
-                className="px-5 py-3 rounded-xl bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all hover:bg-blue-500 active:scale-95 disabled:opacity-80 disabled:cursor-default disabled:hover:bg-blue-600"
-              >
-                {sendState === 'sending' && <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Sending…</>}
-                {sendState === 'sent' && <><CheckCircle2 className="w-3.5 h-3.5" /> Report Sent</>}
-                {sendState === 'idle' && <><Send className="w-3.5 h-3.5" /> Email Full Report</>}
-              </button>
-              <p className="text-[11px] text-slate-500 dark:text-white/40 md:text-right">
-                {sendState === 'sent'
-                  ? <>Sent to <span className="font-mono">{query}</span>. Check the inbox shortly.</>
-                  : <>Full PDF report to this inbox · passwords never included</>}
-              </p>
-              {sendError && (
-                <p className="flex items-center gap-1.5 text-[11px] font-bold text-red-500 md:justify-end">
-                  <AlertTriangle className="w-3.5 h-3.5 shrink-0" /> {sendError}
-                </p>
-              )}
-            </div>
-          )}
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

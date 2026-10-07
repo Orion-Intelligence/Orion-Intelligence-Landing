@@ -20,8 +20,8 @@ const Pricing: React.FC = () => {
     {
       id: "ESSENTIAL-01",
       name: "Essential",
-      price: billingCycle === 'annual' ? "1,200" : "1,500",
-      isQuote: false,
+      price: "QUOTE",
+      isQuote: true,
       desc: "For small teams that need core search, breach monitoring, and basic exposure checks.",
       features: [
         "3 analyst seats + 10 viewers",
@@ -33,7 +33,7 @@ const Pricing: React.FC = () => {
         "Basic alerts and WebScan",
         "Limited API access"
       ],
-      button: "Contact Us",
+      button: "Request Quote",
       type: "standard"
     },
     {
