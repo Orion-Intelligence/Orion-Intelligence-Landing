@@ -373,9 +373,9 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 text-left mb-14 md:mb-16">
               {[
                 { icon: Globe, label: t('contact_hq'), value: <>75 H2 Wapda Town <br />Lahore, Pakistan</> },
-                { icon: Anchor, label: t('contact_hub'), value: <>PO Box 65 Minto <br />Sydney, Australia, 2566</> },
-                { icon: Phone, label: t('contact_call'), value: '(+92) 332 4935230' },
-                { icon: Mail, label: t('contact_email'), value: 'msmannan00@gmail.com' }
+                { icon: Anchor, label: t('contact_hub'), value: <>St. Petersburg, Florida <br />United States</> },
+                { icon: Phone, label: t('contact_call'), value: '(+92) 42 35131458' },
+                { icon: Mail, label: t('contact_email'), value: 'support@orionintelligence.org' }
               ].map((item) => (
                 <div key={item.label} className="space-y-5 border-t border-slate-200/55 dark:border-white/[0.06] pt-5">
                   <div className="flex items-center gap-3 text-[10px] font-black text-slate-400 dark:text-white/48 uppercase tracking-[0.2em]">
