@@ -316,3 +316,104 @@ h1, h2, h3, h4 {
 .duration-500 { animation-duration: 500ms; }
 .duration-700 { animation-duration: 700ms; }
 .duration-1000 { animation-duration: 1000ms; }
+
+/* Product tour: progress line on the active tab, advances the slide when it completes */
+@keyframes tour-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.tour-progress {
+  transform-origin: left center;
+  animation-name: tour-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+/* Product tour slide change: a quick directional wipe. The incoming screen is revealed from the side it travels from
+   and slides a little faster than the reveal (parallax); the outgoing screen eases the other way and dims slightly
+   underneath. A fine light line rides the wipe edge. Captions slide in from the same side. --tour-dir is 1 or -1. */
+.tour-wipe-in-fwd,
+.tour-wipe-in-back,
+.tour-wipe-out-fwd,
+.tour-wipe-out-back,
+.tour-edge-fwd,
+.tour-edge-back {
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.25, 1);
+  animation-fill-mode: both;
+  will-change: transform;
+}
+
+.tour-wipe-in-fwd { animation-name: tour-wipe-in-fwd; }
+.tour-wipe-in-back { animation-name: tour-wipe-in-back; }
+.tour-wipe-out-fwd { animation-name: tour-wipe-out; --tour-shift: -5%; }
+.tour-wipe-out-back { animation-name: tour-wipe-out; --tour-shift: 5%; }
+.tour-edge-fwd { animation-name: tour-edge-fwd; }
+.tour-edge-back { animation-name: tour-edge-back; }
+
+@keyframes tour-wipe-in-fwd {
+  from { clip-path: inset(0 0 0 100%); transform: translate3d(7%, 0, 0); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+
+@keyframes tour-wipe-in-back {
+  from { clip-path: inset(0 100% 0 0); transform: translate3d(-7%, 0, 0); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+
+@keyframes tour-wipe-out {
+  from { transform: none; filter: brightness(1); }
+  to { transform: translate3d(var(--tour-shift), 0, 0); filter: brightness(0.72); }
+}
+
+.tour-edge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(191, 219, 254, 0.85) 25%, rgba(191, 219, 254, 0.85) 75%, transparent);
+  box-shadow: 0 0 14px 1px rgba(96, 165, 250, 0.4);
+}
+
+.tour-edge-fwd::before { left: 0; }
+.tour-edge-back::before { right: 0; }
+
+@keyframes tour-edge-fwd {
+  0% { transform: translate3d(100%, 0, 0); opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: none; opacity: 0; }
+}
+
+@keyframes tour-edge-back {
+  0% { transform: translate3d(-100%, 0, 0); opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: none; opacity: 0; }
+}
+
+.tour-text-in {
+  animation: tour-text-in 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes tour-text-in {
+  from { opacity: 0; transform: translate3d(calc(var(--tour-dir, 1) * 14px), 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-wipe-in-fwd,
+  .tour-wipe-in-back,
+  .tour-wipe-out-fwd,
+  .tour-wipe-out-back,
+  .tour-edge,
+  .tour-text-in {
+    animation: none;
+  }
+
+  .tour-edge {
+    display: none;
+  }
+}

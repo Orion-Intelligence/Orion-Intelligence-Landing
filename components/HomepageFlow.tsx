@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { translations } from '../translations';
 import { COMPANY } from '../company';
+import ProductTour from './ProductTour';
 
 type HomeView = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | 'about' | 'contact' | 'privacy' | '404';
 type TranslationKey = keyof typeof translations['en'];
@@ -292,6 +293,10 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
               </div>
             </div>
           </div>
+
+          <div className="home-flow-divider"></div>
+
+          <ProductTour />
 
           <div className="home-flow-divider"></div>
 
