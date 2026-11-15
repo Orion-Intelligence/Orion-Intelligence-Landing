@@ -60,6 +60,8 @@ import ErrorBoundary from './components/ErrorBoundary';
 import About from './components/About';
 import Contact from './components/Contact';
 import Privacy from './components/Privacy';
+import Terms from './components/Terms';
+import Sla from './components/Sla';
 import { COMPANY, COPYRIGHT, GITHUB_URL } from './company';
 import { useLanguage } from './components/LanguageContext';
 
@@ -111,7 +113,7 @@ const saveSearchCache = (query: string, data: StealerLogResponse) => {
   }
 };
 
-type ViewType = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | 'about' | 'contact' | 'privacy' | '404';
+type ViewType = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | 'about' | 'contact' | 'privacy' | 'terms' | 'sla' | '404';
 
 const BrandLogos = {
   X: (props: any) => (
@@ -165,6 +167,8 @@ const App: React.FC = () => {
       case 'about': return 'about';
       case 'contact': return 'contact';
       case 'privacy': return 'privacy';
+      case 'terms': return 'terms';
+      case 'sla': return 'sla';
       case 'home': return '';
       default: return '';
     }
@@ -205,6 +209,8 @@ const App: React.FC = () => {
     if (effectivePath === '/about') return 'about';
     if (effectivePath === '/contact') return 'contact';
     if (effectivePath === '/privacy') return 'privacy';
+    if (effectivePath === '/terms') return 'terms';
+    if (effectivePath === '/sla') return 'sla';
 
     return '404';
   };
@@ -346,7 +352,7 @@ const App: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
-  const bgClass = ['adversaries', 'actor-dossier', 'sources', 'search-results', 'remediation-guide', 'pricing', 'collaboration', 'about', 'contact', 'privacy'].includes(view) ? 'mesh-gradient-bright' : 'mesh-gradient';
+  const bgClass = ['adversaries', 'actor-dossier', 'sources', 'search-results', 'remediation-guide', 'pricing', 'collaboration', 'about', 'contact', 'privacy', 'terms', 'sla'].includes(view) ? 'mesh-gradient-bright' : 'mesh-gradient';
 
   return (
     <ErrorBoundary>
@@ -385,11 +391,21 @@ const App: React.FC = () => {
             </div>
           ) : view === 'pricing' ? (
             <div className="pt-[90px] px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
-              <Pricing />
+              <Pricing onNavigate={openPage} />
             </div>
-          ) : view === 'about' || view === 'contact' || view === 'privacy' ? (
+          ) : view === 'about' || view === 'contact' || view === 'privacy' || view === 'terms' || view === 'sla' ? (
             <div className="pt-[90px] px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
-              {view === 'about' ? <About onNavigate={openPage} /> : view === 'contact' ? <Contact onNavigate={openPage} /> : <Privacy onNavigate={openPage} />}
+              {view === 'about' ? (
+                <About onNavigate={openPage} />
+              ) : view === 'contact' ? (
+                <Contact onNavigate={openPage} />
+              ) : view === 'terms' ? (
+                <Terms onNavigate={openPage} />
+              ) : view === 'sla' ? (
+                <Sla onNavigate={openPage} />
+              ) : (
+                <Privacy onNavigate={openPage} />
+              )}
             </div>
           ) : view === 'collaboration' ? (
             <div className="pt-[90px] px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
@@ -529,6 +545,8 @@ const App: React.FC = () => {
                     </h3>
                     <ul className="space-y-6 text-[11.5px] text-slate-500 dark:text-white/40 uppercase tracking-[0.12em] font-bold">
                       <li><button onClick={() => openPage('privacy')} className="hover:text-blue-600 dark:hover:text-white transition-all">Privacy</button></li>
+                      <li><button onClick={() => openPage('terms')} className="hover:text-blue-600 dark:hover:text-white transition-all">Terms of Service</button></li>
+                      <li><button onClick={() => openPage('sla')} className="hover:text-blue-600 dark:hover:text-white transition-all">SLA</button></li>
                       <li><button onClick={() => setActiveModal('compliance')} className="hover:text-blue-600 dark:hover:text-white transition-all">Compliance</button></li>
                       <li><button onClick={() => navigateTo('pricing')} className="hover:text-blue-600 dark:hover:text-white transition-all">Pricing</button></li>
                     </ul>
@@ -559,6 +577,8 @@ const App: React.FC = () => {
 
                 <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400 dark:text-white/25">
                    <button onClick={() => openPage('privacy')} className="hover:text-blue-600 dark:hover:text-white transition-colors">Privacy</button>
+                   <button onClick={() => openPage('terms')} className="hover:text-blue-600 dark:hover:text-white transition-colors">Terms</button>
+                   <button onClick={() => openPage('sla')} className="hover:text-blue-600 dark:hover:text-white transition-colors">SLA</button>
                    <button onClick={() => openPage('contact')} className="hover:text-blue-600 dark:hover:text-white transition-colors">Contact</button>
                    <a href={COMPANY.statusUrl} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-white transition-colors flex items-center gap-2">
                      <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>

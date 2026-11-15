@@ -14,7 +14,7 @@ import {
   Shield,
 } from 'lucide-react';
 import { InfoPage, InfoView, PageHeader, PageSection, cardClass, eyebrowClass, labelClass } from './InfoPageLayout';
-import { COMPANY, SECURITY_REPORT_URL } from '../company';
+import { COMPANY, SECURITY_REPORT_URL, SLA } from '../company';
 
 interface ContactProps {
   onNavigate: (view: InfoView) => void;
@@ -104,9 +104,15 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
       icon: Activity,
       label: 'Service status',
       value: (
-        <a href={COMPANY.statusUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-white transition-colors">
-          Live uptime <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
-        </a>
+        <>
+          <a href={COMPANY.statusUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-white transition-colors">
+            Live uptime <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
+          </a>
+          <br />
+          <button onClick={() => onNavigate('sla')} className="inline-flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-white transition-colors">
+            {SLA.uptime} uptime SLA <ArrowRight className="w-3.5 h-3.5 opacity-50" />
+          </button>
+        </>
       ),
     },
   ];

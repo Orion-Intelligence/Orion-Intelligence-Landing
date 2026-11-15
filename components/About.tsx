@@ -39,7 +39,7 @@ import {
   eyebrowClass,
   labelClass,
 } from './InfoPageLayout';
-import { COMPANY, GITHUB_URL } from '../company';
+import { COMPANY, GITHUB_URL, SLA } from '../company';
 
 interface AboutProps {
   onNavigate: (view: InfoView) => void;
@@ -124,12 +124,20 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
     { label: 'Founded', val: COMPANY.founded, color: 'text-slate-900 dark:text-white' },
   ];
 
-  const facts = [
+  const facts: { label: string; value: React.ReactNode }[] = [
     { label: 'Company', value: COMPANY.legalName },
     { label: 'Headquarters', value: COMPANY.headquarters },
     { label: 'Founded', value: COMPANY.founded },
     { label: 'Team size', value: COMPANY.size },
     { label: 'Industry', value: COMPANY.industry },
+    {
+      label: 'Service levels',
+      value: (
+        <button onClick={() => onNavigate('sla')} className="inline-flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          {SLA.uptime} uptime SLA <ArrowRight className="w-3.5 h-3.5" />
+        </button>
+      ),
+    },
   ];
 
   return (

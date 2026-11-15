@@ -2,7 +2,7 @@ import React from 'react';
 import type { LucideIcon } from 'lucide-react';
 
 // Views the About, Contact, and Privacy pages link to.
-export type InfoView = 'home' | 'about' | 'contact' | 'privacy' | 'pricing' | 'sources' | 'adversaries' | 'api-docs';
+export type InfoView = 'home' | 'about' | 'contact' | 'privacy' | 'terms' | 'sla' | 'pricing' | 'sources' | 'adversaries' | 'api-docs';
 
 export const cardClass =
   'bg-white/80 dark:bg-[#0d0d0f]/80 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-[2rem] shadow-sm';

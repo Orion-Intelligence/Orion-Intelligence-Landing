@@ -275,7 +275,7 @@ const PricingV1: React.FC = () => {
                 <Activity className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                 <div className="space-y-1">
                   <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest">SLA Status</p>
-                  <p className="text-[9px] text-slate-500 dark:text-white/40 font-medium">99.98% Guaranteed Uptime for Grid Nodes.</p>
+                  <p className="text-[9px] text-slate-500 dark:text-white/40 font-medium">99.5% monthly uptime SLA for the hosted platform.</p>
                 </div>
               </div>
             </div>

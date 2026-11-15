@@ -6,8 +6,13 @@ import {
   Mail, MousePointer2, ShieldCheck, 
   XCircle, Shield, Users, Database, Clock
 } from 'lucide-react';
+import { SLA } from '../company';
 
-const Pricing: React.FC = () => {
+interface PricingProps {
+  onNavigate?: (view: 'sla' | 'terms') => void;
+}
+
+const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('annual');
 
   const handleCustomQuote = (tier: string) => {
@@ -230,6 +235,23 @@ const Pricing: React.FC = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* Service levels included with every paid plan */}
+        <div className="mt-10 md:mt-12 flex flex-col md:flex-row md:items-center justify-between gap-5 rounded-2xl border border-slate-200 dark:border-white/[0.07] bg-white/60 dark:bg-white/[0.02] px-6 md:px-8 py-5">
+          <p className="flex items-start md:items-center gap-3 text-sm md:text-[15px] leading-relaxed text-slate-600 dark:text-white/55 font-medium">
+            <ShieldCheck className="w-4 h-4 mt-0.5 md:mt-0 shrink-0 text-blue-600 dark:text-blue-400" />
+            <span>
+              Every paid plan includes our SLA: <strong className="font-extrabold text-slate-900 dark:text-white">{SLA.uptime} monthly uptime</strong>, a
+              first response to critical issues within {SLA.responseCritical}, and service credits if we miss the target.
+            </span>
+          </p>
+          <button
+            onClick={() => onNavigate?.('sla')}
+            className="shrink-0 self-start md:self-auto px-4 py-3 rounded-xl border border-slate-200 dark:border-white/[0.08] text-slate-700 dark:text-white/70 text-[10px] font-black uppercase tracking-[0.18em] flex items-center gap-2 hover:border-blue-500/40 hover:text-blue-600 dark:hover:text-white transition-all"
+          >
+            Read the SLA <ArrowRight className="w-3.5 h-3.5" />
+          </button>
         </div>
       </section>
 
