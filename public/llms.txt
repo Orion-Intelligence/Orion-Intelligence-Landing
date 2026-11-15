@@ -15,7 +15,7 @@ This site describes Orion Intelligence, its public investigative intelligence ca
 - [Contact](https://www.orionintelligence.org/contact): Sales, access, privacy, security-disclosure, and support contacts.
 - [Privacy Policy](https://www.orionintelligence.org/privacy): How Orion handles information on this website and the platform.
 - [Terms of Service](https://www.orionintelligence.org/terms): Terms for using this website and the Orion Intelligence platform, including acceptable use.
-- [Service Level Agreement](https://www.orionintelligence.org/sla): 99.5% monthly uptime commitment, support response times, and service credits.
+- [Service Level Agreement](https://www.orionintelligence.org/sla): Support response times, maintenance notice, and incident communication for the hosted platform.
 
 ## Platform Resources
 

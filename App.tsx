@@ -108,7 +108,6 @@ const saveSearchCache = (query: string, data: StealerLogResponse) => {
       localStorage.setItem(SEARCH_CACHE_KEY, JSON.stringify(entries.slice(0, count)));
       return;
     } catch {
-      // Storage full: retry with fewer of the most recent entries.
     }
   }
 };
@@ -174,11 +173,6 @@ const App: React.FC = () => {
     }
   };
 
-  /**
-   * REFACTORED: Keyword-First Inclusion Strategy
-   * This is much more resilient for proxy environments because it defaults to 'home'
-   * if no specific clinical keywords are found in the URL.
-   */
   const getViewFromPath = (pathOrUrl: string): ViewType => {
     let pathname = '/';
     try {
@@ -215,7 +209,6 @@ const App: React.FC = () => {
     return '404';
   };
 
-  // State initialization
   const [view, setView] = useState<ViewType>(() => getViewFromPath(window.location.href));
 
   const navigateTo = useCallback((newView: ViewType) => {
@@ -230,7 +223,6 @@ const App: React.FC = () => {
     try {
       const base = `${getEnvironmentBasePath()}/`;
       
-      // Construct the absolute path relative to the environment root
       const fullTargetPath = targetSegment === '' ? base : `${base}${targetSegment}`;
       
       window.history.pushState({ view: newView }, '', fullTargetPath);
@@ -278,8 +270,6 @@ const App: React.FC = () => {
 
   const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
-  // Accept any identifier (email, username, domain, phone, etc.).
-  // Only block input that could break the backend search query.
   const validateIdentifier = (value: string) =>
     value.length >= 1 && value.length <= 254 && !/[\s*:&|]/.test(value);
 
@@ -346,7 +336,6 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Page links (footer, About/Contact/Privacy) land at the top of the new page.
   const openPage = (newView: ViewType) => {
     navigateTo(newView);
     window.scrollTo(0, 0);

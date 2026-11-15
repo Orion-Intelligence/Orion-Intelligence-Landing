@@ -14,19 +14,12 @@ interface IntelligenceSource {
 }
 
 const sourceData: IntelligenceSource[] = [
-  // NEWS (Clearnet)
   ...['bleepingcomputer', 'csocybercrime', 'hackread', 'infosecuritymagazine', 'krebsonsecurity', 'postswigger', 'schneier', 'securityweek', 'thehackernews', 'therecord'].map(s => ({ raw: s, category: 'News' })),
-  // SOCIAL (Clearnet)
   ...['b1nd', 'crackingx', 'hacksnation', 'xreactor', 'reddit', 'twitter'].map(s => ({ raw: s, category: 'Social' })),
-  // DEFACEMENT (Clearnet/Scripts)
   ...['github_mthcht_awesome_lists', 'github_openfish', 'phishunt', 'zone_xsec', 'tweetfeed.py'].map(s => ({ raw: s, category: 'Defacement' })),
-  // EXPLOIT (Clearnet)
   ...['0dayfans', 'anyrun_malwaretrends', 'cisa', 'cxsecurity', 'cybergcca', 'exploitdb', 'github_trickest_cve', 'inthewild', 'kb_cert', 'rapid7', 'sploitus', 'talosintelligence'].map(s => ({ raw: s, category: 'Exploit' })),
-  // API (Mixed)
   ...['breachdbsztfykg2fdaq2gnqnxfsbj5d35byz3yzj73hazydk4vq72qd.onion', 'pcgame_mod.py', 'pagespeed_seo_check.py', 'apk_mod.py', 'pakdbwftdzn3xwslrzewbtsju63wep2xn37klmh community_checker.py', 'username_checker.py'].map(s => ({ raw: s, category: 'API' })),
-  // TRACKING (Clearnet)
   ...['acn', 'cert', 'certeu', 'certgovua', 'csocybercrime_tracking', 'cyber', 'cybernewsksa', 'idsirtii', 'incibe', 'msb', 'ncsc', 'ncsc_swed', 'ncscuk', 'nsm', 'nukibgovcz', 'public_tableau', 'thaicert'].map(s => ({ raw: s, category: 'Tracking' })),
-  // LEAKS (Onion)
   ...[
     '3ev4metjirohtdpshsqlkrqcmxq6zu3d7obrdhglpy5jpbr7whmlfgqd.onion', '5butbkrljkaorg5maepuca25oma7eiwo6a2rlhvkblb4v6mf3ki2ovid.onion',
     '7ukmkdtyxdkdivtjad57klqnd3kdsmq6tp45rrsxqnu76zzv3jvitlqd.onion', '34o4m3f26ucyeddzpf53bksy76wd737nf2fytslovwd3viac3by5chad.onion',
@@ -155,7 +148,6 @@ const SourceInventory: React.FC<SourceInventoryProps> = ({ onBack }) => {
   return (
     <div className="relative min-h-screen -mt-20 lg:-mt-32 pt-32 pb-32 overflow-visible animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out">
       
-      {/* Red-ish Clinical Galaxy Background */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
         <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>
         <div className="absolute inset-0 opacity-40 dark:opacity-100 transition-all duration-1000" 
@@ -184,7 +176,6 @@ const SourceInventory: React.FC<SourceInventoryProps> = ({ onBack }) => {
 
       <div className="relative z-10 space-y-8 px-2 md:px-3 lg:px-8 max-w-[1600px] mx-auto">
         
-        {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-slate-200 dark:border-white/5">
           <div className="space-y-6">
             <button 
@@ -221,7 +212,6 @@ const SourceInventory: React.FC<SourceInventoryProps> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
           {stats.map((stat, i) => (
             <div key={i} className={`${cardStyle} p-4 md:p-6 space-y-3`}>
@@ -237,7 +227,6 @@ const SourceInventory: React.FC<SourceInventoryProps> = ({ onBack }) => {
           ))}
         </div>
 
-        {/* Filters and List Section */}
         <div className="grid lg:grid-cols-12 gap-6 items-start">
           <div className="lg:col-span-12 space-y-6">
             <div className={`${cardStyle} p-4 md:p-5 lg:p-8 space-y-8 bg-slate-50/50 dark:bg-white/[0.01]`}>
@@ -330,7 +319,6 @@ const SourceInventory: React.FC<SourceInventoryProps> = ({ onBack }) => {
         </div>
       </div>
 
-      {/* Warning Popup Component */}
       {torTarget && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-900/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
           <div className="w-full max-w-lg bg-white dark:bg-[#131315] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden p-6 md:p-8 space-y-8">

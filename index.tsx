@@ -19,4 +19,3 @@ root.render(
   </React.StrictMode>
 );
 
-// AI Studio always uses an `index.tsx` file for all project types.

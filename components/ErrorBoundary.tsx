@@ -34,7 +34,6 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen bg-[#050507] flex flex-col p-8 md:p-16 lg:p-24 text-slate-400 font-sans relative overflow-hidden selection:bg-red-500/30">
-          {/* Subtle Technical Backdrop */}
           <div className="fixed inset-0 pointer-events-none -z-10">
             <div className="absolute inset-0 opacity-[0.02]" 
                  style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
@@ -42,7 +41,6 @@ class ErrorBoundary extends Component<Props, State> {
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,rgba(220,38,38,0.05),transparent_40%)]"></div>
           </div>
 
-          {/* Top Branding/Status Bar */}
           <div className="relative z-10 flex items-center justify-between mb-24 animate-in fade-in slide-in-from-top-4 duration-700">
             <div className="flex items-center gap-5">
               <div className="w-12 h-12 rounded-2xl bg-red-600/10 border border-red-500/20 flex items-center justify-center text-red-500 shadow-xl">
@@ -58,7 +56,6 @@ class ErrorBoundary extends Component<Props, State> {
             </div>
           </div>
 
-          {/* Main Layout Grid */}
           <div className="grid lg:grid-cols-12 gap-16 lg:gap-24 items-start max-w-7xl relative z-10">
             <div className="lg:col-span-7 space-y-10 animate-in fade-in slide-in-from-left-6 duration-1000">
               <div className="space-y-8">
@@ -89,7 +86,6 @@ class ErrorBoundary extends Component<Props, State> {
               </div>
             </div>
 
-            {/* Diagnostic Panel Sidebar */}
             <div className="lg:col-span-5 space-y-6 animate-in fade-in slide-in-from-right-6 duration-1000 delay-200">
               <div className="p-8 rounded-[2.5rem] bg-black border border-white/5 text-left shadow-2xl relative group overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-red-600/40"></div>
@@ -108,7 +104,6 @@ class ErrorBoundary extends Component<Props, State> {
             </div>
           </div>
 
-          {/* Minimal Footer */}
           <div className="mt-auto pt-24 border-t border-white/5 flex items-center justify-between opacity-10">
             <span className="text-[10px] font-black uppercase tracking-[0.5em]">Global_Defense_Sector</span>
             <span className="text-[10px] font-black uppercase tracking-[0.2em] font-mono">INCIDENT_LOGGED</span>

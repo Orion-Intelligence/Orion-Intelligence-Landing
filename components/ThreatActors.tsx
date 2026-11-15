@@ -11,7 +11,6 @@ import {
   Scan, ShieldAlert as Alert, Binary
 } from 'lucide-react';
 
-// Direct data import for zero-fetch reliability
 import { THREAT_ACTOR_DB } from '../data/threatData';
 
 export interface ActorIntelligence {
@@ -78,13 +77,12 @@ const ThreatActors: React.FC<ThreatActorsProps> = ({ onSelectActor, onBack }) =>
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Initializing the grid with the full database
     const syncDatabase = () => {
       setActors(THREAT_ACTOR_DB);
       setIsLoading(false);
     };
     
-    const timer = setTimeout(syncDatabase, 1000); // Extended delay for a better viewing of the animation sequence
+    const timer = setTimeout(syncDatabase, 1000);
     return () => clearTimeout(timer);
   }, []);
 

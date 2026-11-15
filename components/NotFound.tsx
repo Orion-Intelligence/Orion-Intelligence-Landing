@@ -9,7 +9,6 @@ interface NotFoundProps {
 const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
   return (
     <div className="relative min-h-screen flex flex-col p-8 md:p-16 lg:p-24 bg-slate-50 dark:bg-[#050507] text-slate-700 dark:text-slate-300 font-sans selection:bg-red-500/30">
-      {/* Subtle Technical Background */}
       <div className="fixed inset-0 pointer-events-none -z-10">
         <div className="absolute inset-0 opacity-[0.02]" 
              style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
@@ -19,7 +18,6 @@ const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
         <div className="absolute bottom-0 left-0 w-[30%] h-[30%] bg-red-600/5 blur-[100px] rounded-full"></div>
       </div>
 
-      {/* Header Section */}
       <div className="flex items-center justify-between mb-24 animate-in fade-in slide-in-from-top-4 duration-700">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-white/40 shadow-sm dark:shadow-none">
@@ -40,7 +38,6 @@ const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
         </div>
       </div>
 
-      {/* Main Content Layout */}
       <div className="grid lg:grid-cols-2 gap-20 items-start max-w-6xl">
         <div className="space-y-10 animate-in fade-in slide-in-from-left-6 duration-1000">
           <div className="space-y-6">
@@ -67,7 +64,6 @@ const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* Technical Diagnostics Sidebar */}
         <div className="space-y-6 animate-in fade-in slide-in-from-right-6 duration-1000 delay-200">
           <div className="p-8 rounded-3xl bg-white/80 dark:bg-black/40 border border-slate-200 dark:border-white/5 backdrop-blur-xl shadow-xl dark:shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-1 h-full bg-red-500/20 group-hover:bg-red-500/50 transition-colors"></div>
@@ -102,7 +98,6 @@ const NotFound: React.FC<NotFoundProps> = ({ onBack }) => {
         </div>
       </div>
 
-      {/* Simple Footer */}
       <div className="mt-auto pt-24 border-t border-slate-200 dark:border-white/5 flex items-center justify-between opacity-30 dark:opacity-20">
         <span className="text-[10px] font-black uppercase tracking-widest">Orion_Protocol_V4.2</span>
         <span className="text-[10px] font-black uppercase tracking-widest font-mono">SIG_RECOVERY_ACTIVE</span>

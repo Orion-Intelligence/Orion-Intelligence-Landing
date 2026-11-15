@@ -12,18 +12,14 @@ interface Endpoint {
   response?: string;
   example: string;
   category: 'Core' | 'Search' | 'Intelligence' | 'Dynamic' | 'Asset' | 'Dossier';
-  // 'public' routes need no token, 'crawler' routes need a crawler account token, 'extension' routes use the extension token.
   auth?: 'public' | 'crawler' | 'extension';
-  // role, license, and limit requirements, shown under Authentication
   access?: string;
-  // replaces the generated cURL example
   curl?: string;
 }
 
 const API_HOST = 'https://try.orionintelligence.org';
 
 const endpoints: Endpoint[] = [
-  // --- CORE SYSTEMS ---
   {
     id: 'insight',
     category: 'Core',
@@ -119,7 +115,6 @@ GET  /ext/{artifact}`,
   -d '{"username":"analyst01","password":"********"}'`
   },
 
-  // --- SEARCH ENGINES ---
   {
     id: 'consolidated',
     category: 'Search',
@@ -326,7 +321,6 @@ type: breach | news | strategic | exploit | social | chat | defacement`,
   -H "Authorization: Bearer $ORION_TOKEN"`
   },
 
-  // --- DYNAMIC INTEL ---
   {
     id: 'dynamic_user',
     category: 'Intelligence',
@@ -418,7 +412,6 @@ POST /api/social/identity-resolution/investigate
     access: 'The scanning license, or an osint_advanced or social_mapper license. Saving and pruning graphs accept osint_advanced but not social_mapper.'
   },
 
-  // --- ASSET DISCOVERY ---
   {
     id: 'urlscan',
     category: 'Asset',
@@ -534,7 +527,6 @@ const ApiDocumentation: React.FC = () => {
     { name: 'Dossier', icon: FileText, label: 'Reports & Export' }
   ];
 
-  // "/api/search/{breach|social}" becomes "/api/search/breach"; "/a | /b" becomes "/a"
   const primaryPath = activeEndpoint.path.replace(/\{([^}|]+)\|[^}]*\}/g, '$1').split(' | ')[0].trim();
   const isPublicEndpoint = activeEndpoint.auth === 'public';
   const authMode = isPublicEndpoint
@@ -555,7 +547,6 @@ const ApiDocumentation: React.FC = () => {
 
   return (
     <div className="relative flex flex-col md:flex-row md:h-[calc(100vh-80px)] md:overflow-hidden animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out">
-      {/* Sidebar Navigation */}
       <aside className="relative z-10 w-full md:w-72 lg:w-80 border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5 bg-slate-50/82 dark:bg-black/20 overflow-y-auto no-scrollbar flex flex-col shrink-0">
         <nav className="flex-1 p-6 space-y-10 md:pb-20">
           {categories.map((cat, catIdx) => (
@@ -595,7 +586,6 @@ const ApiDocumentation: React.FC = () => {
         </div>
       </aside>
 
-      {/* Main Documentation Area */}
       <main className="relative z-10 flex-1 min-w-0 overflow-y-auto bg-white/90 dark:bg-[#0a0a0c]/95 px-5 py-5 md:px-6 md:py-7 lg:px-9 lg:py-8 no-scrollbar animate-in fade-in slide-in-from-right-1 duration-700">
         <article className="max-w-none mx-auto animate-in fade-in slide-in-from-bottom-2 duration-500">
           <header className="mb-8">

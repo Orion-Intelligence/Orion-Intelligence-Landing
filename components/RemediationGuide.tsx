@@ -16,7 +16,6 @@ const RemediationGuide: React.FC<RemediationGuideProps> = ({ query, onBack }) =>
 
   return (
     <div className="relative min-h-screen -mt-20 lg:-mt-32 pt-32 pb-32 overflow-visible animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out">
-      {/* Galaxy Background */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
         <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>
         <div className="absolute inset-0 opacity-40 dark:opacity-100" 
@@ -36,7 +35,6 @@ const RemediationGuide: React.FC<RemediationGuideProps> = ({ query, onBack }) =>
       </div>
 
       <div className="relative z-10 space-y-8 px-6 md:px-12 lg:px-20 max-w-[1200px] mx-auto">
-        {/* Header */}
         <div className="flex flex-col gap-6 pb-8 border-b border-slate-200 dark:border-white/5">
           <button 
             onClick={onBack}
@@ -59,7 +57,6 @@ const RemediationGuide: React.FC<RemediationGuideProps> = ({ query, onBack }) =>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-8 items-start">
-          {/* Main Steps */}
           <div className="lg:col-span-8 space-y-6">
             {[
               { 
@@ -118,7 +115,6 @@ const RemediationGuide: React.FC<RemediationGuideProps> = ({ query, onBack }) =>
             ))}
           </div>
 
-          {/* Sidebar Advisory */}
           <div className="lg:col-span-4 space-y-6">
             <div className="p-8 rounded-[2rem] bg-white/85 dark:bg-black border border-slate-200 dark:border-white/10 shadow-xl space-y-8">
               <div className="space-y-4">

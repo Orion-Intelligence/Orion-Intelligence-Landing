@@ -99,7 +99,6 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
   return (
     <div className="pb-32 animate-in fade-in duration-700 w-full overflow-x-hidden relative">
       
-      {/* Galaxy Stars Background */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
         <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>
         <div className="absolute inset-0 opacity-40 dark:opacity-100 transition-all duration-1000" 
@@ -126,7 +125,6 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
         <div className="absolute bottom-0 left-0 w-[1000px] h-[1000px] bg-blue-900/5 blur-[180px] rounded-full"></div>
       </div>
 
-      {/* 1. Header */}
       <header className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 pt-16 mb-16 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10">
           <div className="space-y-6 max-w-3xl">
@@ -156,7 +154,6 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
         </div>
       </header>
 
-      {/* 2. Tier Grid */}
       <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 mb-32 relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {plans.map((plan, i) => {
@@ -237,13 +234,13 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
           })}
         </div>
 
-        {/* Service levels included with every paid plan */}
         <div className="mt-10 md:mt-12 flex flex-col md:flex-row md:items-center justify-between gap-5 rounded-2xl border border-slate-200 dark:border-white/[0.07] bg-white/60 dark:bg-white/[0.02] px-6 md:px-8 py-5">
           <p className="flex items-start md:items-center gap-3 text-sm md:text-[15px] leading-relaxed text-slate-600 dark:text-white/55 font-medium">
             <ShieldCheck className="w-4 h-4 mt-0.5 md:mt-0 shrink-0 text-blue-600 dark:text-blue-400" />
             <span>
-              Every paid plan includes our SLA: <strong className="font-extrabold text-slate-900 dark:text-white">{SLA.uptime} monthly uptime</strong>, a
-              first response to critical issues within {SLA.responseCritical}, and service credits if we miss the target.
+              Every paid plan includes our SLA: a first response to critical issues within{' '}
+              <strong className="font-extrabold text-slate-900 dark:text-white">{SLA.responseCritical}</strong>, planned maintenance announced{' '}
+              {SLA.maintenanceNoticeHours} hours ahead, and live availability on our public status page.
             </span>
           </p>
           <button
@@ -255,7 +252,6 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* 3. Capability Audit Matrix */}
       <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 mb-32 relative z-10">
         <div className="space-y-12">
            <div className="max-w-3xl space-y-4">
@@ -305,7 +301,6 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* 4. Final CTA */}
       <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 relative z-10">
         <div className="relative p-12 md:p-20 rounded-[3rem] bg-slate-900 dark:bg-white overflow-hidden group shadow-2xl">
            <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(circle_at_2px_2px,#3b82f6_1px,transparent_0)] bg-[size:32px_32px]"></div>

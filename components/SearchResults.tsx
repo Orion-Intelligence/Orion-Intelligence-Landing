@@ -145,7 +145,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, data, onBack, onNa
 
   const cardStyle = "bg-white/40 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-3xl shadow-sm backdrop-blur-md transition-all duration-300";
 
-  // Unified High-Fidelity Galaxy Background
   const Background = ({ type }: { type: 'breach' | 'clearance' }) => (
     <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
       <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>

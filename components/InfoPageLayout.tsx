@@ -1,7 +1,6 @@
 import React from 'react';
 import type { LucideIcon } from 'lucide-react';
 
-// Views the About, Contact, and Privacy pages link to.
 export type InfoView = 'home' | 'about' | 'contact' | 'privacy' | 'terms' | 'sla' | 'pricing' | 'sources' | 'adversaries' | 'api-docs';
 
 export const cardClass =
@@ -27,7 +26,6 @@ const STARFIELD = `
   repeating-radial-gradient(circle at center, transparent 0, transparent 200px, rgba(59,130,246,0.03) 201px, transparent 203px)
 `;
 
-// Page root with the same fixed starfield the Pricing page sits on.
 export const InfoPage: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="pb-32 animate-in fade-in duration-700 w-full overflow-x-clip relative">
     <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
@@ -45,7 +43,6 @@ interface PageHeaderProps {
   eyebrow: string;
   title: React.ReactNode;
   description: React.ReactNode;
-  // optional right-hand column (summary card, quick facts, ...)
   aside?: React.ReactNode;
 }
 
@@ -86,7 +83,6 @@ export const SectionIntro: React.FC<SectionIntroProps> = ({ eyebrow, title, chil
   </div>
 );
 
-// The small gradient icon tile used across the homepage flow.
 export const IconTile: React.FC<{ icon: LucideIcon }> = ({ icon: Icon }) => (
   <div className="w-11 h-11 shrink-0 rounded-lg bg-gradient-to-br from-blue-50/90 via-white/55 to-slate-100/45 dark:from-blue-500/[0.12] dark:via-white/[0.045] dark:to-white/[0.015] shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_10px_24px_rgba(37,99,235,0.08)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_10px_24px_rgba(0,0,0,0.16)] flex items-center justify-center">
     <Icon className="w-4 h-4 text-blue-600/80 dark:text-blue-400/70" />
@@ -107,7 +103,6 @@ interface CtaPanelProps {
   actions: React.ReactNode;
 }
 
-// Inverted closing panel, matching the one at the bottom of Pricing.
 export const CtaPanel: React.FC<CtaPanelProps> = ({ badge, badgeIcon: BadgeIcon, title, description, actions }) => (
   <PageSection className="!mb-0">
     <div className="relative p-10 sm:p-12 md:p-20 rounded-[3rem] bg-slate-900 dark:bg-white overflow-hidden shadow-2xl">

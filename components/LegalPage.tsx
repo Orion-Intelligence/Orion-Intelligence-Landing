@@ -3,8 +3,6 @@ import { CheckCircle2, ChevronDown, Mail } from 'lucide-react';
 import { InfoPage, InfoView, PageHeader, cardClass, eyebrowClass } from './InfoPageLayout';
 import { COMPANY } from '../company';
 
-// Shared layout and text blocks for the Privacy Policy, Terms of Service, and SLA pages.
-
 export const linkClass =
   'font-bold text-blue-600 dark:text-blue-400 underline decoration-blue-500/30 underline-offset-2 hover:decoration-blue-500 transition-colors';
 
@@ -51,8 +49,6 @@ export const Callout: React.FC<{ title: string; children: React.ReactNode }> = (
   </div>
 );
 
-// Data table on wider screens; on phones each row becomes a stacked card so no column is hidden off-screen.
-// With emphasizeLast, the last column (the commitment) is highlighted and shown beside the row title on phones.
 export const Table: React.FC<{ head: string[]; rows: React.ReactNode[][]; emphasizeLast?: boolean }> = ({ head, rows, emphasizeLast = false }) => (
   <div className="rounded-2xl border border-slate-200 dark:border-white/[0.07] bg-white/60 dark:bg-white/[0.02] overflow-hidden">
     <table className="hidden sm:table w-full text-left">
@@ -110,7 +106,6 @@ export const Table: React.FC<{ head: string[]; rows: React.ReactNode[][]; emphas
   </div>
 );
 
-// Closing "Contact us" card: a primary email button, the company address, and an optional note underneath.
 export const ContactCard: React.FC<{ intro: React.ReactNode; email: string; note?: React.ReactNode }> = ({ intro, email, note }) => (
   <div className={`${cardClass} !rounded-3xl p-6 md:p-8 space-y-6`}>
     <P>{intro}</P>
@@ -147,11 +142,9 @@ interface LegalDocumentProps {
   sections: LegalSection[];
 }
 
-// Header with an "At a glance" card, then numbered sections beside a sticky table of contents with scroll-spy.
 export const LegalDocument: React.FC<LegalDocumentProps> = ({ eyebrow, title, description, lastUpdated, glance, sections }) => {
   const [activeId, setActiveId] = useState(sections[0].id);
 
-  // Highlight the section currently under the fixed header.
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(
@@ -165,8 +158,6 @@ export const LegalDocument: React.FC<LegalDocumentProps> = ({ eyebrow, title, de
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-    // Section ids are fixed for the life of each page.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const jumpTo = (id: string) => (e: React.MouseEvent) => {

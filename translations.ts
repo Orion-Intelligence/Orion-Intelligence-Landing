@@ -3,24 +3,21 @@ export type Language = 'en' | 'fr' | 'de' | 'es' | 'it';
 
 export const translations = {
   en: {
-    // Nav
     nav_intelligence_os: "Homepage",
     nav_adversaries: "Adversaries",
     nav_sources: "Sources",
     nav_api_docs: "API Docs",
     nav_get_access: "Get Access",
     nav_login: "Login",
-    // Hero
     hero_title: "Unified Investigative Intelligence",
     hero_desc: "A role-aware analytical ecosystem for global enterprise defense. Orion unifies automated scrapers, ransomware tracking, and STIX 2.1 workflows into a clinical workspace.",
     hero_demo: "Operational Demo",
     hero_adversary_inv: "Adversary Inventory",
-    // Stats
     stats_records: "Records",
     stats_groups: "Groups",
     stats_throughput: "Throughput",
-    stats_uptime: "Uptime SLA",
-    // Core
+    stats_uptime: "Uptime",
+    stats_status_link: "Live status",
     core_title: "Strategic Modular Core",
     core_subtitle: "Unified Defense Platform",
     core_desc: "High-fidelity infrastructure for sovereign intelligence operations and organizational threat discovery",
@@ -40,7 +37,6 @@ export const translations = {
     core_f7_desc: "Export standardized STIX/TAXII threat intelligence reports as JSON.",
     core_f8_title: "Secure Whistleblowing",
     core_f8_desc: "Secure submissions, optional Tor anonymity, unified case workflow.",
-    // Whistleblowing
     whistle_title: "Secure Reporting System",
     whistle_desc: "Orion includes a fully integrated secure whistleblowing module designed to safely collect sensitive disclosures while protecting the identity of the submitter.",
     whistle_identity: "Identity Shielding",
@@ -48,19 +44,16 @@ export const translations = {
     whistle_role: "Role Isolation",
     whistle_onion: "Onion Intake",
     whistle_button: "Enter Portal",
-    // Admin
     admin_title: "Governance and FIDO2 Support",
     admin_subtitle: "Administrative Governance",
     admin_desc: "Whether performing persona reconstruction or auditing cases across a global team, Orion enforces clinical governance at every node.",
     admin_f1: "Governance",
     admin_f2: "Audit Ready",
     admin_f3: "Isolation",
-    // Probe
     probe_title: "Intelligence Search",
     probe_desc: "Enter an email address to check monitored stealer-log sources.",
     probe_placeholder: "Email address",
     probe_run: "Run Search",
-    // Contact
     contact_title: "Talk to the Orion team",
     contact_desc: "See how Orion can help your team find exposure, understand threat activity, and move faster on investigations.",
     contact_hq: "Headquarters",
@@ -68,7 +61,6 @@ export const translations = {
     contact_status: "Service status",
     contact_email: "Email",
     contact_button: "Book a Walkthrough",
-    // Footer
     footer_platform: "Platform",
     footer_intelligence: "Intelligence",
     footer_network: "Network",
@@ -88,7 +80,8 @@ export const translations = {
     stats_records: "Enregistrements",
     stats_groups: "Groupes",
     stats_throughput: "Débit",
-    stats_uptime: "SLA de disponibilité",
+    stats_uptime: "Disponibilité",
+    stats_status_link: "Statut en direct",
     core_title: "Cœur Modulaire Stratégique",
     core_subtitle: "Plateforme de Défense Unifiée",
     core_desc: "Infrastructure haute fidélité pour les opérations d'intelligence souveraine et la découverte de menaces organisationnelles",
@@ -151,7 +144,8 @@ export const translations = {
     stats_records: "Datensätze",
     stats_groups: "Gruppen",
     stats_throughput: "Durchsatz",
-    stats_uptime: "Uptime-SLA",
+    stats_uptime: "Verfügbarkeit",
+    stats_status_link: "Live-Status",
     core_title: "Strategischer Modularer Kern",
     core_subtitle: "Vereinigte Verteidigungsplattform",
     core_desc: "Hochpräzise Infrastruktur für souveräne Geheimdienstoperationen und organisatorische Bedrohungserkennung",
@@ -214,7 +208,8 @@ export const translations = {
     stats_records: "Registros",
     stats_groups: "Grupos",
     stats_throughput: "Rendimiento",
-    stats_uptime: "SLA de disponibilidad",
+    stats_uptime: "Disponibilidad",
+    stats_status_link: "Estado en vivo",
     core_title: "Núcleo Modular Estratégico",
     core_subtitle: "Plataforma de Defensa Unificada",
     core_desc: "Infraestructura de alta fidelidad para operaciones de inteligencia soberana y descubrimiento de amenazas organizativas",
@@ -277,7 +272,8 @@ export const translations = {
     stats_records: "Record",
     stats_groups: "Gruppi",
     stats_throughput: "Throughput",
-    stats_uptime: "SLA di uptime",
+    stats_uptime: "Disponibilità",
+    stats_status_link: "Stato in tempo reale",
     core_title: "Nucleo Modulare Strategico",
     core_subtitle: "Piattaforma di Difesa Unificata",
     core_desc: "Infrastruttura ad alta fedeltà per operazioni di intelligence sovrana e scoperta di minacce organizzative",

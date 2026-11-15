@@ -149,7 +149,7 @@ const buildSections = (onNavigate: (view: InfoView) => void): LegalSection[] => 
       body: (
         <P>
           Paid plans, prices, and billing terms are set out in your quote or order. Fees are due as stated there and do not include taxes. Fees are
-          non-refundable, except for service credits under the SLA or where the law requires otherwise. We may suspend access for overdue amounts
+          non-refundable, except where the law requires otherwise. We may suspend access for overdue amounts
           after giving notice. Trial and evaluation access may be changed or ended at any time and is not covered by the SLA.
         </P>
       ),
@@ -169,7 +169,7 @@ const buildSections = (onNavigate: (view: InfoView) => void): LegalSection[] => 
       title: 'Availability and support',
       body: (
         <P>
-          Our uptime, support response, maintenance, and service credit commitments for paid subscriptions are in the{' '}
+          Our support response, maintenance, and incident communication commitments for paid subscriptions are in the{' '}
           {link('sla', 'Service Level Agreement')}. We may add, change, or remove features over time, and we will give reasonable notice
           before removing functionality that is material to a paid subscription.
         </P>
@@ -269,7 +269,7 @@ const Terms: React.FC<TermsProps> = ({ onNavigate }) => (
       'Use Orion only for lawful, authorized security and intelligence work.',
       'Scan only systems you own or have permission to test.',
       'You keep ownership of the content you put into Orion.',
-      'Uptime and support commitments are in our SLA.',
+      'Support response commitments are in our SLA.',
     ]}
     sections={buildSections(onNavigate)}
   />

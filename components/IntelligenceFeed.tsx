@@ -58,7 +58,6 @@ const IntelligenceFeed: React.FC = () => {
 
   useEffect(() => {
     if (logContainerRef.current) {
-      // Use requestAnimationFrame to prevent forced reflow / layout thrashing
       requestAnimationFrame(() => {
         if (logContainerRef.current) {
           logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
@@ -69,7 +68,6 @@ const IntelligenceFeed: React.FC = () => {
 
   return (
     <div className="bg-white dark:bg-[#131315] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden font-mono shadow-xl dark:shadow-2xl h-[580px] flex flex-col transition-colors duration-300 w-full">
-      {/* Header */}
       <div className="px-3 md:px-5 py-3 border-b border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/[0.02] flex items-center justify-between shrink-0 w-full overflow-hidden">
         <div className="flex items-center gap-1.5 md:gap-3 min-w-0">
           <Activity className="w-3.5 h-3.5 text-blue-600 dark:text-blue-500 animate-pulse shrink-0" />
@@ -82,7 +80,6 @@ const IntelligenceFeed: React.FC = () => {
       </div>
       
       <div className="p-4 md:p-6 flex flex-col gap-8 flex-grow w-full overflow-hidden">
-        {/* Situation Report Section */}
         <div className="space-y-3 shrink-0 w-full overflow-hidden">
           <div className="flex items-center gap-2 text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest truncate">
             <Globe className="w-3.5 h-3.5 shrink-0" />
@@ -97,7 +94,6 @@ const IntelligenceFeed: React.FC = () => {
           </div>
         </div>
 
-        {/* Live Terminal Log Section */}
         <div className="space-y-3 flex-grow flex flex-col min-h-0 w-full overflow-hidden">
           <div className="flex items-center gap-2 text-[10px] text-slate-400 dark:text-white/20 font-bold uppercase tracking-widest">
             <Terminal className="w-3.5 h-3.5 shrink-0" />

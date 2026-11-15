@@ -39,7 +39,7 @@ import {
   eyebrowClass,
   labelClass,
 } from './InfoPageLayout';
-import { COMPANY, GITHUB_URL, SLA } from '../company';
+import { COMPANY, GITHUB_URL } from '../company';
 
 interface AboutProps {
   onNavigate: (view: InfoView) => void;
@@ -134,7 +134,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
       label: 'Service levels',
       value: (
         <button onClick={() => onNavigate('sla')} className="inline-flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-          {SLA.uptime} uptime SLA <ArrowRight className="w-3.5 h-3.5" />
+          Published SLA <ArrowRight className="w-3.5 h-3.5" />
         </button>
       ),
     },
@@ -152,7 +152,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         description={`Orion Intelligence is a cybersecurity intelligence platform for OSINT, exposure discovery, ransomware tracking, monitored-source analysis, and investigative workflows, built by ${COMPANY.legalName}.`}
       />
 
-      {/* Key numbers */}
       <PageSection className="!mb-20 md:!mb-28">
         <div className="flex flex-wrap items-center justify-between gap-8 font-mono border-y border-slate-200/80 dark:border-white/5 py-10">
           {stats.map((stat) => (
@@ -164,7 +163,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         </div>
       </PageSection>
 
-      {/* Why Orion */}
       <PageSection>
         <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-20 items-start">
           <SectionIntro eyebrow="Why Orion exists" title="One place for the whole investigation." />
@@ -190,7 +188,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         </div>
       </PageSection>
 
-      {/* Pipeline */}
       <PageSection>
         <div className="home-flow-divider mb-14 md:mb-20"></div>
         <SectionIntro eyebrow="How it works" title="Collection to access." className="mb-12 md:mb-16">
@@ -212,7 +209,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         </div>
       </PageSection>
 
-      {/* Ecosystem */}
       <PageSection>
         <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-20 items-start">
           <div className="lg:sticky lg:top-28 space-y-8">
@@ -251,7 +247,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         </div>
       </PageSection>
 
-      {/* Audience */}
       <PageSection>
         <div className="home-flow-divider mb-14 md:mb-20"></div>
         <SectionIntro eyebrow="Who it's for" title="Built for the people doing the work." className="mb-12 md:mb-16">
@@ -270,7 +265,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         </div>
       </PageSection>
 
-      {/* Principles */}
       <PageSection>
         <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-20 items-start">
           <SectionIntro eyebrow="How we work" title="Principles behind the platform.">
@@ -290,7 +284,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         </div>
       </PageSection>
 
-      {/* Company */}
       <PageSection>
         <div className={`${cardClass} overflow-hidden`}>
           <div className="grid lg:grid-cols-[1.15fr_0.85fr]">

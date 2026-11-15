@@ -15,7 +15,6 @@ const ActorDossier: React.FC<ActorDossierProps> = ({ actor, onBack }) => {
   return (
     <div className="relative min-h-screen -mt-20 lg:-mt-32 pt-32 pb-32 animate-in fade-in slide-in-from-bottom-2 duration-700 ease-out">
       
-      {/* Background Style consistent with site */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen left-1/2 -translate-x-1/2">
         <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950 transition-colors duration-700"></div>
         <div className="absolute inset-0 opacity-40 dark:opacity-100 transition-all duration-1000" 
@@ -34,7 +33,6 @@ const ActorDossier: React.FC<ActorDossierProps> = ({ actor, onBack }) => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 space-y-8">
-        {/* Navigation Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-slate-200 dark:border-white/5">
           <div className="space-y-6">
             <button 
@@ -71,10 +69,8 @@ const ActorDossier: React.FC<ActorDossierProps> = ({ actor, onBack }) => {
           </div>
         </div>
 
-        {/* Dossier Content Grid */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
-          {/* Main Intelligence Column */}
           <div className="lg:col-span-8 space-y-12">
             <section className="space-y-6">
               <div className="flex items-center gap-3 text-red-600 dark:text-red-500">
@@ -124,7 +120,6 @@ const ActorDossier: React.FC<ActorDossierProps> = ({ actor, onBack }) => {
             </section>
           </div>
 
-          {/* Sidebar Panel */}
           <div className="lg:col-span-4 space-y-8 sticky top-24">
             <div className="p-8 md:p-10 rounded-[2.5rem] bg-white/85 dark:bg-black border border-slate-200 dark:border-white/10 space-y-8 shadow-xl dark:shadow-2xl">
               <div className="space-y-3">

@@ -14,14 +14,12 @@ import dataBreach1600 from '../assets/product-tour/data-breach-1600.webp';
 import cases960 from '../assets/product-tour/case-management-960.webp';
 import cases1600 from '../assets/product-tour/case-management-1600.webp';
 
-// Screens come from the Orion user manual (docs/screenshots in the platform repo) plus current
-// Dashboard, Network Intel, and Data Breach captures, cropped to drop burned-in captions and frames. Copy is adapted from the manual.
 interface Slide {
   label: string;
   title: string;
   body: string;
   alt: string;
-  src: [string, string]; // 960w, 1600w
+  src: [string, string];
 }
 
 const SLIDES: Slide[] = [
@@ -82,11 +80,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
 const ProductTour: React.FC = () => {
   const count = SLIDES.length;
   const [active, setActive] = useState(0);
-  // The slide being covered, kept fully opaque underneath so the change never dips through a half-transparent mix.
   const [prev, setPrev] = useState<number | null>(null);
-  // 1 = forward, -1 = backward; sets which way the incoming screen drifts in.
   const [dir, setDir] = useState<1 | -1>(1);
-  // Mount every screenshot once the tour is on screen, so jumping to any tab never animates an image that is still loading.
   const [mountAll, setMountAll] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [focusWithin, setFocusWithin] = useState(false);
@@ -133,7 +128,6 @@ const ProductTour: React.FC = () => {
     if (inView) setMountAll(true);
   }, [inView]);
 
-  // Keep the active tab visible when the tab row scrolls sideways (small screens), without moving the page.
   useEffect(() => {
     const list = tabListRef.current;
     const tab = tabRefs.current[active];
@@ -142,7 +136,6 @@ const ProductTour: React.FC = () => {
     list.scrollTo({ left, behavior: reducedMotion ? 'auto' : 'smooth' });
   }, [active, reducedMotion]);
 
-  // Reduced motion turns autoplay off; hover, focus, scrolling away, or a hidden tab hold the progress bar where it is.
   const autoplay = !reducedMotion;
   const running = autoplay && inView && pageVisible && !hovering && !focusWithin;
 
@@ -187,7 +180,6 @@ const ProductTour: React.FC = () => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocusWithin(false);
       }}
     >
-      {/* Header */}
       <div className="mb-10 md:mb-14">
         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 dark:text-blue-400 mb-5">Inside the platform</p>
         <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-none mb-6">See Orion at work.</h2>
@@ -197,7 +189,6 @@ const ProductTour: React.FC = () => {
       </div>
 
       <div onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
-        {/* Screen */}
         <div className="relative">
           <div
             id="product-tour-panel"
@@ -240,7 +231,6 @@ const ProductTour: React.FC = () => {
                   />
                 ) : null
               )}
-              {/* Light line riding the leading edge of the wipe; remounts on every change so it replays. */}
               {prev !== null && (
                 <span
                   key={active}
@@ -253,7 +243,6 @@ const ProductTour: React.FC = () => {
           </div>
         </div>
 
-        {/* Tabs */}
         <div
           ref={tabListRef}
           role="tablist"
@@ -296,11 +285,9 @@ const ProductTour: React.FC = () => {
           })}
         </div>
 
-        {/* Captions share one grid cell, so the block always takes the tallest one's height and the page never jumps. */}
         <div className="mt-8 md:mt-10 grid" aria-live={running ? 'off' : 'polite'}>
           {SLIDES.map((s, i) => {
             const isActive = i === active;
-            // The outgoing caption fades out fast; the incoming title and text then rise in, slightly staggered.
             const textIn = isActive && prev !== null ? 'tour-text-in' : '';
             return (
               <div

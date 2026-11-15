@@ -4,7 +4,6 @@ import { useLanguage } from './LanguageContext';
 import { Language } from '../translations';
 import { COMPANY } from '../company';
 
-// The AI analyst product has its own site; the nav and footer send people there.
 export const DEEPINTEL_URL = 'https://deepintel.si/';
 
 type View = 'home' | 'adversaries' | 'api-docs' | 'sources' | 'pricing' | 'collaboration';
@@ -24,7 +23,6 @@ const LANGUAGES: { code: Language; label: string }[] = [
   { code: 'it', label: 'Italiano' },
 ];
 
-// The Orion logo in the same small rounded tile the DeepIntel site uses, with a plain "O" if the image can't load.
 const Logo: React.FC = () => {
   const [error, setError] = useState(false);
   return (
@@ -47,15 +45,12 @@ const Logo: React.FC = () => {
   );
 };
 
-// Header styled like deepintel.si: a 64px bar, the logo tile and "ORION Intelligence" wordmark,
-// plain text links, text "Login" / "Get Access" actions, and a numbered-row menu below xl.
 const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggleTheme }) => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showLang, setShowLang] = useState(false);
   const { t, language, setLanguage } = useLanguage();
 
-  // entries with an href leave the site (DeepIntel has its own home) instead of switching views
   const items: { id: View | 'deepintel'; label: string; href?: string }[] = [
     { id: 'home', label: t('nav_intelligence_os') },
     { id: 'adversaries', label: t('nav_adversaries') },

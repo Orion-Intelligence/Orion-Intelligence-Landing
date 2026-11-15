@@ -1,10 +1,8 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-// Always use const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-// Clinical technical analysis for a specific target.
 export const generateThreatReport = async (target: string, type: 'website' | 'ioc'): Promise<string> => {
   try {
     const prompt = `Perform a clinical technical analysis for the following ${type}: ${target}. 
@@ -17,7 +15,6 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
     - Known Entities/Associations
     - Investigative Risk Level (CRITICAL, HIGH, MODERATE, LOW, NEUTRAL)`;
 
-    // Fix: Add thinkingBudget when maxOutputTokens is set for Gemini 3 series models
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: prompt,
@@ -36,11 +33,9 @@ export const generateThreatReport = async (target: string, type: 'website' | 'io
   }
 };
 
-// Brief situational report of global cyber activity.
 export const getBriefIntelligenceSummary = async (): Promise<string> => {
   try {
     const prompt = `Provide a concise 3-sentence technical situational report of global cyber activity. Focus on infrastructure-level events, protocol vulnerabilities, or documented threat actor movements. Do not use buzzwords.`;
-    // Fix: Add thinkingBudget when maxOutputTokens is set for Gemini 3 series models
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
@@ -55,7 +50,6 @@ export const getBriefIntelligenceSummary = async (): Promise<string> => {
   }
 };
 
-// Start a streaming chat session with Orion Nexus AI.
 export const getStreamingChat = async (message: string) => {
   return await ai.models.generateContentStream({
     model: 'gemini-3-flash-preview',

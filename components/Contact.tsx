@@ -14,7 +14,7 @@ import {
   Shield,
 } from 'lucide-react';
 import { InfoPage, InfoView, PageHeader, PageSection, cardClass, eyebrowClass, labelClass } from './InfoPageLayout';
-import { COMPANY, SECURITY_REPORT_URL, SLA } from '../company';
+import { COMPANY, SECURITY_REPORT_URL } from '../company';
 
 interface ContactProps {
   onNavigate: (view: InfoView) => void;
@@ -67,7 +67,6 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
     (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
       setForm((f) => ({ ...f, [field]: e.target.value }));
 
-  // No backend here: compose the message in the visitor's own email app, as the Pricing quote buttons do.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const to = form.topic === 'Privacy request' ? COMPANY.privacyEmail : COMPANY.supportEmail;
@@ -110,7 +109,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
           </a>
           <br />
           <button onClick={() => onNavigate('sla')} className="inline-flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-white transition-colors">
-            {SLA.uptime} uptime SLA <ArrowRight className="w-3.5 h-3.5 opacity-50" />
+            Support SLA <ArrowRight className="w-3.5 h-3.5 opacity-50" />
           </button>
         </>
       ),
@@ -131,7 +130,6 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
 
       <PageSection>
         <div className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-10 lg:gap-16 items-start">
-          {/* Form */}
           <form onSubmit={handleSubmit} className={`${cardClass} p-7 sm:p-10 lg:p-12 space-y-7`}>
             <div className="space-y-2">
               <p className={eyebrowClass}>Send a message</p>
@@ -194,7 +192,6 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
             </div>
           </form>
 
-          {/* Other channels */}
           <aside className="space-y-8 lg:pt-4">
             <div>
               <p className={`${eyebrowClass} mb-4`}>Other channels</p>
@@ -231,7 +228,6 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
         </div>
       </PageSection>
 
-      {/* Company details */}
       <PageSection className="!mb-0">
         <div className="home-flow-divider mb-12 md:mb-16"></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">

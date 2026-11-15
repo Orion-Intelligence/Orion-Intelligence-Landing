@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Activity,
   ArrowRight,
+  ArrowUpRight,
   BookOpen,
   Database,
   FileJson,
@@ -18,7 +19,7 @@ import {
   Workflow
 } from 'lucide-react';
 import { translations } from '../translations';
-import { COMPANY, SLA } from '../company';
+import { COMPANY } from '../company';
 import ProductTour from './ProductTour';
 
 type HomeView = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | 'about' | 'contact' | 'privacy' | 'terms' | 'sla' | '404';
@@ -175,18 +176,18 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
               <span className={`text-lg md:text-xl font-black tracking-tight ${stat.color}`}>{stat.val}</span>
             </div>
           ))}
-          {/* The published SLA commitment, not a measured figure; links to its terms. */}
-          <button
-            type="button"
-            onClick={() => {
-              onNavigate('sla');
-              window.scrollTo(0, 0);
-            }}
-            className="group flex flex-col gap-1 text-center md:text-left min-w-[120px]"
+          <a
+            href={COMPANY.statusUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col gap-1 items-center md:items-start text-center md:text-left min-w-[120px]"
           >
             <span className="text-[9px] md:text-[10px] text-slate-400 dark:text-white/20 uppercase tracking-[0.2em] font-bold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{t('stats_uptime')}</span>
-            <span className="text-lg md:text-xl font-black tracking-tight text-green-600 dark:text-green-500">{SLA.uptime}</span>
-          </button>
+            <span className="inline-flex items-center gap-1.5 text-lg md:text-xl font-black tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              {t('stats_status_link')}
+              <ArrowUpRight className="w-4 h-4" />
+            </span>
+          </a>
         </div>
       </section>
 

@@ -44,10 +44,9 @@
         linear-gradient(90deg, rgba(37, 99, 235, 0.08) 0%, transparent 34%, rgba(148, 163, 184, 0.04) 100%);
 }
 
-/* Enhanced Gradient for Sources and Adversaries - Lightened further as requested */
 .mesh-gradient-bright {
     @apply transition-all duration-700;
-    background-color: #f8fafc; /* Even lighter than slate-100 */
+    background-color: #f8fafc;
     background-attachment: fixed;
     background-image:
         linear-gradient(180deg, rgba(248, 250, 252, 1) 0%, rgba(255, 255, 255, 1) 54%, rgba(241, 245, 249, 0.86) 100%),
@@ -55,7 +54,7 @@
 }
 
 .dark .mesh-gradient-bright {
-    background-color: #0e0e11; /* Slightly lighter than pure black for depth */
+    background-color: #0e0e11;
     background-attachment: fixed;
     background-image:
         linear-gradient(180deg, rgba(14, 14, 17, 1) 0%, rgba(17, 20, 26, 1) 52%, rgba(10, 10, 12, 1) 100%),
@@ -276,7 +275,6 @@ h1, h2, h3, h4 {
     @apply font-bold;
 }
 
-/* Entry Animations */
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -317,7 +315,6 @@ h1, h2, h3, h4 {
 .duration-700 { animation-duration: 700ms; }
 .duration-1000 { animation-duration: 1000ms; }
 
-/* Product tour: progress line on the active tab, advances the slide when it completes */
 @keyframes tour-progress {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
@@ -330,9 +327,6 @@ h1, h2, h3, h4 {
   animation-fill-mode: forwards;
 }
 
-/* Product tour slide change: a quick directional wipe. The incoming screen is revealed from the side it travels from
-   and slides a little faster than the reveal (parallax); the outgoing screen eases the other way and dims slightly
-   underneath. A fine light line rides the wipe edge. Captions slide in from the same side. --tour-dir is 1 or -1. */
 .tour-wipe-in-fwd,
 .tour-wipe-in-back,
 .tour-wipe-out-fwd,

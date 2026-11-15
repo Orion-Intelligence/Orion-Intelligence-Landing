@@ -91,7 +91,6 @@ const PricingV1: React.FC = () => {
 
   return (
     <div className="py-12 animate-in fade-in slide-in-from-bottom-1 duration-500 ease-out px-0 relative">
-      {/* Background stars and gradients mirrored from SourceInventory */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10 opacity-30 w-screen left-1/2 -translate-x-1/2">
         <div className="absolute inset-0" 
              style={{ 
@@ -188,7 +187,6 @@ const PricingV1: React.FC = () => {
         ))}
       </div>
 
-      {/* Comparison Matrix Section */}
       <div className="space-y-8 px-4 md:px-0">
         <div className="max-w-3xl space-y-4">
           <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight uppercase">Capability Audit</h2>
@@ -275,7 +273,7 @@ const PricingV1: React.FC = () => {
                 <Activity className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                 <div className="space-y-1">
                   <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest">SLA Status</p>
-                  <p className="text-[9px] text-slate-500 dark:text-white/40 font-medium">99.5% monthly uptime SLA for the hosted platform.</p>
+                  <p className="text-[9px] text-slate-500 dark:text-white/40 font-medium">Published SLA: support response times and live status.</p>
                 </div>
               </div>
             </div>
