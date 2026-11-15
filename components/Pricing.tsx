@@ -305,9 +305,7 @@ const Pricing: React.FC = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 shrink-0 w-full md:w-auto">
                  <a 
-                  href="https://calendly.com/msmannan/30min" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                  href="mailto:support@orionintelligence.org"
                   className="px-10 py-5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl font-black uppercase tracking-widest text-[11px] hover:opacity-90 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-sm"
                  >
                    Operational Demo <MousePointer2 className="w-4 h-4" />

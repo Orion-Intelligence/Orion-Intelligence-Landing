@@ -63,17 +63,16 @@ export const translations = {
     // Contact
     contact_title: "Talk to the Orion team",
     contact_desc: "See how Orion can help your team find exposure, understand threat activity, and move faster on investigations.",
-    contact_hq: "Lahore office",
-    contact_hub: "USA office",
-    contact_call: "Phone",
+    contact_hq: "Headquarters",
+    contact_docs: "Documentation",
+    contact_status: "Service status",
     contact_email: "Email",
     contact_button: "Book a Walkthrough",
     // Footer
     footer_platform: "Platform",
     footer_intelligence: "Intelligence",
     footer_network: "Network",
-    footer_policy: "Policy",
-    footer_copy: "© 2025 Orion Intelligence"
+    footer_policy: "Policy"
   },
   fr: {
     nav_intelligence_os: "Accueil",
@@ -128,16 +127,15 @@ export const translations = {
     probe_run: "Identifier la Menace",
     contact_title: "Liaison Opérationnelle",
     contact_desc: "Découvrez comment Orion Intelligence peut renforcer votre posture de sécurité.",
-    contact_hq: "Siège Lahore",
-    contact_hub: "Bureau États-Unis",
-    contact_call: "Appelez-nous",
+    contact_hq: "Siège social",
+    contact_docs: "Documentation",
+    contact_status: "État du service",
     contact_email: "E-mail",
     contact_button: "Réserver un Onboarding Stratégique",
     footer_platform: "Plateforme",
     footer_intelligence: "Intelligence",
     footer_network: "Réseau",
-    footer_policy: "Politique",
-    footer_copy: "© 2025 Orion Intelligence"
+    footer_policy: "Politique"
   },
   de: {
     nav_intelligence_os: "Homepage",
@@ -192,16 +190,15 @@ export const translations = {
     probe_run: "Bedrohung Identifizieren",
     contact_title: "Operative Verbindung",
     contact_desc: "Entdecken Sie, wie Orion Intelligence Ihre Sicherheitslage stärken kann.",
-    contact_hq: "Hauptquartier Lahore",
-    contact_hub: "Büro USA",
-    contact_call: "Rufen Sie uns an",
+    contact_hq: "Hauptsitz",
+    contact_docs: "Dokumentation",
+    contact_status: "Dienststatus",
     contact_email: "E-mail",
     contact_button: "Strategisches Onboarding Buchen",
     footer_platform: "Plattform",
     footer_intelligence: "Intelligenz",
     footer_network: "Netzwerk",
-    footer_policy: "Richtlinien",
-    footer_copy: "© 2025 Orion Intelligence"
+    footer_policy: "Richtlinien"
   },
   es: {
     nav_intelligence_os: "Inicio",
@@ -256,16 +253,15 @@ export const translations = {
     probe_run: "Identificar Amenaza",
     contact_title: "Enlace Operativo",
     contact_desc: "Descubra cómo Orion Intelligence puede fortalecer su postura de seguridad.",
-    contact_hq: "Sede Lahore",
-    contact_hub: "Oficina EE. UU.",
-    contact_call: "Llámenos",
+    contact_hq: "Sede central",
+    contact_docs: "Documentación",
+    contact_status: "Estado del servicio",
     contact_email: "Correo",
     contact_button: "Reservar Onboarding Estratégico",
     footer_platform: "Platorma",
     footer_intelligence: "Inteligencia",
     footer_network: "Red",
-    footer_policy: "Política",
-    footer_copy: "© 2025 Orion Intelligence"
+    footer_policy: "Política"
   },
   it: {
     nav_intelligence_os: "Homepage",
@@ -320,15 +316,14 @@ export const translations = {
     probe_run: "Identifica Minaccia",
     contact_title: "Collegamento Operativo",
     contact_desc: "Scopri come Orion Intelligence può rafforzare la tua sicurezza.",
-    contact_hq: "Sede Lahore",
-    contact_hub: "Ufficio USA",
-    contact_call: "Chiamaci",
+    contact_hq: "Sede centrale",
+    contact_docs: "Documentazione",
+    contact_status: "Stato del servizio",
     contact_email: "Email",
     contact_button: "Prenota Onboarding Strategico",
     footer_platform: "Piattaforma",
     footer_intelligence: "Intelligence",
     footer_network: "Rete",
-    footer_policy: "Policy",
-    footer_copy: "© 2025 Orion Intelligence"
+    footer_policy: "Policy"
   }
 } as const;

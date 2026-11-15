@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowUpRight, Globe, Lock, Menu, Moon, Sun, X } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import { Language } from '../translations';
+import { COMPANY } from '../company';
 
 // The AI analyst product has its own site; the nav and footer send people there.
 export const DEEPINTEL_URL = 'https://deepintel.si/';
@@ -109,9 +110,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView, theme, onToggl
         {t('nav_login')}
       </a>
       <a
-        href="https://calendly.com/msmannan/30min"
-        target="_blank"
-        rel="noopener noreferrer"
+        href={`mailto:${COMPANY.supportEmail}`}
         className={`${link} inline-flex items-center gap-1 text-slate-900 hover:text-blue-600 dark:text-white dark:hover:text-blue-300`}
       >
         {t('nav_get_access')}

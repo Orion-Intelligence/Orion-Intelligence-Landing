@@ -1,16 +1,16 @@
 import React from 'react';
 import {
-  Anchor,
+  Activity,
   ArrowRight,
+  BookOpen,
   Database,
   FileJson,
   Fingerprint,
-  Globe,
   Loader2,
   Mail,
+  MapPin,
   MessageSquare,
   MonitorCheck,
-  Phone,
   Search,
   ShieldAlert,
   ShieldHalf,
@@ -18,8 +18,9 @@ import {
   Workflow
 } from 'lucide-react';
 import { translations } from '../translations';
+import { COMPANY } from '../company';
 
-type HomeView = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | '404';
+type HomeView = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | 'about' | 'contact' | 'privacy' | '404';
 type TranslationKey = keyof typeof translations['en'];
 
 interface HomepageFlowProps {
@@ -31,7 +32,7 @@ interface HomepageFlowProps {
   isSearching: boolean;
   onHeroSearch: (e: React.FormEvent) => void;
   onNavigate: (view: HomeView) => void;
-  calendlyUrl: string;
+  contactUrl: string;
 }
 
 const sourceSignals = [
@@ -107,7 +108,7 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
   isSearching,
   onHeroSearch,
   onNavigate,
-  calendlyUrl
+  contactUrl
 }) => {
   return (
     <div className="home-story-bg">
@@ -372,10 +373,10 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 text-left mb-14 md:mb-16">
               {[
-                { icon: Globe, label: t('contact_hq'), value: <>75 H2 Wapda Town <br />Lahore, Pakistan</> },
-                { icon: Anchor, label: t('contact_hub'), value: <>St. Petersburg, Florida <br />United States</> },
-                { icon: Phone, label: t('contact_call'), value: '(+92) 42 35131458' },
-                { icon: Mail, label: t('contact_email'), value: 'support@orionintelligence.org' }
+                { icon: MapPin, label: t('contact_hq'), value: <>{COMPANY.headquarters} <br />{COMPANY.country}</> },
+                { icon: Mail, label: t('contact_email'), value: <a href={`mailto:${COMPANY.supportEmail}`} className="hover:text-blue-600 dark:hover:text-white transition-colors">{COMPANY.supportEmail}</a> },
+                { icon: BookOpen, label: t('contact_docs'), value: <a href={COMPANY.docsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-white transition-colors">orion-search.readthedocs.io</a> },
+                { icon: Activity, label: t('contact_status'), value: <a href={COMPANY.statusUrl} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-white transition-colors">Live uptime</a> }
               ].map((item) => (
                 <div key={item.label} className="space-y-5 border-t border-slate-200/55 dark:border-white/[0.06] pt-5">
                   <div className="flex items-center gap-3 text-[10px] font-black text-slate-400 dark:text-white/48 uppercase tracking-[0.2em]">
@@ -390,7 +391,7 @@ const HomepageFlow: React.FC<HomepageFlowProps> = ({
             </div>
 
             <div className="flex justify-center">
-              <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-7 md:px-9 py-3.5 md:py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold text-[12px] uppercase tracking-[0.15em] flex items-center justify-center gap-4 transition-all active:scale-95 shadow-xl shadow-blue-500/20 border-t border-white/20">
+              <a href={contactUrl} className="w-full sm:w-auto px-7 md:px-9 py-3.5 md:py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold text-[12px] uppercase tracking-[0.15em] flex items-center justify-center gap-4 transition-all active:scale-95 shadow-xl shadow-blue-500/20 border-t border-white/20">
                 {t('contact_button')}
                 <ArrowRight className="w-4 h-4" />
               </a>

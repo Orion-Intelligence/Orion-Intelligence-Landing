@@ -57,6 +57,10 @@ import RemediationGuide from './components/RemediationGuide';
 import Pricing from './components/Pricing';
 import NotFound from './components/NotFound';
 import ErrorBoundary from './components/ErrorBoundary';
+import About from './components/About';
+import Contact from './components/Contact';
+import Privacy from './components/Privacy';
+import { COMPANY, COPYRIGHT, GITHUB_URL } from './company';
 import { useLanguage } from './components/LanguageContext';
 
 export interface StealerLogResponse {
@@ -107,7 +111,7 @@ const saveSearchCache = (query: string, data: StealerLogResponse) => {
   }
 };
 
-type ViewType = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | '404';
+type ViewType = 'home' | 'adversaries' | 'actor-dossier' | 'api-docs' | 'sources' | 'search-results' | 'remediation-guide' | 'pricing' | 'collaboration' | 'about' | 'contact' | 'privacy' | '404';
 
 const BrandLogos = {
   X: (props: any) => (
@@ -128,11 +132,6 @@ const BrandLogos = {
   YouTube: (props: any) => (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.377.505 9.377.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6273 3.568z" />
-    </svg>
-  ),
-  Instagram: (props: any) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
     </svg>
   ),
 };
@@ -163,6 +162,9 @@ const App: React.FC = () => {
       case 'collaboration': return 'collaboration';
       case 'search-results': return 'search';
       case 'remediation-guide': return 'remediation';
+      case 'about': return 'about';
+      case 'contact': return 'contact';
+      case 'privacy': return 'privacy';
       case 'home': return '';
       default: return '';
     }
@@ -200,6 +202,9 @@ const App: React.FC = () => {
     if (effectivePath.startsWith('/collaboration')) return 'collaboration';
     if (effectivePath.startsWith('/search')) return 'search-results';
     if (effectivePath.startsWith('/remediation')) return 'remediation-guide';
+    if (effectivePath === '/about') return 'about';
+    if (effectivePath === '/contact') return 'contact';
+    if (effectivePath === '/privacy') return 'privacy';
 
     return '404';
   };
@@ -255,7 +260,7 @@ const App: React.FC = () => {
     return 'dark';
   });
 
-  const CALENDLY_URL = "https://calendly.com/msmannan/30min";
+  const CONTACT_MAILTO = `mailto:${COMPANY.supportEmail}`;
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -335,11 +340,17 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const bgClass = ['adversaries', 'actor-dossier', 'sources', 'search-results', 'remediation-guide', 'pricing', 'collaboration'].includes(view) ? 'mesh-gradient-bright' : 'mesh-gradient';
+  // Page links (footer, About/Contact/Privacy) land at the top of the new page.
+  const openPage = (newView: ViewType) => {
+    navigateTo(newView);
+    window.scrollTo(0, 0);
+  };
+
+  const bgClass = ['adversaries', 'actor-dossier', 'sources', 'search-results', 'remediation-guide', 'pricing', 'collaboration', 'about', 'contact', 'privacy'].includes(view) ? 'mesh-gradient-bright' : 'mesh-gradient';
 
   return (
     <ErrorBoundary>
-      <div className={`min-h-screen ${bgClass} selection:bg-blue-500/30 overflow-x-hidden transition-all duration-700`}>
+      <div className={`min-h-screen ${bgClass} selection:bg-blue-500/30 overflow-x-clip transition-all duration-700`}>
         <div className="grain"></div>
         {view !== '404' && <Navbar onNavigate={navigateTo} currentView={view as any} theme={theme} onToggleTheme={toggleTheme} />}
         
@@ -353,7 +364,7 @@ const App: React.FC = () => {
           <div className="fixed top-[-5%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 blur-[180px] rounded-full pointer-events-none z-0 opacity-40"></div>
         )}
 
-        <main key={view} className="relative z-10 w-full overflow-x-hidden animate-in fade-in duration-700">
+        <main key={view} className="relative z-10 w-full overflow-x-clip animate-in fade-in duration-700">
           {view === '404' ? (
             <NotFound onBack={() => navigateTo('home')} />
           ) : view === 'adversaries' ? (
@@ -375,6 +386,10 @@ const App: React.FC = () => {
           ) : view === 'pricing' ? (
             <div className="pt-[90px] px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
               <Pricing />
+            </div>
+          ) : view === 'about' || view === 'contact' || view === 'privacy' ? (
+            <div className="pt-[90px] px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
+              {view === 'about' ? <About onNavigate={openPage} /> : view === 'contact' ? <Contact onNavigate={openPage} /> : <Privacy onNavigate={openPage} />}
             </div>
           ) : view === 'collaboration' ? (
             <div className="pt-[90px] px-4 md:px-10 max-w-[1700px] mx-auto min-h-screen">
@@ -414,7 +429,7 @@ const App: React.FC = () => {
               isSearching={isSearching}
               onHeroSearch={handleHeroSearch}
               onNavigate={navigateTo}
-              calendlyUrl={CALENDLY_URL}
+              contactUrl={CONTACT_MAILTO}
             />
           )}
         </main>
@@ -464,8 +479,7 @@ const App: React.FC = () => {
                       { component: BrandLogos.X, href: "https://x.com/orionfeed", label: "X" },
                       { component: BrandLogos.LinkedIn, href: "https://www.linkedin.com/showcase/108619822/", label: "LinkedIn" },
                       { component: BrandLogos.Facebook, href: "https://web.facebook.com/people/Orion-Feed/61581366287535/", label: "Facebook" },
-                      { component: BrandLogos.YouTube, href: "https://www.youtube.com/@OrionFeeds", label: "YouTube" },
-                      { component: BrandLogos.Instagram, href: "https://www.instagram.com/msman_nan00", label: "Instagram" }
+                      { component: BrandLogos.YouTube, href: "https://www.youtube.com/@OrionFeeds", label: "YouTube" }
                     ].map((social, i) => (
                       <a
                         key={i}
@@ -488,9 +502,10 @@ const App: React.FC = () => {
                       Platform
                     </h3>
                     <ul className="space-y-6 text-[11.5px] text-slate-500 dark:text-white/40 uppercase tracking-[0.12em] font-bold">
+                      <li><button onClick={() => openPage('about')} className="hover:text-blue-600 dark:hover:text-white transition-all">About Orion</button></li>
                       <li><a href="https://try.orionintelligence.org/" className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">Open Platform <ExternalLink className="w-3 h-3 opacity-20" /></a></li>
                       <li><a href={DEEPINTEL_URL} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">DeepIntel.si <ExternalLink className="w-3 h-3 opacity-20" /></a></li>
-                      <li><a href="https://github.com/Orion-Intelligence/Orion-Intelligence" className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">GitHub <Share2 className="w-3 h-3 opacity-20" /></a></li>
+                      <li><a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">GitHub <Share2 className="w-3 h-3 opacity-20" /></a></li>
                       <li><button onClick={() => navigateTo('api-docs')} className="hover:text-blue-600 dark:hover:text-white transition-all">API Docs</button></li>
                     </ul>
                   </div>
@@ -513,7 +528,7 @@ const App: React.FC = () => {
                       Policy
                     </h3>
                     <ul className="space-y-6 text-[11.5px] text-slate-500 dark:text-white/40 uppercase tracking-[0.12em] font-bold">
-                      <li><button onClick={() => setActiveModal('privacy')} className="hover:text-blue-600 dark:hover:text-white transition-all">Privacy</button></li>
+                      <li><button onClick={() => openPage('privacy')} className="hover:text-blue-600 dark:hover:text-white transition-all">Privacy</button></li>
                       <li><button onClick={() => setActiveModal('compliance')} className="hover:text-blue-600 dark:hover:text-white transition-all">Compliance</button></li>
                       <li><button onClick={() => navigateTo('pricing')} className="hover:text-blue-600 dark:hover:text-white transition-all">Pricing</button></li>
                     </ul>
@@ -525,6 +540,7 @@ const App: React.FC = () => {
                       Operations
                     </h3>
                     <ul className="space-y-6 text-[11.5px] text-slate-500 dark:text-white/40 uppercase tracking-[0.12em] font-bold">
+                      <li><button onClick={() => openPage('contact')} className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">Contact <Mail className="w-3 h-3 opacity-20" /></button></li>
                       <li><button onClick={() => navigateTo('pricing')} className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">Get a Quote <Quote className="w-3 h-3 opacity-20" /></button></li>
                       <li><a href="https://try.orionintelligence.org/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">Client Login <User className="w-3 h-3 opacity-20" /></a></li>
                       <li><a href="https://orionleaks.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-white transition-all flex items-center gap-2">Reporting Portal <ShieldEllipsis className="w-3.5 h-3.5 opacity-20" /></a></li>
@@ -534,8 +550,20 @@ const App: React.FC = () => {
               </div>
               
               <div className="pt-8 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-10 relative z-10">
-                <div className="flex flex-col md:flex-row items-center gap-8 text-[11px] font-bold uppercase tracking-[0.18em]">
-                   <span className="text-slate-500 dark:text-white/20">{t('footer_copy')}</span>
+                <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
+                   <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-white/30">{COPYRIGHT}</span>
+                   <span className="text-[11px] font-medium text-slate-400 dark:text-white/20">
+                     {COMPANY.product} is a product of {COMPANY.legalName}, {COMPANY.headquarters}, {COMPANY.country}.
+                   </span>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400 dark:text-white/25">
+                   <button onClick={() => openPage('privacy')} className="hover:text-blue-600 dark:hover:text-white transition-colors">Privacy</button>
+                   <button onClick={() => openPage('contact')} className="hover:text-blue-600 dark:hover:text-white transition-colors">Contact</button>
+                   <a href={COMPANY.statusUrl} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-white transition-colors flex items-center gap-2">
+                     <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                     Status
+                   </a>
                 </div>
                 
                 <div className="flex gap-8 items-center">

@@ -11,6 +11,9 @@ This site describes Orion Intelligence, its public investigative intelligence ca
 - [Source Map](https://www.orionintelligence.org/sources): Public overview of monitored source categories and intelligence coverage.
 - [API Docs](https://www.orionintelligence.org/api-docs): Technical endpoint and integration documentation for Orion platform workflows.
 - [Pricing](https://www.orionintelligence.org/pricing): Commercial package and access information.
+- [About](https://www.orionintelligence.org/about): What Orion is, how the platform works, and the company behind it.
+- [Contact](https://www.orionintelligence.org/contact): Sales, access, privacy, security-disclosure, and support contacts.
+- [Privacy Policy](https://www.orionintelligence.org/privacy): How Orion handles information on this website and the platform.
 
 ## Platform Resources
 
@@ -21,4 +24,4 @@ This site describes Orion Intelligence, its public investigative intelligence ca
 ## Optional
 
 - [Collaboration Deck](https://www.orionintelligence.org/collaboration.html): Partner and technical collaboration presentation.
-- [Schedule Access](https://calendly.com/msmannan/30min): Meeting link for access requests and evaluations.
+- [Schedule Access](mailto:support@orionintelligence.org): Contact for access requests and evaluations.
